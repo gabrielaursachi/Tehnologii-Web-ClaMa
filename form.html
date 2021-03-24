@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Class Manager register </title>
+    <link rel="stylesheet" href="registerForm.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <form action="#">
+        <div class="register_container">
+            <h2>
+                New account
+            </h2>
+
+            <label for="username">
+                <b> Username</b>
+                <input type="text" placeholder="Username" name="username" id="username" required>
+            </label>
+
+
+            <label for="password">
+                <b>Password</b>
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+            </label>
+
+
+
+            <label for="name">
+                <b>Name</b>
+                <input type="text" placeholder="Enter name" name="name" id="name" required>
+            </label>
+
+
+            <label for="surname">
+                <b>Surname</b>
+                <input type="text" placeholder="Enter surname" name="surname" id="surname" required>
+            </label>
+
+
+            <label for="email">
+                <b>Email</b>
+                <input type="email" placeholder="Enter Email" name="email" id="email" required>
+
+            </label>
+
+            <p>Choose your account type:</p>
+
+            <label class="radio-inline">
+                <input type="radio" name="account" value="student" id="student" checked> Student
+            </label>
+
+            <label class="radio-inline">
+                <input type="radio" name="account" value="profesor" id="profesor"> Profesor
+            </label>
+
+            <button type="submit" class="registerButton">Register</button>
+
+        </div>
+
+    </form>
+
+</body>

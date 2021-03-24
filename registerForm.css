@@ -1,0 +1,130 @@
+label,
+input {
+    display: block;
+    padding-left: 11%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-size: cover;
+    background-image: url("https://cdn.pixabay.com/photo/2017/04/05/04/44/background-2203989_960_720.jpg");
+}
+
+p {
+    margin-top: -5px;
+    margin-left: 35px;
+}
+
+.register_container {
+    position: relative;
+    width: 40%;
+    /* height: 50%; */
+    padding: 0px 0px 180px;
+    box-sizing: border-box;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    padding-bottom: 20px;
+    /* border: 25px #305A72; */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    background-color: rgba(226, 240, 240, 0.589);
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+    width: 80%;
+    height: 10%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: block;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(226, 226, 226, 0.589);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+input[type=radio] {
+    display: inline-block;
+}
+
+.registerButton {
+    background-color: #6aca52;
+    color: white;
+    padding: 15px 20px;
+    margin: 8px 0;
+    cursor: pointer;
+    width: 87%;
+    opacity: 0.9;
+    border: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.registerButton:hover {
+    opacity: 5;
+}
+
+h2 {
+    padding: 20px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media only screen and (max-width: 650px) {
+    .registerButton {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+    }
+    input[type=text],
+    input[type=password],
+    input[type=email] {
+        text-size-adjust: 90%;
+        width: 75%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: block;
+        border: none;
+        background: #f1f1f1;
+    }
+    .register_container {
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        text-size-adjust: 70%;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .registerButton {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+    }
+    input[type=text],
+    input[type=password],
+    input[type=email] {
+        text-size-adjust: 90%;
+        width: 75%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: block;
+        border: none;
+        background: #f1f1f1;
+    }
+}
