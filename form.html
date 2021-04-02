@@ -9,42 +9,46 @@
 
 <body>
 
-    <form action="#">
+    <form action="#" autocomplete="off">
         <div class="register_container">
             <h2>
                 New account
             </h2>
 
             <label for="username">
-                <b> Username</b>
-                <input type="text" placeholder="Username" name="username" id="username" required>
+                <b> Username</b>   
             </label>
-
+            <input type="text" placeholder="Username" name="username" id="username" required>
 
             <label for="password">
                 <b>Password</b>
-                <input type="password" placeholder="Enter Password" name="password" id="password" required>
             </label>
+            <input type="password" placeholder="Enter Password" name="password" id="password" required>
 
+
+
+
+            <label for="password">
+                <b>Confirm password</b>
+            </label>
+            <input type="password" placeholder="Confirm Password" name="password" id="confirmPassword" required>
 
 
             <label for="name">
                 <b>Name</b>
-                <input type="text" placeholder="Enter name" name="name" id="name" required>
             </label>
+            <input type="text" placeholder="Enter name" name="name" id="name" required>
 
 
             <label for="surname">
                 <b>Surname</b>
-                <input type="text" placeholder="Enter surname" name="surname" id="surname" required>
             </label>
-
+            <input type="text" placeholder="Enter surname" name="surname" id="surname" required>
 
             <label for="email">
                 <b>Email</b>
-                <input type="email" placeholder="Enter Email" name="email" id="email" required>
-
             </label>
+            <input type="email" placeholder="Enter Email" name="email" id="email" required>
 
             <p>Choose your account type:</p>
 
@@ -53,13 +57,15 @@
             </label>
 
             <label class="radio-inline">
-                <input type="radio" name="account" value="profesor" id="profesor"> Profesor
+             <input type="radio" name="account" value="profesor" id="profesor"> Profesor   
             </label>
 
-            <button type="submit" class="registerButton">Register</button>
+            <button type="submit" class="registerButton" onclick="checkPasswordRegister()">Register</button>
 
         </div>
 
     </form>
+
+    <script src="functions.js"></script>
 
 </body>
