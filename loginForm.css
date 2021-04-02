@@ -1,29 +1,32 @@
-label,
-input {
+label {
     display: block;
-    padding-left: 11%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
     background-position-x: 70px;
     background-position-y: 50px;
-    /* background-origin: border-box; */
+    background-size: 500px 500px;
     background-repeat: no-repeat;
     background-color: whitesmoke;
-    background-image: url("file:///C:/Users/eu/Desktop/undraw_remotely_2j6y-removebg-preview%20(1).png");
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url("https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/remotely_2j6y.svg");
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.fields {
+    margin: 0 auto;
+    align-items: center;
+    margin-left: 52px;
+    border: 20px;
+    padding-left: 10px;
 }
 
 .login_container {
     right: 50px;
     width: 450px;
     height: 300px;
-    display: block;
     position: absolute;
     margin-top: 5%;
-    margin-left: auto;
-    margin-right: auto;
     padding: 50px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
     background-color: white;
@@ -34,21 +37,17 @@ body {
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus {
-    background-color: rgba(226, 240, 240, 0.589);
+    background-color: rgb(210, 241, 239);
+    outline: none;
 }
 
-input[type=text],
-input[type=password],
-input[type=email] {
-    width: 80%;
-    height: 10%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: block;
+input[type="text"],
+input[type="password"] {
+    left: 60px;
     border: none;
     border-radius: 20px;
     background-color: rgba(226, 226, 226, 0.589);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .loginButton {
@@ -59,20 +58,18 @@ input[type=email] {
     background-color: #2588d8;
     color: white;
     padding: 15px 20px;
-    /* margin: 8px 0; */
     cursor: pointer;
     opacity: 0.9;
     border: none;
-    position: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 5%;
     border-radius: 10px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-top: 5%;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .loginButton:hover {
-    opacity: 5;
+    background-color: rgb(140, 185, 223);
 }
 
 h1 {
@@ -81,7 +78,7 @@ h1 {
     margin-top: -1px;
     margin-left: auto;
     margin-right: auto;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .unregistered_container {
@@ -100,11 +97,11 @@ h1 {
         background-repeat: no-repeat;
         background-position-x: -60px;
         background-position-y: 350px;
-        background-image: url("https://www.worldscode.com/wp-content/uploads/2020/06/undraw_remotely_2j6y-removebg-preview.png");
+        position: relative;
+        bottom: 0px;
     }
     .login_container {
         display: block;
-        padding-top: -50%;
         width: 60%;
         text-size-adjust: 70%;
         padding: 5%;
@@ -131,7 +128,9 @@ h1 {
         text-align: center;
         display: flex;
         justify-content: center;
-        /* margin-top: 15%; */
+    }
+    .fields {
+        margin-left: 8%;
     }
 }
 
@@ -140,15 +139,14 @@ h1 {
         background-repeat: no-repeat;
         position: relative;
         bottom: 0px;
-        background-image: url("https://www.worldscode.com/wp-content/uploads/2020/06/undraw_remotely_2j6y-removebg-preview.png");
     }
-    .loginButton {
+    /* .loginButton {
         width: 80%;
         display: flex;
         justify-content: center;
         width: 80%;
         margin-top: -2%;
-    }
+    } */
     input[type=text],
     input[type=password],
     input[type=email] {
@@ -165,6 +163,5 @@ h1 {
         text-align: center;
         display: flex;
         justify-content: center;
-        /* margin-top: 15%; */
     }
 }
