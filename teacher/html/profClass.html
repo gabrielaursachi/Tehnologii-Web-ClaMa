@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="ro">
+
+<head>
+    <title>Class Manager</title>
+    <link rel="stylesheet" href="../css/profClass.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+</head>
+
+<body>
+
+    <div class="topnav" id="myTopnav">
+        <a href="profHomePage.html" class="active">My Classes</a>
+        <a href="assignmentsPage.html">Assignments</a>
+        <a href="settingsAccount.html">Settings</a>
+        <a href="loginForm.html">Logout</a>
+
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <img class="logo" alt="logo of the site" src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/spreadsheets_xdjy.svg" width="110" height="60">
+
+    </div>
+
+    <div class="header" id="myHeader">
+        <!-- upper border -->
+        <b>Web Technologies</b>
+    </div>
+
+
+    <div class="generalInfo" id="general">
+
+        <p class="predefined"><b>Your class informations</b></p>
+
+        <p class="predefined">Other platforms: <span class="customInfo">Zoom, Discord, links to other platforms that are
+                going to be used</span></p>
+
+        <p class="predefined">Schedule: <span class="customInfo">
+                Wednesday, 10:00 - 12:00 &nbsp; </span></p>
+
+        <p class="predefined">Number of components: <span class="customInfo">4</span></p>
+
+    </div>
+
+
+    <div class="classToolBar" id="classToolBar">
+
+        <button type="button" class="classButton">
+            Catalog
+        </button>
+
+        <button type="button" class="classButton">
+            Requests
+        </button>
+
+        <button type="button" class="classButton">
+            Edit Class
+        </button>
+
+    </div>
+
+    <div class="news">
+
+        <div class="addNews">
+
+            <form action="profClass.html">
+
+                <textarea class="newsTitle" id="newsTitle" name="newsTitle" rows="1" cols="30" placeholder="Enter your news title..."></textarea>
+
+                <textarea class="newsBodyInput" id="newsBodyInput" name="newsBodyInput" rows="8" cols="60" placeholder="Enter your news description..."></textarea>
+
+                <br>
+
+                <br>
+
+                <label for="files">Upload your files:</label>
+                <input type="file" id="files" name="files" multiple>
+
+                <button type="submit" class="submitNewsButton">
+                    Submit news
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="news" id="newPost">
+
+        <h1>
+            News title
+        </h1>
+
+        <p class="newsBody">
+            news body
+        </p>
+
+    </div>
+
+    <div class="assignments" id="myAssignments">
+
+        <a href="assignment.html" class="assignment_container">
+            <div class="assignmentTitle" id="assignmentTitle">
+
+                <p class="assignmentName"><b>Tehnologii WEB sapatamana 8</b></p>
+
+            </div>
+            <div class="assignmentInfo" id="assignmentInfo">
+                <p>Author : Cosmin Varlan</p>
+                <p>Posted at : 27 March 2021, 16:20:14 </p>
+                <p>Deadline : 13 April 2021, 23:59:59 </p>
+            </div>
+
+        </a>
+
+    </div>
+
+
+
+
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
+</body>
+
+</html>
