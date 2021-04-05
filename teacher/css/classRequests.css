@@ -68,11 +68,92 @@ body {
     padding: 10px;
     display: block;
     color: #596faa;
+    margin-left: 2%;
+    font-size: 20px;
+}
+
+.generalInfo form {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.listOfRequests {
+    background-color: transparent;
+    background-size: cover;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.request {
+    background-clip: padding-box;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    width: 400px;
+    margin-bottom: 1.5rem;
+    margin-right: 1.5rem;
+    text-decoration: none;
+    background-color: #cfe7f3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-left: 25px;
+    margin-top: 20px;
+    text-decoration: none;
+    box-shadow: 3px 3px 8px #b8b2b2;
+    display: flex;
+    justify-content: space-between;
+}
+
+.request p {
+    margin-left: 4%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.request form {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.request .acceptRequest {
+    background-color: #59ce6d;
+    color: white;
+    cursor: pointer;
+    padding: 12px 17px;
+    opacity: 0.9;
+    border: none;
+    border-radius: 10px;
+    outline: whitesmoke;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.request .declineRequest {
+    background-color: #df3535;
+    color: white;
+    cursor: pointer;
+    padding: 12px 17px;
+    opacity: 0.9;
+    border: none;
+    border-radius: 10px;
+    outline: whitesmoke;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.request .acceptRequest:hover{
+    background-color: #6dd67f;
+}
+
+.request .declineRequest:hover{
+    background-color: #e25050;
 }
 
 .customInfo {
     color: #0a1840;
-    display: flexbox;
     display: inline-block;
     padding-left: 5px;
 }
@@ -247,17 +328,6 @@ p.newsBody {
     background-color: #6aca52;
 }
 
-input[type="file"]::file-selector-button {
-    display: inline-block;
-    padding: 12px 17px;
-    border: none;
-    color: white;
-    background-color: #6aca52;
-    border-radius: 10px;
-    outline: none;
-    cursor: pointer;
-}
-
 label[for="files"],
 input[type="file"] {
     display: inline-block;
@@ -315,7 +385,15 @@ input[type="file"] {
         width: 50%;
         font-size: 85%;
     }
-    .classButton {
-        width: 90%;
+    .request {
+        font-size: 13px;
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .request {
+        font-size: 12px;
+        width: 275px;
     }
 }
