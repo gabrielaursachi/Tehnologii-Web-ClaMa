@@ -17,7 +17,7 @@
     padding: 23px 24px;
     text-decoration: none;
     font-size: 18px;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .topnav a:hover {
@@ -39,7 +39,7 @@ body {
     margin: 0;
     background-color: whitesmoke;
     background-repeat: repeat-y;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .header {
@@ -78,7 +78,7 @@ body {
 
 input[type="text"] {
     background-color: rgba(241, 245, 247, 0.904);
-    padding: 0;
+    padding: 10px;
     border: none;
     width: 200px;
     height: 25px;
@@ -127,12 +127,11 @@ a {
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
-    border-radius: 50px;
+    border-radius: 10px;
     color: rgb(0, 0, 0);
-    box-shadow: 3px 3px 8px #b8b2b2;
-    background-color: #e5ffe5;
-    background-color: transparent;
+    box-shadow: 0px 7px 7px #b8b2b2;
     cursor: pointer;
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
     border: none;
     text-decoration: none;
     margin-bottom: 30px;
@@ -149,17 +148,45 @@ a {
     color: black;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
 }
 
-.assignmentInfo {
+.assignmentInfoToDo {
     text-align: left;
     padding: 25px;
-    background-color: #fff6e5;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     text-decoration: none;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    background-color: #fff6e5;
+}
+
+.assignmentInfoDone {
+    text-align: left;
+    padding: 25px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+    background-color: #dffcbe;
+}
+
+.assignmentTitleToDo {
+    text-align: center;
+    padding: 15px;
+    background-color: #ffdc9b;
+    color: black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
+}
+
+.assignmentTitleDone {
+    text-align: center;
+    padding: 15px;
+    background-color: #c3ff7f;
+    color: black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
 }
 
 @media screen and (max-width: 600px) {

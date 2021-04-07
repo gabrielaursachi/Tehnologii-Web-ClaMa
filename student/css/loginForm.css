@@ -1,6 +1,6 @@
 label {
     display: block;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 body {
@@ -10,7 +10,7 @@ body {
     background-repeat: no-repeat;
     background-color: whitesmoke;
     background-image: url("https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/remotely_2j6y.svg");
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .fields {
@@ -45,12 +45,13 @@ input[type="text"],
 input[type="password"] {
     left: 60px;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: rgba(226, 226, 226, 0.589);
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .loginButton {
+    outline: none;
     display: block;
     width: 80%;
     display: flex;
@@ -65,7 +66,7 @@ input[type="password"] {
     margin-right: auto;
     border-radius: 10px;
     margin-top: 5%;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .loginButton:hover {
@@ -78,7 +79,7 @@ h1 {
     margin-top: -1px;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .unregistered_container {

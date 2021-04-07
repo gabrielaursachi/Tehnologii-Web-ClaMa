@@ -17,7 +17,7 @@
     padding: 23px 24px;
     text-decoration: none;
     font-size: 18px;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .topnav a:hover {
@@ -38,9 +38,8 @@ body {
     padding: 0;
     margin: 0;
     background-color: whitesmoke;
-    /* background-image: url("file:///C:/Users/eu/Downloads/Pattern-Randomized.svg"); */
     background-repeat: repeat-y;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .header {
@@ -49,34 +48,36 @@ body {
     position: relative;
     line-height: 100px;
     background-color: whitesmoke;
-    z-index: 1;
     text-align: center;
     border-bottom: 0.8px solid #59A2CE;
 }
 
+.header.dropDown {
+    width: 120%;
+    outline: none;
+}
+
 .dropDown>select {
-    /* box-sizing: border-box;
-    padding: 18px;
-    cursor: pointer;
-    background-color: whitesmoke;
-    font-family: Trebuchet MS, sans-serif;
-    background-color: transparent;
-    border: none;
-    margin: 0;
-    font-size: 20px;
-    line-height: inherit;
-    background-image: linear-gradient; */
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    outline: none;
+    width: min-content;
+    font-family: 'Trebuchet MS', sans-serif;
     color: black;
     font-weight: bold;
     position: relative;
-    border: 1px solid var(--select-border);
-    border-radius: 0.25em;
+    border: none;
     padding: 0.25em 0.5em;
-    font-size: 1.25rem;
+    font-size: 125%;
     cursor: pointer;
     line-height: 1.1;
     background-color: transparent;
+}
+
+select option {
+    border-radius: 50px;
+    width: 50%;
+    background-color: whitesmoke;
+    font-size: smaller;
+    width: min-content;
 }
 
 .assignments {
@@ -93,7 +94,6 @@ body {
 }
 
 .assignments .assignment_container {
-    /* padding: 30px; */
     box-sizing: border-box;
     width: 90%;
     margin-left: auto;
@@ -101,11 +101,9 @@ body {
     margin-top: 30px;
     border-radius: 10px;
     color: rgb(0, 0, 0);
-    box-shadow: 3px 3px 8px #b8b2b2;
-    /* background-color: #e5ffe5;
-    background-color: transparent; */
+    box-shadow: 0px 7px 7px #b8b2b2;
     cursor: pointer;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
     border: none;
     text-decoration: none;
 }
@@ -121,22 +119,37 @@ a {
 .assignmentTitle {
     text-align: center;
     padding: 15px;
-    /* background: #ffd57e; */
     color: black;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
+}
+
+.assignmentInfoToDo {
+    text-align: left;
+    padding: 25px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+    background-color: #fff6e5;
+}
+
+.assignmentInfoDone {
+    text-align: left;
+    padding: 25px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+    background-color: #dffcbe;
 }
 
 .assignmentInfo {
     text-align: left;
     padding: 25px;
-    /* background-color: #fff6e5; */
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    /* margin-bottom: 40px; */
     text-decoration: none;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
 }
 
 .assignment_container+.assignment_container {
@@ -157,6 +170,26 @@ a {
 
 #doneTitle {
     background-color: #c3ff7f;
+}
+
+.assignmentTitleToDo {
+    text-align: center;
+    padding: 15px;
+    background-color: #ffdc9b;
+    color: black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
+}
+
+.assignmentTitleDone {
+    text-align: center;
+    padding: 15px;
+    background-color: #c3ff7f;
+    color: black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
 }
 
 @media screen and (max-width: 600px) {

@@ -22,16 +22,18 @@
         </a>
         <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
 
+
     </div>
 
     <div class="header" id="myHeader">
         <!-- upper border -->
+
         <div class="dropDown" id="dropDown">
             <!-- <label for="assignmentChoice">Choose a car:</label> -->
             <select onchange="location = this.value" name="assignments" id="assignments">
-                    <option value="./assignmentsPage.html">All Assignments History</option>
+                    <option selected="selected"  value="./assignmentsPage.html">All Assignments History</option>
                     <option value="./toDoAssignments.html">To Do Assignments</option>
-                    <option  selected="selected"  value="./doneAssignments.html">Turned In Assignments</option>
+                    <option value="./doneAssignments.html">Turned In Assignments</option>
             </select>
         </div>
 
@@ -40,23 +42,51 @@
     <div class="assignments" id="myAssignments">
 
 
+        <a href="assignment.html" class="assignment_container">
+            <div class="assignmentTitleToDo">
+
+                <p class="assignmentName"><b>Web Technologies 8th week</b></p>
+
+            </div>
+            <div class="assignmentInfoToDo">
+                <p>Author : Cosmin Varlan</p>
+                <p>Posted at : 27 March 2021, 16:20:14 </p>
+                <p>Deadline : 13 April 2021, 23:59:59 </p>
+            </div>
+
+        </a>
+
+
         <a href="#assignment2" class="assignment_container">
             <div class="assignmentTitleDone">
 
                 <p class="assignmentName"><b>Demo Assignment #1</b></p>
 
             </div>
-            <div class="assignmentInfo">
+            <div class="assignmentInfoDone">
                 <p>Author : Cosmin Varlan</p>
                 <p>Posted at : 27 March 2021, 16:20:14 </p>
-                <p>Deadline : 13 April 2021, 23:59:59 </p>
+                <p>Deadline : 11 April 2021, 23:59:59 </p>
             </div>
         </a>
 
 
+
+        <a href="assignment.html" class="assignment_container">
+            <div class="assignmentTitleToDo">
+
+                <p class="assignmentName"><b>Demo Assignment #2</b></p>
+
+            </div>
+            <div class="assignmentInfoToDo">
+                <p>Author : Cosmin Varlan</p>
+                <p>Posted at : 27 March 2021, 16:20:14 </p>
+                <p>Deadline : 13 April 2021, 23:59:59 </p>
+            </div>
+
+        </a>
+
     </div>
-
-
 
     <script src="../js/functions.js"></script>
 

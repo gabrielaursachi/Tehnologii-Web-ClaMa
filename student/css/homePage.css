@@ -4,12 +4,13 @@ body {
     background-color: whitesmoke;
     /* background-image: url("file:///C:/Users/eu/Downloads/Pattern-Randomized.svg"); */
     color: rgba(49, 49, 49, 0.829);
-    font-family: 'Courier New';
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .endOfPage {
     margin-top: 1%;
     height: 190px;
+    background-size: 750px;
     background-repeat: no-repeat;
     background-image: url('https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/professor_8lrt.svg');
     background-position-x: 50%;
@@ -36,7 +37,7 @@ body {
     padding: 23px 24px;
     text-decoration: none;
     font-size: 18px;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .topnav a:hover {
@@ -67,7 +68,7 @@ body {
     margin-left: 20px;
     margin-top: 15px;
     background-color: whitesmoke;
-    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
     font-size: 18px;
     font-weight: 500;
     letter-spacing: .25px;
@@ -83,13 +84,14 @@ body {
     width: 250px;
     height: 25px;
     border-radius: 10px;
-    outline-color: #59A2CE;
+    text-align: center;
+    outline: none;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
 }
 
 .whiteBack p input:focus {
     border: none;
-    background-color: rgb(210, 241, 239);
+    background-color: rgb(234, 241, 241);
 }
 
 .whiteBack .tr {
@@ -135,7 +137,7 @@ body {
 
 .topOfRect {
     background: #59A2CE;
-    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .classRect p {
@@ -224,7 +226,6 @@ body {
     }
     .topOfRect {
         background: #59A2CE;
-        font-family: 'Roboto', Helvetica, Arial, sans-serif;
         height: 50%;
         font-size: 90%;
     }
@@ -254,7 +255,7 @@ body {
         margin-top: 1%;
         height: 150px;
         background-repeat: no-repeat;
-        background-size: 580px;
+        background-size: 570px;
         background-image: url('https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/professor_8lrt.svg');
         background-position-x: 50%;
         background-position-y: 27%;
