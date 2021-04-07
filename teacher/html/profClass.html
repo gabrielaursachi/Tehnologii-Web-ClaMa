@@ -13,16 +13,14 @@
 
     <div class="topnav" id="myTopnav">
         <a href="profHomePage.html" class="active">My Classes</a>
-        <a href="assignmentsPage.html">Assignments</a>
         <a href="settingsAccount.html">Settings</a>
         <a href="loginForm.html">Logout</a>
 
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site"
-            src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/spreadsheets_xdjy.svg"
-            width="110" height="60">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
+            width="130" height="65">
 
     </div>
 
@@ -52,23 +50,35 @@
 
     <div class="classToolBar" id="classToolBar">
 
-        <a href="classCatalog.html">
-            <button type="button" class="classButton">
+        <form action="classCatalog.html">
+            <button type="submit" class="classButton">
                 Catalog
             </button>
-        </a>
+        </form>
 
-        <a href="classRequests.html">
-            <button type="button" class="classButton">
+        <form action="classRequests.html">
+            <button type="submit" class="classButton">
                 Requests
             </button>
-        </a>
+        </form>
 
-        <a href="classEdit.html">
-            <button type="button" class="classButton">
+        <form action="addAssignment.html">
+            <button type="submit" class="classButton">
+                Assignment
+            </button>
+        </form>
+
+        <form >
+            <button type="submit" class="classButton">
+                Start Class
+            </button>
+        </form>
+
+        <form action="classEdit.html">
+            <button type="submit" class="classButton">
                 Edit Class
             </button>
-        </a>
+        </form>
 
     </div>
 
@@ -115,7 +125,7 @@
 
     <div class="assignments" id="myAssignments">
 
-        <a href="assignment.html" class="assignment_container">
+        <a class="assignment_container" href="classAssignments.html">
             <div class="assignmentTitle" id="assignmentTitle">
 
                 <p class="assignmentName"><b>Tehnologii WEB sapatamana 8</b></p>
@@ -131,20 +141,7 @@
 
     </div>
 
-
-
-
-
-    <script>
-        function myFunction() {
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
-    </script>
+    <script src="../js/functions.js"></script>
 </body>
 
 </html>

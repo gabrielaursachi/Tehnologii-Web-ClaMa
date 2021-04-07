@@ -86,11 +86,15 @@ body {
     padding: 30px;
 }
 
+.listOfRequests a {
+    color:rgb(0, 0, 0);
+    text-decoration: none;
+    outline: none;
+}
+
 .request {
     background-clip: padding-box;
-    display: flex;
-    flex-direction: row;
-    height: 60px;
+    height: auto;
     width: 400px;
     margin-bottom: 1.5rem;
     margin-right: 1.5rem;
@@ -102,8 +106,10 @@ body {
     margin-top: 20px;
     text-decoration: none;
     box-shadow: 3px 3px 8px #b8b2b2;
-    display: flex;
-    justify-content: space-between;
+}
+
+.listOfRequests a:hover {
+    opacity: 0.8;
 }
 
 .request p {
@@ -112,43 +118,14 @@ body {
     margin-bottom: auto;
 }
 
+.request .click {
+    font-size: 9px;
+    color: #0a1840;
+}
+
 .request form {
     margin-top: auto;
     margin-bottom: auto;
-}
-
-.request .acceptRequest {
-    background-color: #59ce6d;
-    color: white;
-    cursor: pointer;
-    padding: 12px 17px;
-    opacity: 0.9;
-    border: none;
-    border-radius: 10px;
-    outline: whitesmoke;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.request .declineRequest {
-    background-color: #df3535;
-    color: white;
-    cursor: pointer;
-    padding: 12px 17px;
-    opacity: 0.9;
-    border: none;
-    border-radius: 10px;
-    outline: whitesmoke;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.request .acceptRequest:hover{
-    background-color: #6dd67f;
-}
-
-.request .declineRequest:hover{
-    background-color: #e25050;
 }
 
 .customInfo {

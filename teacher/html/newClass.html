@@ -13,21 +13,17 @@
 
     <div class="topnav" id="myTopnav">
         <a href="profHomePage.html" class="active">My Classes</a>
-        <a href="assignmentsPage.html">Assignments</a>
         <a href="settingsAccount.html">Settings</a>
         <a href="loginForm.html">Logout</a>
 
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="file:///C:/Users/eu/Downloads/undraw_spreadsheets_xdjy.svg"
-            width="110" height="60">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
+            width="130" height="65">
 
     </div>
-
-    <div class="underTopnav">
-    </div>
-
+    
     <div class="newClass" id="myClasses">
 
         <div class="classRect">
@@ -39,7 +35,7 @@
                 <form action="profHomePage.html">
                     <p>
                         <label for="className"><b>Class name:</b></label>
-                        <input type="text" name="className" id="className" required>
+                        <input type="text" name="className" id="className" required required placeholder="Class title">
                     </p>
                     <p>
                         <label for="classDate"><b>Select the day of the class:</b></label>
@@ -63,7 +59,7 @@
                     </p>
                     <p>
                         <label for="classLink"><b>Class link:</b></label>
-                        <input type="text" name="classLink" id="classLink">
+                        <input type="text" name="classLink" id="classLink" placeholder="Link to your class website">
                     </p>
                     <p>
                         <label for="classComponents"><b>Number of components:</b></label>
@@ -76,8 +72,12 @@
                         </select>
                     </p>
                     <p>
+                        <label for="classFormula"><b>Final grade formula:</b></label>
+                        <input type="text" name="classFormula" id="classFormula" placeholder="Ex: (C1+C2+C3)/3">
+                    </p>
+                    <p>
                         <label for="classOtherPlatforms"><b>Other platforms:</b></label>
-                        <input type="text" name="classOtherPlatforms" id="classOtherPlatforms">
+                        <input type="text" name="classOtherPlatforms" id="classOtherPlatforms" placeholder="Ex: Zoom">
                     </p>
                     <button type="submit" class="submitClass">
                         Create new class

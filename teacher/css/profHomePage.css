@@ -244,30 +244,6 @@ body {
         float: right;
         display: block;
     }
-    .classes {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    .classes .classRect {
-        font-size: 20px;
-        width: 70%;
-        height: 300px;
-    }
-    .classRect p.className {
-        font-size: 90%;
-    }
-    .topOfRect {
-        background: #59A2CE;
-        font-family: 'Roboto', Helvetica, Arial, sans-serif;
-        height: 50%;
-        font-size: 90%;
-    }
-    /* .className {
-        font-size: 10%;
-    } */
 }
 
 @media screen and (max-width: 600px) {
@@ -286,5 +262,8 @@ body {
     }
     .topnav.responsive .logo {
         display: none;
+    }
+    .classes .classRect {
+        width: 130%;
     }
 }

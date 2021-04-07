@@ -123,7 +123,6 @@ body {
     text-decoration: none;
     background-color: #e2ecf1;
     /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
-    -webkit-border-radius: 10px;
     border-radius: 10px;
     overflow: hidden;
     margin-left: 25px;
@@ -163,7 +162,6 @@ body {
     font-family: 'Trebuchet MS', sans-serif;
     margin-left: 9%;
     padding: 5px;
-    text-size-adjust: auto;
 }
 
 .bottomOfRect p>input {
