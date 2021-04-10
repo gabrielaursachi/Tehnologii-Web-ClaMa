@@ -2,7 +2,7 @@ label {
     display: block;
     padding: 10px;
     padding-left: 8%;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 body {
@@ -51,7 +51,7 @@ input[type=email] {
     border: none;
     border-radius: 10px;
     background-color: rgba(226, 226, 226, 0.589);
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
     outline: none;
 }
 
@@ -60,6 +60,7 @@ input[type=radio] {
 }
 
 .registerButton {
+    outline: none;
     background-color: #6aca52;
     color: white;
     padding: 15px 20px;
@@ -72,7 +73,7 @@ input[type=radio] {
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .registerButton:hover {
@@ -84,7 +85,7 @@ h2 {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 @media only screen and (max-width: 650px) {

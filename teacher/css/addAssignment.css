@@ -2,32 +2,8 @@ body {
     padding: 0;
     margin: 0;
     background-color: whitesmoke;
-    /* background-image: url("file:///C:/Users/eu/Downloads/Pattern-Randomized.svg"); */
     background-repeat: repeat-y;
     font-family: Trebuchet MS, sans-serif;
-}
-
-
-/* .classes::after {
-    position: relative;
-    bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    background-image: url('file:///C:/Users/eu/Downloads/undraw_teaching_f1cm.svg');
-    background-size: 500px 500px;
-    width: 500px;
-    height: 290px;
-    bottom: 0;
-    content: "";
-} */
-
-#bottomOfPage p {
-    position: fixed;
-    background-image: url("file:///C:/Users/eu/Downloads/undraw_teaching_f1cm.svg");
-    background-color: yellow;
-    /* position: fixed;
-    bottom: 0;
-    background-image: url("file:///C:/Users/eu/Downloads/undraw_teaching_f1cm.svg"); */
 }
 
 .topnav {
@@ -79,7 +55,6 @@ body {
     border-bottom: 0.8px solid #59A2CE;
 }
 
-
 .assignmentInfo>h1 {
     margin-left: 30px;
     background-color: whitesmoke;
@@ -88,11 +63,9 @@ body {
 
 .assignmentInfo>.general {
     margin-left: 20px;
-    /*  padding-left: 0; */
     box-sizing: border-box;
     width: fit-content;
     height: fit-content;
-    /* background-color: rgb(205, 50, 192); */
 }
 
 .assignmentInfo>.extra {
@@ -105,13 +78,10 @@ body {
     /* background-color: rgb(205, 50, 192); */
 }
 
-.submitArea{
+.submitArea {
     width: 100%;
-    height: 300px;
+    height: fit-content;
     display: flex;
-    /* margin-right: auto;
-    margin-left: auto; */
-    /* background-color: purple; */
 }
 
 .submitArea form {
@@ -129,24 +99,23 @@ body {
     margin-bottom: 40px;
 }
 
-textarea, input[type=date], input[type=time]{
+textarea,
+input[type=date],
+input[type=time] {
     padding: 10px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
-    /* width: 60%; */
-    /* height: 80%; */
     border: 2px solid #cccccc;
     resize: none;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.35);
-    outline:none;  
+    outline: none;
     background-color: white;
 }
 
 textarea:focus {
-    outline:none;
+    outline: none;
 }
-
 
 .assignmentButton {
     display: block;
@@ -158,6 +127,7 @@ textarea:focus {
     background-color: #59A2CE;
     color: white;
     outline: none;
+    margin-bottom: 20px;
 }
 
 .assignmentButton:hover {
@@ -171,13 +141,6 @@ textarea:focus {
     background-color: black;
     display: inline-block;
 }
-
-
-/*padding: 5px;
-    font-family: Tahoma, sans-serif;
-    left: auto;
-    right: auto;
-    bottom: 20px; */
 
 @media screen and (max-width: 600px) {
     .topnav a {

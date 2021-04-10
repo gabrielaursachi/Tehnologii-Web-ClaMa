@@ -17,7 +17,7 @@
     padding: 23px 24px;
     text-decoration: none;
     font-size: 18px;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .topnav a:hover {
@@ -41,7 +41,6 @@
     margin-right: auto;
     width: fit-content;
     height: fit-content;
-    background-color: white;
     padding-bottom: 20px;
     margin-right: auto;
     margin-left: auto;
@@ -49,28 +48,29 @@
     box-sizing: border-box;
     box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.35);
     border-radius: 10px;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     padding-left: 20px;
     padding-right: 10px;
 }
 
 .settings_container>label {
     display: block;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 h1 {
     padding: 10px;
     text-align: center;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 body {
     padding: 0;
     margin: 0;
-    background-position-x: 0;
-    background-position-y: 150%;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
     background-image: url("https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/features_overview_jg7a.svg");
 }
 
@@ -81,7 +81,7 @@ body {
 }
 
 .userNames>label {
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
     float: left;
     width: 210px;
 }
@@ -96,6 +96,7 @@ body {
 }
 
 .updateButton {
+    outline: none;
     display: block;
     text-align: center;
     margin-left: auto;
@@ -107,7 +108,7 @@ body {
     background-color: #6aca52;
     color: white;
     padding: 15px 20px;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .updateButton:hover {
@@ -124,7 +125,7 @@ input[type=email] {
     border: none;
     border-radius: 10px;
     background-color: rgba(226, 226, 226, 0.589);
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
     outline: none;
 }
 
@@ -149,7 +150,7 @@ input[type="email"]:focus {
         flex-direction: column;
     }
     .userNames>label>input {
-        width: 90%;
+        width: 85%;
     }
     .h1 {
         padding-right: 20px;

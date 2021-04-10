@@ -64,7 +64,7 @@ body {
     /* padding: 20px; */
 }
 
-.generalInfo p{
+.generalInfo p {
     margin-left: 15px;
 }
 
@@ -125,13 +125,11 @@ p.newsBody {
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
-    border-radius: 50px;
+    border-radius: 10px;
     color: rgb(0, 0, 0);
-    box-shadow: 3px 3px 8px #b8b2b2;
-    background-color: #e5ffe5;
-    background-color: transparent;
+    box-shadow: 0px 7px 7px #b8b2b2;
     cursor: pointer;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
     border: none;
     text-decoration: none;
     margin-bottom: 30px;
@@ -144,22 +142,22 @@ p.newsBody {
 .assignmentTitle {
     text-align: center;
     padding: 15px;
-    background: #ffd57e;
+    background: #94c1f5;
     color: black;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
 }
 
 .assignmentInfo {
     text-align: left;
     padding: 25px;
-    background-color: #fff6e5;
+    background-color: #d9e4f7;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     /* margin-bottom: 40px; */
     text-decoration: none;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
+    /* border: .0625rem solid rgba(145, 140, 140, 0.829); */
 }
 
 .classToolBar {
@@ -251,8 +249,6 @@ p.newsBody {
     background-color: #6aca52;
 }
 
-
-
 label[for="files"],
 input[type="file"] {
     display: inline-block;
@@ -324,7 +320,7 @@ input[type="file"] {
         margin-right: 40px;
         width: 80%;
     }
-    .news textarea{
+    .news textarea {
         width: 75%;
     }
     label[for="files"] {
