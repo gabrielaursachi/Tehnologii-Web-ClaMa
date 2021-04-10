@@ -88,13 +88,6 @@ textarea:focus {
     outline-color: #2588d8;
 }
 
-.icon {
-    position: fixed;
-    top: 10px;
-    right: 0px;
-    cursor: pointer;
-}
-
 .assignmentButton {
     display: block;
     margin: 0;

@@ -2,7 +2,6 @@ body {
     padding: 0;
     margin: 0;
     background-color: whitesmoke;
-    /* background-image: url("file:///C:/Users/eu/Downloads/Pattern-Randomized.svg"); */
     color: rgba(49, 49, 49, 0.829);
     font-family: 'Trebuchet MS', sans-serif;
 }
@@ -259,5 +258,16 @@ body {
         background-image: url('https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/professor_8lrt.svg');
         background-position-x: 50%;
         background-position-y: 27%;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .endOfPage {
+        margin-top: 1%;
+        height: 150px;
+        background-repeat: no-repeat;
+        background-size: 120%;
+        background-position-x: 60%;
+        background-position-y: 31%;
     }
 }
