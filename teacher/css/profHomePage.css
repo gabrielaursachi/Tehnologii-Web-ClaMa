@@ -2,32 +2,14 @@ body {
     padding: 0;
     margin: 0;
     background-color: whitesmoke;
-    /* background-image: url("file:///C:/Users/eu/Downloads/Pattern-Randomized.svg"); */
     background-repeat: repeat-y;
     font-family: Trebuchet MS, sans-serif;
 }
-
-
-/* .classes::after {
-    position: relative;
-    bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    background-image: url('file:///C:/Users/eu/Downloads/undraw_teaching_f1cm.svg');
-    background-size: 500px 500px;
-    width: 500px;
-    height: 290px;
-    bottom: 0;
-    content: "";
-} */
 
 #bottomOfPage p {
     position: fixed;
     background-image: url("file:///C:/Users/eu/Downloads/undraw_teaching_f1cm.svg");
     background-color: yellow;
-    /* position: fixed;
-    bottom: 0;
-    background-image: url("file:///C:/Users/eu/Downloads/undraw_teaching_f1cm.svg"); */
 }
 
 .topnav {
@@ -219,7 +201,6 @@ body {
         height: 150px;
         background-repeat: no-repeat;
         background-size: contain;
-        /* background-image: url('https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/professor_8lrt.svg'); */
     }
     .classes .classRect {
         font-size: 20px;
