@@ -11,14 +11,14 @@
 
 <body>
     <header>
-        <b>Class Manager</b>
+        <b>ClaMA Class Manager</b>
     </header>
 
 
     <section typeof="sa:AuthorsList">
         <h1>Authors</h1>
         <ul>
-            <li typeof="sa:ContributorRole" property="schema:contributor">
+            <li typeof="sa:ContributorRole" property="schema:author">
                 <span typeof="schema:Person" resource="">
                     <meta property="schema:givenName" content="Gabriela">
                     <meta property="schema:familyName" content="Ursachi">
@@ -34,7 +34,7 @@
                 </ul>
 
 
-                <li typeof="sa:ContributorRole" property="schema:contributor">
+                <li typeof="sa:ContributorRole" property="schema:author">
                     <span typeof="schema:Person" resource="">
                         <meta property="schema:givenName" content="Teodor">
                         <meta property="schema:familyName" content="Zet">
@@ -50,7 +50,16 @@
                     </ul>
 
         </ul>
+
+        <div role="contentinfo">
+
+            <h4>Repository proiect</h4>
+            <a href="https://github.com/gabrielaursachi/Tehnologii-Web-ClaMa">Git-hub ClaMA</a>
+
+        </div>
+
     </section>
+
 
     <section id="introducere" role="doc-introduction">
         <h1>Introducere</h1>
@@ -63,7 +72,7 @@
         </p>
     </section>
 
-    <section id="descriereGenerala">
+    <section id="descriereGenerala" property="schema:description">
         <h1>Descriere Generala</h1>
         <h2>Perspectiva produsului</h2>
         <p>
@@ -99,7 +108,7 @@
             Interfata a fost realizata cu ajutorul HTML5 si CSS3, respectiv javascript pentru meniul de navigatie, fiind construita intr-o maniera responsive pentru a permite utlizarea aplicatiei pe orice dispozitiv indiferent de marimea ecranului.
         </p>
     </section>
-    <section id="interfataUtilizatorului">
+    <section id="interfataUtilizatorului" property="schema:description">
         <h1>Interfata utilizatorului</h1>
         <p>In vederea realizarii interfetei unui site cu scop didactic a fost aleasa cu predominanta culoarea albastru. Unele cercetari sugereaza ca persoanele care depun un efort intelectual solicitant sunt mult mai productive intr-un ”mediu albastru”,
             fiind astfel o alegere potrivita pentru situatii de invatare ce pot fi considerate mai mult sau mai putin istovitoare.
@@ -147,7 +156,7 @@
                 a creea totusi un aspect cat mai prietenos, in ceea ce priveste stilizarea paginilor au fost utilizate ilustratii open-source (svg-uri) din cadrul platformei unDraw si platforma freelogodesign pentru realizarea logo-ului site-ului.
             </p>
     </section>
-    <section id="caracteristiciAleAplicatiei">
+    <section id="caracteristiciAleAplicatiei" property="schema:description">
         <h1>Caracteristici ale aplicatiei</h1>
         <h2>Autentificarea/Inregsitrarea</h2>
         <p>
@@ -193,12 +202,54 @@
         </p>
     </section>
 
+
+
+    <section role="doc-bibliography" id="bibliografie">
+        <h1>
+            Bibliografie
+        </h1>
+
+        <h4> Site-ul materiei Tehnologii Web</h4>
+        <span property="schema:notation" typeof="schema:WebPage" resource="https://profs.info.uaic.ro/~busaco/teach/courses/web/">
+            <cite property="schema:name">
+                <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/"> Tehnologii Web</a>
+            </cite>
+
+        </span>
+
+        <h4> Tutoriale</h4>
+        <span property="schema:notation" typeof="schema:WebPage" resource="https://www.w3schools.com">
+            <cite property="schema:name">
+                
+                   
+                        <a href="https://www.w3schools.com/html"> Tutoriale HTML5</a>
+                    </cite>
+                                       
+                    <cite property="schema:name">
+                        <a href="https://www.w3schools.com/css">Tutoriale CSS3</a>
+                   
+               
+            
+            </cite>
+
+        </span>
+
+        <h4> Resurse si ilustratii</h4>
+        <span property="schema:notation" typeof="schema:WebPage" resource="https://www.w3schools.com">
+            <cite property="schema:name">
+                
+                        <a href="https://www.freelogodesign.org/"> Free Logo Design</a>
+                </cite>
+      
+                <cite>
+                        <a href="https://undraw.co/">unDraw</a>
+              
+            </cite>
+
+        </span>
+
+    </section>
+
 </body>
-
-
-
-
-
-
 
 </html>
