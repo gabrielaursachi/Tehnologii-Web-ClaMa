@@ -31,9 +31,8 @@ module.exports = {
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         username: Joi.string().required(),
-        newPassword: Joi.string().required(),
-        newPasswordConfirm: Joi.string().required(),
-        mail: Joi.string().email().required()
+        password: Joi.string().allow(null, ''),
+        email: Joi.string().email().required()
     }),
 
     newsModel: Joi.object().options({ abortEarly: false }).keys({

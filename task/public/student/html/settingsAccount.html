@@ -15,7 +15,7 @@
         <a href="homePage.html">My Classes</a>
         <a href="assignmentsPage.html">Assignments</a>
         <a href="settingsAccount.html" class="active">Settings</a>
-        <a href="loginForm.html">Logout</a>
+        <a href="http://localhost:8888">Logout</a>
 
         <a class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -23,7 +23,8 @@
         <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
     </div>
 
-    <form action="homePage.html" autocomplete="on">
+
+    <form action="http://localhost:8888/api/update" method="POST" autocomplete="on" id="updateForm">
         <div class="settings_container">
 
             <div class="userNames">
@@ -54,12 +55,11 @@
                 <b>New password</b>
                 
             </label>
-            <input type="password" placeholder="new password" name="newPassword" id="newPassword">
+            <input type="password" placeholder="new password" name="newPassword" id="password">
 
 
             <label for="confirmPassword">
                 <b>Confirm password</b>
-                
             </label>
             <input type="password" placeholder="confirm password" name="newPasswordConfirm" id="confirmPassword">
 
@@ -80,6 +80,7 @@
     </form>
 
     <script src="../js/functions.js"></script>
+    <script src="../../common/js/update.js"></script>
 
 </body>
 

@@ -9,9 +9,7 @@ class WebApp {
         this.router = router
     }
 
-    use() {
-
-    }
+    use() {}
 
     listen() {
         var app = this

@@ -1,4 +1,3 @@
-// const { Client } = require('pg');
 const urlModule = require('url');
 class Router {
     constructor() {
@@ -56,7 +55,7 @@ class Router {
                 try {
                     this.getRoutes[url](req, res)
                 } catch (e) {
-                    console.err(e)
+                    console.error(e)
                 }
             }
         }
