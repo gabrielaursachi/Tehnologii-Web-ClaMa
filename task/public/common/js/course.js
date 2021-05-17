@@ -1,21 +1,21 @@
 console.log('@buildUpCourse')
-    // fetch('http://localhost:8888/api/course', {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-type": "application/json; charset=UTF-8"
-    //         }
-    //     })
-    //     .then(response => response.json())
-    //     .then(json => {
-    //         console.log(json)
-    //         if (json.error) {
-    //             console.log(`error encountered`);
-    //             console.log(json.error);
-    //         } else {
-    //             console.log(json)
-    //         }
-    //     })
-    //     .catch(err => { console.log(err) })
+fetch('http://localhost:8888/api/course', {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(response => response.json())
+    .then(json => {
+        console.log(json)
+        if (json.error) {
+            console.log(`error encountered`);
+            console.log(json.error);
+        } else {
+            console.log(json)
+        }
+    })
+    .catch(err => { console.log(err) })
 
 buildUpCourse()
 

@@ -25,8 +25,7 @@ function authenticateUser() {
                 invalidDataError.className += " display"
                 document.getElementById("invalidData").innerHTML = json.error.split('.')[0]
             } else {
-                console.log(`@authenticateUser`)
-                localStorage.setItem('cookie', json.jwt)
+                console.log(`redirecting`)
                 location.href = json.redirect
             }
         })

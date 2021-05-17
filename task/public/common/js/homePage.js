@@ -1,13 +1,11 @@
-handleJWT(localStorage.getItem('cookie'))
+handleJWT()
 
-function handleJWT(jwt) {
-    console.log(jwt)
+function handleJWT() {
     console.log(`redirect@auth`)
     fetch('/api/user', {
             method: "GET",
             headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                "x-access-token": jwt
+                "Content-type": "application/json; charset=UTF-8"
             }
         })
         .then(response => response.json())
@@ -18,19 +16,18 @@ function handleJWT(jwt) {
                 console.log(json.error);
             } else {
                 console.log(json)
-                redirectToHomePage(json, jwt)
+                redirectToHomePage(json)
             }
         })
         .catch(err => { console.log(err) })
 }
 
-function redirectToHomePage(user, jwt) {
+function redirectToHomePage(user) {
     console.log(`redirectToHomePage@auth`)
     fetch('/api/homepage', {
             method: "GET",
             headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                "x-access-token": jwt
+                "Content-type": "application/json; charset=UTF-8"
             }
         })
         .then(response => response.json())
@@ -46,7 +43,7 @@ function redirectToHomePage(user, jwt) {
         .catch(err => { console.log(err) })
 }
 
-function buildUpHomePage(classes, jwt) {
+function buildUpHomePage(classes) {
 
     var parentElement = document.getElementById("myClasses")
     for (var i = 0; i < classes.length; i++) {

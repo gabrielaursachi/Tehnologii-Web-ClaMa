@@ -104,24 +104,25 @@ function checkAuthData(userInfo, res) {
                         })
                         return
                     } else {
-                        var token = jwt.sign({ id: results.rows[0].id }, config.secret, { expiresIn: 86400 })
-
+                        var token = jwt.sign({ id: results.rows[0].id, userType: results.rows[0].type }, config.secret, { expiresIn: 86400 })
                         console.log('@checkAuthData')
                         var redirectTo
                         if (results.rows[0].type === `student`) {
                             redirectTo = `/student/html/homePage.html`
-
                         } else {
                             redirectTo = `/teacher/html/profHomePage.html`
                         }
-
                         res.statusCode = 200;
-                        json.responseJSON(res, {
+                        let date = new Date();
+                        date.setDate(date.getDate() + 1); //cookie expires in a day
+                        res.setHeader('Set-cookie', `myCookie=${token}; HttpOnly; Secure; expires =${date}; Max-Age=; Domain=localhost; Path=/; overwrite=true`)
+                        res.setHeader('Content-Type', 'application/json');
+                        res.write(JSON.stringify({
                             authenticate: true,
                             message: `logged in`,
                             redirect: redirectTo,
-                            jwt: token
-                        })
+                        }))
+                        res.end()
                     }
                 } else {
                     res.statusCode = 300;
@@ -152,7 +153,6 @@ function findUserClassesByUserId(id, res) {
                 })
             }
         })
-
 }
 
 function findCourseInfoById(id, res) {
@@ -256,6 +256,71 @@ function updateUserInfo(userInfo, userID, res) {
     }
 }
 
+function addRequestForClassSignUp(idStudent, idCourse, res) {
+
+    console.log(idStudent)
+    client.query("select * from classes where id = $1", [idCourse],
+        function(err, results) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 300;
+                json.responseJSON(res, {
+                    error: err.message
+                })
+            } else {
+                console.log(results.rows)
+                if (results.rowCount == 0) {
+                    console.log('no class found')
+                    res.statusCode = 300
+                    json.responseJSON(res, {
+                        error: 'Invalid class code'
+                    })
+                    return
+                } else {
+                    //check if user is in already signed up in the class
+                    client.query("select * from user_classes where id_user= $1 and id_class = $2", [idStudent, idCourse],
+                        function(err, results) {
+                            if (err) {
+                                console.log(err)
+                                res.statusCode = 300
+                                json.responseJSON(res, {
+                                    error: err.message
+                                })
+                            } else {
+                                console.log(results.rows)
+                                if (results.rowCount == 1) {
+                                    res.statusCode = 300
+                                    json.responseJSON(res, {
+                                        error: 'You are already signed up to this class'
+                                    })
+                                } else {
+                                    //save to database
+                                    client.query("insert into classes_requests(id_class, id_student) values ($1, $2)", [idCourse, idStudent],
+                                        function(err, results) {
+                                            if (err) {
+                                                console.log(err)
+                                                res.statusCode = 300
+                                                json.responseJSON(res, {
+                                                    error: err.message
+                                                })
+                                            } else {
+                                                res.statusCode = 200
+                                                json.responseJSON(res, {
+                                                    message: `Request registered, wait for teacher's approval`
+                                                })
+                                            }
+                                        })
+                                }
+                            }
+                        })
+                    console.log('available class')
+                }
+
+            }
+        })
+
+}
+
 module.exports = {
     client,
     checkIfUserExists,
@@ -267,5 +332,6 @@ module.exports = {
     findCourseInfoById,
     checkIfUsernameExists,
     checkIfEmailExists,
-    updateUserInfo
+    updateUserInfo,
+    addRequestForClassSignUp
 }

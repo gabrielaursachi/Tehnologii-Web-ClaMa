@@ -15,7 +15,7 @@
         <a href="#myclasses" class="active">My Classes</a>
         <a href="assignmentsPage.html">Assignments</a>
         <a href="settingsAccount.html">Settings</a>
-        <a href="../html/loginForm.html">Logout</a>
+        <a id="logoutButton">Logout</a>
 
         <a class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -28,7 +28,7 @@
             <p class="titleJoinBar"><b>Join a new class</b></p>
             <p>
                 Enter class code:
-                <input type="text" name="classCode">
+                <input type="text" name="classCode" id="enterNewClass">
             </p>
     </div>
 
@@ -52,6 +52,8 @@
 
     <script src="../js/functions.js"></script>
     <script type="module" src="../../common/js/homePage.js"></script>
+    <script src="../../common/js/logout.js"></script>
+    <script src="../../common/js/enterNewClass.js"></script>
 </body>
 
 </html>

@@ -6,6 +6,7 @@ const { StatusCodes } = require('http-status-codes')
 const json = require(`../utils/handleJson`)
 const jwt = require('jsonwebtoken');
 var config = require(`../utils/config`)
+var parseCookies = require(`../utils/cookieParser`)
 
 function register(req, res) {
     console.log(`register@controllerIndex`)
@@ -68,15 +69,15 @@ function authenticate(req, res) {
 }
 
 function identifyUser(req, res) {
-
     console.log(`identifyUser@ControllerIndex`)
-    var token = req.headers['x-access-token'];
-    if (!token) {
+    var request = parseCookies.parseCookies(req) // cookie value is in request.myCookie
+    console.log(request.myCookie)
+    if (!request.myCookie) {
         res.statusCode = 401
         json.responseJSON(res, { authenticate: false, message: 'No token provided.' })
         return
     }
-    jwt.verify(token, config.secret, function(err, decoded) {
+    jwt.verify(request.myCookie, config.secret, function(err, decoded) {
         if (err) {
             res.statusCode = 500;
             json.responseJSON({
@@ -90,11 +91,9 @@ function identifyUser(req, res) {
 }
 
 function homepage(req, res) {
-    // identifyUser(req, res)
-    // console.log(req)
-    var token = req.headers['x-access-token'];
-    console.log(token)
-    jwt.verify(token, config.secret, (err, data) => {
+    var token = parseCookies.parseCookies(req);
+    console.log(`login token from cookie ${JSON.stringify(token.myCookie)}`)
+    jwt.verify(token.myCookie, config.secret, (err, data) => {
         if (err) {
             res.statusCode = 403
             json.responseJSON(res, {
@@ -111,20 +110,21 @@ function homepage(req, res) {
                     console.log(err.message)
                     return
                 } else {
-                    // conn.findUserClassesByUserId(user.rows[0].id, res);
-                    if (user.rows[0].type === `student`) {
-                        conn.findUserClassesByUserId(user.rows[0].id, res);
-                        // query to select classes of user and return as json to front => interpret there
-                        // get request => /api/classes => query to return classes =>
-                        // => send to front => front makes another get request to fill html
+                    conn.findUserClassesByUserId(user.rows[0].id, res);
+                    // if (user.rows[0].type === `student`) {
+                    //     conn.findUserClassesByUserId(user.rows[0].id, res);
+                    //     // query to select classes of user and return as json to front => interpret there
+                    //     // get request => /api/classes => query to return classes =>
+                    //     // => send to front => front makes another get request to fill html
 
-                    } else {
-                        // conn.findUserClassesByUserId(user.rows[0].id, res);
-                        res.StatusCode = 200
-                        json.responseJSON(res, {
-                            redirect: `/teacher/html/profHomePage.html`
-                        })
-                    }
+                    // } else {
+                    //     // conn.findUserClassesByUserId(user.rows[0].id, res);
+                    //     // conn.findUserClassesByUserId(user.rows[0].id, res);
+                    //     res.StatusCode = 200
+                    //     json.responseJSON(res, {
+                    //         redirect: `/teacher/html/profHomePage.html`
+                    //     })
+                    // }
                 }
             })
         }
@@ -139,7 +139,9 @@ function courseInfo(req, res) {
 function settingsAccount(req, res) {
 
     var userID
-    jwt.verify(req.headers['x-access-token'], config.secret, (err, data) => {
+
+    var request = parseCookies.parseCookies(req)
+    jwt.verify(request.myCookie, config.secret, (err, data) => {
         if (err) {
             res.statusCode = 403
             json.responseJSON(res, {
@@ -216,11 +218,61 @@ function settingsAccount(req, res) {
     })
 }
 
+function logout(req, res) {
+    res.statusCode = 200;
+    let date = new Date();
+    // date.setDate(date.getDate() + 1); //cookie expires in a day
+    res.setHeader('Set-cookie', `myCookie=0; HttpOnly; Secure; expires = Mon May 17 2000 19:46:22 GMT; Max-Age=; Domain=localhost; Path=/; overwrite=true`)
+    res.setHeader('Content-Type', 'application/json');
+    res.write(JSON.stringify({
+        authenticate: false,
+        message: `logged in`,
+        redirect: '/',
+    }))
+    res.end()
+}
+
+
+function enterNewClass(req, res) {
+    console.log('enter new class function ')
+    json.requestJSON(req, res, function(recievedJSON) {
+        console.log(typeof recievedJSON.class)
+        if (isNaN(`${recievedJSON.class}` + 1)) {
+            console.log("data is not an integer")
+
+            res.statusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, {
+                error: 'Invalid class code'
+            })
+            return
+        } else {
+            //add to database
+            var token = parseCookies.parseCookies(req);
+            console.log(token.myCookie)
+            jwt.verify(token.myCookie, config.secret, (err, decoded) => {
+                if (err) {
+                    res.statusCode = 403
+                    json.responseJSON(res, {
+                        error: err.message
+                    })
+                } else {
+                    conn.addRequestForClassSignUp(decoded.id, recievedJSON.class, res)
+                }
+            })
+
+        }
+    })
+
+}
+
+
 module.exports = {
     register,
     authenticate,
     identifyUser,
     homepage,
     courseInfo,
-    settingsAccount
+    settingsAccount,
+    logout,
+    enterNewClass
 }

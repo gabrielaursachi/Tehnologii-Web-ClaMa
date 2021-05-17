@@ -36,7 +36,6 @@ function registerUser() {
                 var invalidDataError = document.getElementById('invalidData')
                 invalidDataError.className += " display"
                 document.getElementById("invalidData").innerHTML = json.error.split('.')[0]
-
             } else {
                 location.href = `http://localhost:8888`
             }

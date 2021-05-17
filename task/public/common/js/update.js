@@ -4,8 +4,7 @@ function getAccountInfo() {
     fetch('/api/user', {
             method: "GET",
             headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                "x-access-token": localStorage.getItem('cookie')
+                "Content-type": "application/json; charset=UTF-8"
             }
         })
         .then(response => response.json())
@@ -52,15 +51,14 @@ function updateUser() {
             method: "POST",
             body: JSON.stringify(updatedAccount),
             headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                "x-access-token": localStorage.getItem('cookie')
+                "Content-type": "application/json; charset=UTF-8"
             }
         })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
-                /////////////////////////////////////////////TREATEAZA ERORI => email invalid, username..
+                /////////////////////////////////////////////TREATEAZA ERORI => email invalid, username.. arata le in pagina utilizatorului
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {
