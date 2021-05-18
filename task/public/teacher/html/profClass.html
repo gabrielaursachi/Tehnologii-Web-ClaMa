@@ -14,19 +14,18 @@
     <div class="topnav" id="myTopnav">
         <a href="profHomePage.html" class="active">My Classes</a>
         <a href="settingsAccount.html">Settings</a>
-        <a href="loginForm.html">Logout</a>
+        <a id="logoutButton">Logout</a>
 
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
-            width="130" height="65">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
 
     </div>
 
     <div class="header" id="myHeader">
         <!-- upper border -->
-        <b>Web Technologies</b>
+        <b id="courseTitle"></b>
     </div>
 
 
@@ -34,16 +33,13 @@
 
         <p class="predefined"><b>Your class informations</b></p>
 
-        <p class="predefined">Other platforms: <span class="customInfo">Zoom, Discord, links to other platforms that are
-                going to be used</span></p>
+        <p class="predefined">Other platforms: <span class="customInfo" id="platforms"></span></p>
 
-        <p class="predefined">Schedule: <span class="customInfo">
-                Wednesday, 10:00 - 12:00 &nbsp; </span></p>
+        <p class="predefined">Schedule: <span class="customInfo" id="schedule"> </span></p>
 
-        <p class="predefined">Class ID: <span class="customInfo">
-                03QJDDS &nbsp; </span></p>
+        <p class="predefined">Class ID: <span class="customInfo" id="classId"> </span></p>
 
-        <p class="predefined">Number of components: <span class="customInfo">4</span></p>
+        <!-- <p class="predefined">Number of components: <span class="customInfo">4</span></p> -->
 
     </div>
 
@@ -68,7 +64,7 @@
             </button>
         </form>
 
-        <form >
+        <form>
             <button type="submit" class="classButton">
                 Start Class
             </button>
@@ -88,11 +84,9 @@
 
             <form action="profClass.html">
 
-                <textarea class="newsTitle" id="newsTitle" name="newsTitle" rows="1" cols="30"
-                    placeholder="Enter your news title..."></textarea>
+                <textarea class="newsTitle" id="newsTitle" name="newsTitle" rows="1" cols="30" placeholder="Enter your news title..."></textarea>
 
-                <textarea class="newsBodyInput" id="newsBodyInput" name="newsBodyInput" rows="8" cols="60"
-                    placeholder="Enter your news description..."></textarea>
+                <textarea class="newsBodyInput" id="newsBodyInput" name="newsBodyInput" rows="8" cols="60" placeholder="Enter your news description..."></textarea>
 
                 <br>
 
@@ -142,6 +136,8 @@
     </div>
 
     <script src="../js/functions.js"></script>
+    <script src="../../common/js/profCourse.js"></script>
+    <script src="../../common/js/logout.js"></script>
 </body>
 
 </html>

@@ -14,7 +14,7 @@
     <div class="topnav" id="myTopnav">
         <a href="profHomePage.html" class="active">My Classes</a>
         <a href="settingsAccount.html">Settings</a>
-        <a href="loginForm.html">Logout</a>
+        <a id="logoutButton">Logout</a>
 
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -31,7 +31,8 @@
                 <div class="classSeparator"></div>
             </div>
             <div class="bottomOfRect">
-                <form action="profHomePage.html">
+                <!-- http://localhost:8888/api/create-class -->
+                <form action="http://localhost:8888/api/create-class" method="POST" autocomplete="off" id="newClassForm">
                     <p>
                         <label for="className"><b>Class name:</b></label>
                         <input type="text" name="className" id="className" required placeholder="Class title">
@@ -58,7 +59,7 @@
                     </p>
                     <p>
                         <label for="classLink"><b>Class link:</b></label>
-                        <input type="text" name="classLink" id="classLink" placeholder="Link to your class website">
+                        <input type="text" name="classLink" id="classLink" placeholder="Link to your class website" required>
                     </p>
                     <p>
                         <label for="classComponents"><b>Number of components:</b></label>
@@ -72,11 +73,11 @@
                     </p>
                     <p>
                         <label for="classFormula"><b>Final grade formula:</b></label>
-                        <input type="text" name="classFormula" id="classFormula" placeholder="Ex: (C1+C2+C3)/3">
+                        <input type="text" name="classFormula" id="classFormula" placeholder="Ex: (C1+C2+C3)/3" required>
                     </p>
                     <p>
                         <label for="classOtherPlatforms"><b>Other platforms:</b></label>
-                        <input type="text" name="classOtherPlatforms" id="classOtherPlatforms" placeholder="Ex: Zoom">
+                        <input type="text" name="classOtherPlatforms" id="classOtherPlatforms" placeholder="Ex: Zoom" required>
                     </p>
                     <button type="submit" class="submitClass">
                         Create new class
@@ -88,6 +89,8 @@
 
 
     <script src="../js/functions.js"></script>
+    <script src="../../common/js/logout.js"></script>
+    <script src="../../common/js/createNewClass.js"></script>
 </body>
 
 </html>

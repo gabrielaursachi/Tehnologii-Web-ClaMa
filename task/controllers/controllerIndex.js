@@ -133,13 +133,34 @@ function homepage(req, res) {
 }
 
 function courseInfo(req, res) {
-    conn.findCourseInfoById(1, res)
+    console.log(req.parameters.class)
+    conn.findCourseInfoById(req.parameters.class, res)
+}
+
+function getStudentGrades(req, res) {
+    console.log(`getStudentGrades@controllerIndex`)
+        // console.log(req.parameters.class)
+    var request = parseCookies.parseCookies(req)
+    if (!request.myCookie) {
+        res.statusCode = 401
+        json.responseJSON(res, { authenticate: false, message: 'No token provided.' })
+        return
+    }
+    jwt.verify(request.myCookie, config.secret, function(err, decoded) {
+        if (err) {
+            res.statusCode = 500;
+            json.responseJSON({
+                authenticate: false,
+                message: 'Failed to authenticate token.'
+            })
+        }
+        conn.getStudentGradesById(decoded.id, req.parameters.class, res)
+    });
 }
 
 function settingsAccount(req, res) {
 
     var userID
-
     var request = parseCookies.parseCookies(req)
     jwt.verify(request.myCookie, config.secret, (err, data) => {
         if (err) {
@@ -186,7 +207,6 @@ function settingsAccount(req, res) {
                             return
                         }
                     }
-
                     conn.checkIfEmailExists(recievedJSON, function(err, data) {
                         if (err) {
                             res.statusCode = StatusCodes.BAD_REQUEST
@@ -232,14 +252,12 @@ function logout(req, res) {
     res.end()
 }
 
-
 function enterNewClass(req, res) {
     console.log('enter new class function ')
     json.requestJSON(req, res, function(recievedJSON) {
         console.log(typeof recievedJSON.class)
         if (isNaN(`${recievedJSON.class}` + 1)) {
             console.log("data is not an integer")
-
             res.statusCode = StatusCodes.BAD_REQUEST
             json.responseJSON(res, {
                 error: 'Invalid class code'
@@ -259,11 +277,55 @@ function enterNewClass(req, res) {
                     conn.addRequestForClassSignUp(decoded.id, recievedJSON.class, res)
                 }
             })
-
         }
     })
-
 }
+
+//////////////////////////////////////////////////THIS IS NOT DONE YET
+function getClassAssignments(req, res) {
+
+    var request = parseCookies.parseCookies(req) // cookie value is in request.myCookie
+    console.log(request.myCookie)
+    if (!request.myCookie) {
+        res.statusCode = 401
+        json.responseJSON(res, { authenticate: false, message: 'No token provided.' })
+        return
+    }
+    jwt.verify(request.myCookie, config.secret, function(err, decoded) {
+        if (err) {
+            res.statusCode = 500;
+            json.responseJSON({
+                authenticate: false,
+                message: 'Failed to authenticate token.'
+            })
+        }
+        conn.getClassAssignments(decoded.id, req.parameters.class, res)
+    });
+}
+
+
+////////////////////////////////formula...........
+function createNewClass(req, res) {
+    json.requestJSON(req, res, function(recievedJSON) {
+        console.log(recievedJSON)
+        const { error, newClass } = schemas.classModel.validate(recievedJSON)
+        if (error) {
+            res.statusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, {
+                error: error.message
+            })
+            return
+        } else {
+            console.log('data is fine')
+            console.log(`@create new class`)
+            res.StatusCode = 200
+            json.responseJSON(res, {
+                ok: "ok"
+            })
+        }
+    })
+}
+
 
 
 module.exports = {
@@ -274,5 +336,9 @@ module.exports = {
     courseInfo,
     settingsAccount,
     logout,
-    enterNewClass
+    enterNewClass,
+    getStudentGrades,
+    getClassAssignments,
+    createNewClass
+
 }

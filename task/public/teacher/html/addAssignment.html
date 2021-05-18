@@ -14,13 +14,12 @@
     <div class="topnav" id="myTopnav">
         <a href="../html/profHomePage.html" class="active">My Classes</a>
         <a href="../html/settingsAccount.html">Settings</a>
-        <a href="../html/loginForm.html">Logout</a>
+        <a id="logoutButton">Logout</a>
 
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
-            width="130" height="65">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
 
     </div>
 
@@ -36,8 +35,7 @@
                 <b>Add new assignment</b>
             </p>
 
-            <textarea id="assignmentName" name="assignmentName" rows="1" cols="60"
-                placeholder="Enter the assignment title..." required></textarea>
+            <textarea id="assignmentName" name="assignmentName" rows="1" cols="60" placeholder="Enter the assignment title..." required></textarea>
 
             <label for="assignmentDeadlineDate"><b>Select the date of the deadline:</b></label>
             <input type="date" id="assignmentDeadlineDate" name="assignmentDeadlineDate" required>
@@ -46,14 +44,12 @@
             <br>
 
             <label for="assignmentDeadlineHour"><b>Select the hour of the deadline:</b></label>
-            <input type="time" name="assignmentDeadlineHour" id="assignmentDeadlineHour" min="00:00" max="23:59"
-                required>
+            <input type="time" name="assignmentDeadlineHour" id="assignmentDeadlineHour" min="00:00" max="23:59" required>
 
             <br>
             <br>
 
-            <textarea id="assignmentDescription" name="assignmentDescription" rows="8" cols="60"
-                placeholder="Enter the assignment description..." required></textarea>
+            <textarea id="assignmentDescription" name="assignmentDescription" rows="8" cols="60" placeholder="Enter the assignment description..." required></textarea>
 
 
             <label for="files">Upload your files:</label>
@@ -69,6 +65,7 @@
     <div class="endOfPage"></div>
 
     <script src="../js/functions.js"></script>
+    <script src="../../common/js/logout.js"></script>
 </body>
 
 </html>

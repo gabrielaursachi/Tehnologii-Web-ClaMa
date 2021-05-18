@@ -181,7 +181,6 @@ function findCourseInfoById(id, res) {
     ////////TO DO : grades component => another query
 }
 
-
 function checkIfUsernameExists(user, callback) {
     console.log(`@checkIfUsernameExists function`)
     console.log(user)
@@ -257,7 +256,6 @@ function updateUserInfo(userInfo, userID, res) {
 }
 
 function addRequestForClassSignUp(idStudent, idCourse, res) {
-
     console.log(idStudent)
     client.query("select * from classes where id = $1", [idCourse],
         function(err, results) {
@@ -321,6 +319,37 @@ function addRequestForClassSignUp(idStudent, idCourse, res) {
 
 }
 
+
+function getStudentGradesById(idStudent, idCourse, res) {
+    console.log('getStudentGradesById@database')
+    console.log(idStudent)
+    client.query("select * from classes_catalog where id_class = $1 and id_student = $2", [idCourse, idStudent],
+        function(err, results) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 300;
+                json.responseJSON(res, {
+                    error: err.message
+                })
+            } else {
+                res.statusCode = 200;
+                json.responseJSON(res, {
+                    c1: results.rows[0].c1,
+                    c2: results.rows[0].c2,
+                    c3: results.rows[0].c3,
+                    c4: results.rows[0].c4,
+                    c5: results.rows[0].c5,
+                    bonus: results.rows[0].bonus
+                })
+            }
+        })
+}
+
+///////////////using this to retrieve a course assignments => also need to mark each assignment as done or todo
+function getClassAssignments(idStudent, idClass, res) {
+    console.log(`this is not done yet`)
+}
+
 module.exports = {
     client,
     checkIfUserExists,
@@ -333,5 +362,7 @@ module.exports = {
     checkIfUsernameExists,
     checkIfEmailExists,
     updateUserInfo,
-    addRequestForClassSignUp
+    addRequestForClassSignUp,
+    getStudentGradesById,
+    getClassAssignments
 }

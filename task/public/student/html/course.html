@@ -15,7 +15,7 @@
         <a href="homePage.html" class="active">My Classes</a>
         <a href="assignmentsPage.html">Assignments</a>
         <a href="settingsAccount.html">Settings</a>
-        <a href="loginForm.html">Logout</a>
+        <a id="logoutButton">Logout</a>
 
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -25,18 +25,19 @@
 
     <div class="header" id="myHeader">
         <!-- upper border -->
-        <b>Web Technologies</b>
+        <b id="courseTitle"> </b>
     </div>
 
 
     <div class="generalInfo" id="general">
 
-        <p class="predefined">Teacher: <span class="customInfo" id="teacher"> Cosmin Varlan</span></p>
+        <p class="predefined">Teacher: <span class="customInfo" id="teacher">  Varlan</span></p>
 
-        <p class="predefined">Other platforms: <span class="customInfo" id="platforms">Zoom, Discord, links to other platforms that are going to be used</span></p>
+        <p class="predefined">Other platforms: <span class="customInfo" id="platforms"></span></p>
 
         <p class="predefined">Schedule: <span class="customInfo" id="schedule">
-            Wednesday, 10:00 - 12:00 &nbsp; - &nbsp; mark as present &nbsp; <input type="text" placeholder="enter code" name="classCode"> </span></p>
+            <!-- Wednesday, 10:00 - 12:00 &nbsp; - &nbsp; mark as present &nbsp; <input type="text" placeholder="enter code" name="classCode"> </span> -->
+        </p>
 
         <p class="predefined">Grades: <span class="customInfo" id="grades">grade (the component you were graded for) </span></p>
 
@@ -44,19 +45,15 @@
 
 
     <div class="news" id="newPost">
-
         <h1>
             News title
         </h1>
-
         <p class="newsBody">
             news body
         </p>
-
     </div>
 
     <div class="assignments" id="myAssignments">
-
         <a href="assignment.html" class="assignment_container">
             <div class="assignmentTitle" id="assignmentTitle">
 
@@ -68,13 +65,12 @@
                 <p>Posted at : 27 March 2021, 16:20:14 </p>
                 <p>Deadline : 13 April 2021, 23:59:59 </p>
             </div>
-
         </a>
-
     </div>
 
     <script src="../js/functions.js"></script>
     <script src="../../common/js/course.js"></script>
+    <script src="../../common/js/logout.js"></script>
 
 </body>
 

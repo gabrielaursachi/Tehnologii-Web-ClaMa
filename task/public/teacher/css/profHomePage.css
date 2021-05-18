@@ -3,7 +3,7 @@ body {
     margin: 0;
     background-color: whitesmoke;
     background-repeat: repeat-y;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 #bottomOfPage p {
@@ -32,7 +32,7 @@ body {
     padding: 23px 24px;
     text-decoration: none;
     font-size: 18px;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .topnav a:hover {
@@ -79,7 +79,7 @@ body {
     margin-left: 20px;
     margin-top: 15px;
     background-color: whitesmoke;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
     font-size: 18px;
     font-weight: 500;
     letter-spacing: .25px;
@@ -146,7 +146,7 @@ body {
 
 .topOfRect {
     background: #59A2CE;
-    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .classRect p {

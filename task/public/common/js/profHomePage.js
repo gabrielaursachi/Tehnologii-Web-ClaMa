@@ -53,7 +53,7 @@ function buildUpHomePage(classes) {
 
         var childElement = document.createElement('a')
         childElement.className = "classRect"
-        childElement.href = "http://localhost:8888/student/html/course.html"
+        childElement.href = "http://localhost:8888/teacher/html/profClass.html"
         childElement.classID = classes[i].id
 
         let topOfRect = document.createElement('div')

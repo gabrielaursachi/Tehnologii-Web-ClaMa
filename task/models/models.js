@@ -18,7 +18,7 @@ module.exports = {
 
     classModel: Joi.object().options({ abortEarly: false }).keys({
         className: Joi.string().required(),
-        classDate: Joi.date().required(),
+        classDate: Joi.string().required(),
         classHourStart: Joi.string().regex(/^([0-9]{2})\:([0-9]{2})$/).required(),
         classHourEnd: Joi.string().regex(/^([0-9]{2})\:([0-9]{2})$/).required(),
         classLink: Joi.string().required(),

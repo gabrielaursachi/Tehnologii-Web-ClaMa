@@ -15,7 +15,7 @@
         <a href="homePage.html">My Classes</a>
         <a href="assignmentsPage.html">Assignments</a>
         <a href="settingsAccount.html" class="active">Settings</a>
-        <a href="http://localhost:8888">Logout</a>
+        <a id="logoutButton">Logout</a>
 
         <a class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -32,55 +32,39 @@
                     Your Account
                 </h1>
 
-                <label for="firstName">
-                <b> First name</b>
+                <label for="firstName">  <b> First name</b>
                 <input type="text" placeholder="first name" name="firstName" id="firstName">
-            </label>
+               </label>
 
 
-                <label for="lastName">
-                <b>Last name</b>
-                 <input type="text" placeholder="last name" name="lastName" id="lastName">
-            </label>
+                <label for="lastName"><b>Last name</b>
+                <input type="text" placeholder="last name" name="lastName" id="lastName">
+                </label>
 
             </div>
 
-            <label for="username">
-                <b>Username</b>
-              
-            </label>
+            <label for="username"> <b>Username</b>  </label>
             <input type="text" placeholder="username" name="username" id="username">
 
-            <label for="newPassword">
-                <b>New password</b>
-                
-            </label>
+            <label for="newPassword"> <b>New password</b> </label>
             <input type="password" placeholder="new password" name="newPassword" id="password">
 
 
-            <label for="confirmPassword">
-                <b>Confirm password</b>
-            </label>
+            <label for="confirmPassword"> <b>Confirm password</b> </label>
             <input type="password" placeholder="confirm password" name="newPasswordConfirm" id="confirmPassword">
 
-
-
-            <label for="email">
-                <b>Email</b>
-                
-            </label>
+            <label for="email"> <b>Email</b> </label>
             <input type="text" placeholder="email" name="mail" id="email">
 
-
-
             <button type="submit" class="updateButton" onclick="checkPassword()">Update Account</button>
-
         </div>
 
     </form>
 
     <script src="../js/functions.js"></script>
+    <script src="../../common/js/logout.js"></script>
     <script src="../../common/js/update.js"></script>
+
 
 </body>
 

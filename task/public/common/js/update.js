@@ -24,8 +24,8 @@ function getAccountInfo() {
 
 function fillForm(user) {
     // console.log(user.id)
-    document.getElementById(`firstName`).value = user.name
-    document.getElementById(`lastName`).value = user.surname
+    document.getElementById(`firstName`).value = user.surname
+    document.getElementById(`lastName`).value = user.name
     document.getElementById(`username`).value = user.username
         // document.getElementById(`password`).value = 'password'
     document.getElementById(`email`).value = user.email
@@ -65,7 +65,7 @@ function updateUser() {
 
                 console.log(`update done`)
                 console.log(json)
-                    // location.href = `http://localhost:8888/student/html/settingsAccount.html`
+
             }
         })
         .catch(err => { console.log(err) })
