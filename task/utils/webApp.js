@@ -1,8 +1,14 @@
 const http = require('http')
+var parseCookies = require(`../utils/cookieParser`)
 const { port } = require('../utils/port')
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
+const { StatusCodes } = require('http-status-codes');
+const json = require(`../utils/handleJson`)
+const jwt = require('jsonwebtoken');
+var config = require(`../utils/config`)
+
 class WebApp {
     constructor(port, router) {
         this.port = port
@@ -15,6 +21,31 @@ class WebApp {
         var app = this
         var server = http.createServer(function(req, res) {
             if (req.url.startsWith("/api")) {
+                if (!req.url.startsWith("/api/auth") && !req.url.startsWith("/api/register")) {
+                    console.log(`${req.method} ${req.url} auth required`);
+                    var token = parseCookies.parseCookies(req);
+                    if (!token) {
+                        res.statusCode = StatusCodes.UNAUTHORIZED
+                        console.log(`no cookie`)
+                        json.responseJSON(res, {
+                            error: `no auth`
+                        })
+                        return
+                    } else {
+                        try {
+                            jwt.verify(token.myCookie, config.secret)
+                        } catch (error) {
+                            console.log(`cannot decode cookie. error:`)
+                            console.log(error)
+                            json.responseJSON(res, {
+                                error: `no auth`
+                            })
+                            return
+                        }
+                    }
+                    console.log(`auth ok`)
+                }
+
                 console.log(`${req.method} ${req.url}`);
                 app.router.route(req, res)
             } else {
@@ -31,7 +62,7 @@ class WebApp {
                 // based on the URL path, extract the file extention. e.g. .js, .doc, ...
                 const ext = path.parse(pathname).ext;
 
-                console.log(pathname)
+                console.log(`STATIC HANDLE` + pathname)
                     // maps file extention to MIME typere
                 const map = {
                     '.ico': 'image/x-icon',

@@ -30,6 +30,7 @@ function buildUpCourse(classInfo, classId) {
     console.log(classInfo)
 
     document.getElementById("courseTitle").innerHTML = classInfo.title
+    document.getElementById("teacherSite").innerHTML = classInfo.teacher_site
     document.getElementById("platforms").innerHTML = classInfo.other_platforms
     document.getElementById("schedule").innerHTML = classInfo.schedule
     document.getElementById("classId").innerHTML = classId

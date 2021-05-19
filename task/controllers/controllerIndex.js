@@ -7,6 +7,20 @@ const json = require(`../utils/handleJson`)
 const jwt = require('jsonwebtoken');
 var config = require(`../utils/config`)
 var parseCookies = require(`../utils/cookieParser`)
+var math = require('mathjs')
+
+function decryptToken(req) {
+    var token = parseCookies.parseCookies(req);
+    var data;
+    try {
+        data = jwt.verify(token.myCookie, config.secret)
+        console.log(`decoded token: ${JSON.stringify(data)}`)
+    } catch (error) {
+        console.log(`no token provied. data: ${JSON.stringify(data)}`)
+        return undefined
+    }
+    return data
+}
 
 function register(req, res) {
     console.log(`register@controllerIndex`)
@@ -70,110 +84,57 @@ function authenticate(req, res) {
 
 function identifyUser(req, res) {
     console.log(`identifyUser@ControllerIndex`)
-    var request = parseCookies.parseCookies(req) // cookie value is in request.myCookie
-    console.log(request.myCookie)
-    if (!request.myCookie) {
-        res.statusCode = 401
-        json.responseJSON(res, { authenticate: false, message: 'No token provided.' })
-        return
-    }
-    jwt.verify(request.myCookie, config.secret, function(err, decoded) {
-        if (err) {
-            res.statusCode = 500;
-            json.responseJSON({
-                authenticate: false,
-                message: 'Failed to authenticate token.'
-            })
-        }
-        conn.returnUserById(decoded.id, res)
-    });
-
+    let data = decryptToken(req)
+    conn.returnUserById(data.id, res)
 }
 
 function homepage(req, res) {
-    var token = parseCookies.parseCookies(req);
-    console.log(`login token from cookie ${JSON.stringify(token.myCookie)}`)
-    jwt.verify(token.myCookie, config.secret, (err, data) => {
+    let data = decryptToken(req);
+    console.log(data.id)
+    conn.findUserById(data.id, function(err, user) {
         if (err) {
-            res.statusCode = 403
+            res.statusCode = StatusCodes.BAD_REQUEST
             json.responseJSON(res, {
                 error: err.message
             })
+            console.log(err.message)
+            return
         } else {
-            console.log(data.id)
-            conn.findUserById(data.id, function(err, user) {
-                if (err) {
-                    res.statusCode = StatusCodes.BAD_REQUEST
-                    json.responseJSON(res, {
-                        error: err.message
-                    })
-                    console.log(err.message)
-                    return
-                } else {
-                    conn.findUserClassesByUserId(user.rows[0].id, res);
-                    // if (user.rows[0].type === `student`) {
-                    //     conn.findUserClassesByUserId(user.rows[0].id, res);
-                    //     // query to select classes of user and return as json to front => interpret there
-                    //     // get request => /api/classes => query to return classes =>
-                    //     // => send to front => front makes another get request to fill html
+            conn.findUserClassesByUserId(user.rows[0].id, res);
+            // if (user.rows[0].type === `student`) {
+            //     conn.findUserClassesByUserId(user.rows[0].id, res);
+            //     // query to select classes of user and return as json to front => interpret there
+            //     // get request => /api/classes => query to return classes =>
+            //     // => send to front => front makes another get request to fill html
 
-                    // } else {
-                    //     // conn.findUserClassesByUserId(user.rows[0].id, res);
-                    //     // conn.findUserClassesByUserId(user.rows[0].id, res);
-                    //     res.StatusCode = 200
-                    //     json.responseJSON(res, {
-                    //         redirect: `/teacher/html/profHomePage.html`
-                    //     })
-                    // }
-                }
-            })
+            // } else {
+            //     // conn.findUserClassesByUserId(user.rows[0].id, res);
+            //     // conn.findUserClassesByUserId(user.rows[0].id, res);
+            //     res.StatusCode = 200
+            //     json.responseJSON(res, {
+            //         redirect: `/teacher/html/profHomePage.html`
+            //     })
+            // }
         }
     })
+
     console.log(`homepage`)
 }
 
 function courseInfo(req, res) {
     console.log(req.parameters.class)
+    decryptToken(req);
     conn.findCourseInfoById(req.parameters.class, res)
 }
 
 function getStudentGrades(req, res) {
-    console.log(`getStudentGrades@controllerIndex`)
-        // console.log(req.parameters.class)
-    var request = parseCookies.parseCookies(req)
-    if (!request.myCookie) {
-        res.statusCode = 401
-        json.responseJSON(res, { authenticate: false, message: 'No token provided.' })
-        return
-    }
-    jwt.verify(request.myCookie, config.secret, function(err, decoded) {
-        if (err) {
-            res.statusCode = 500;
-            json.responseJSON({
-                authenticate: false,
-                message: 'Failed to authenticate token.'
-            })
-        }
-        conn.getStudentGradesById(decoded.id, req.parameters.class, res)
-    });
+    let data = decryptToken(req);
+    conn.getStudentGradesById(data.id, req.parameters.class, res)
 }
 
 function settingsAccount(req, res) {
 
-    var userID
-    var request = parseCookies.parseCookies(req)
-    jwt.verify(request.myCookie, config.secret, (err, data) => {
-        if (err) {
-            res.statusCode = 403
-            json.responseJSON(res, {
-                error: err.message
-            })
-        } else {
-            userID = (data.id)
-        }
-    })
-
-    console.log('@updateAccount')
+    let dataUser = decryptToken(req);
     json.requestJSON(req, res, function(recievedJSON) {
         const { error, account } = schemas.updateAccountModel.validate(recievedJSON)
         if (error) {
@@ -197,7 +158,7 @@ function settingsAccount(req, res) {
                 } else {
                     console.log("result from db is : ", data.rowCount);
                     if (data.rowCount == 1) {
-                        if (data.rows[0].id != userID) {
+                        if (data.rows[0].id != dataUser.id) {
                             console.log('Unavailable username')
                             res.statusCode = 300;
                             json.responseJSON(res, {
@@ -218,7 +179,7 @@ function settingsAccount(req, res) {
                         } else {
                             console.log("result from db is : ", data.rowCount);
                             if (data.rowCount == 1) {
-                                if (data.rows[0].id != userID) {
+                                if (data.rows[0].id != dataUser.id) {
                                     console.log('Unavailable mail')
                                     res.statusCode = 300;
                                     json.responseJSON(res, {
@@ -228,7 +189,7 @@ function settingsAccount(req, res) {
                                     return
                                 }
                             }
-                            conn.updateUserInfo(recievedJSON, userID, res)
+                            conn.updateUserInfo(recievedJSON, dataUser.id, res)
                         }
                     });
                 }
@@ -253,6 +214,8 @@ function logout(req, res) {
 }
 
 function enterNewClass(req, res) {
+
+    dataUser = decryptToken(req)
     console.log('enter new class function ')
     json.requestJSON(req, res, function(recievedJSON) {
         console.log(typeof recievedJSON.class)
@@ -265,47 +228,74 @@ function enterNewClass(req, res) {
             return
         } else {
             //add to database
-            var token = parseCookies.parseCookies(req);
-            console.log(token.myCookie)
-            jwt.verify(token.myCookie, config.secret, (err, decoded) => {
-                if (err) {
-                    res.statusCode = 403
-                    json.responseJSON(res, {
-                        error: err.message
-                    })
-                } else {
-                    conn.addRequestForClassSignUp(decoded.id, recievedJSON.class, res)
-                }
-            })
+            conn.addRequestForClassSignUp(dataUser.id, recievedJSON.class, res)
         }
     })
 }
 
 //////////////////////////////////////////////////THIS IS NOT DONE YET
 function getClassAssignments(req, res) {
-
-    var request = parseCookies.parseCookies(req) // cookie value is in request.myCookie
-    console.log(request.myCookie)
-    if (!request.myCookie) {
-        res.statusCode = 401
-        json.responseJSON(res, { authenticate: false, message: 'No token provided.' })
-        return
-    }
-    jwt.verify(request.myCookie, config.secret, function(err, decoded) {
-        if (err) {
-            res.statusCode = 500;
-            json.responseJSON({
-                authenticate: false,
-                message: 'Failed to authenticate token.'
-            })
-        }
-        conn.getClassAssignments(decoded.id, req.parameters.class, res)
-    });
+    dataUser = decryptToken(req)
+    conn.getClassAssignments(dataUser.id, req.parameters.class, res)
 }
 
 
-////////////////////////////////formula...........
+function checkCorecnessOfForumla(formula, components) {
+    try {
+        components = components - 1 + 1
+        switch (components) {
+            case 1:
+                formula = formula.replace('a', '0')
+                math.evaluate(formula)
+                return true;
+            case 2:
+                formula = formula.replace('a', '0')
+                formula = formula.replace('b', '0')
+                math.evaluate(formula)
+                return true;
+            case 3:
+                formula = formula.replace('a', '0')
+                formula = formula.replace('b', '0')
+                formula = formula.replace('c', '0')
+                math.evaluate(formula)
+                return true;
+            case 4:
+                formula = formula.replace('a', '0')
+                formula = formula.replace('b', '0')
+                formula = formula.replace('d', '0')
+                formula = formula.replace('c', '0')
+                math.evaluate(formula)
+                return true;
+            case 5:
+                formula = formula.replace('a', '0')
+                formula = formula.replace('b', '0')
+                formula = formula.replace('c', '0')
+                formula = formula.replace('d', '0')
+                formula = formula.replace('e', '0')
+                math.evaluate(formula)
+                return true;
+            default:
+                console.log(`default case`)
+                return false;
+        }
+    } catch (error) {
+
+        console.log(`error: ${JSON.stringify(error.message)}`)
+        console.log(error)
+        return false;
+    }
+}
+
 function createNewClass(req, res) {
+    let auth = decryptToken(req)
+    console.log(auth.type)
+    if (auth.userType === `student`) {
+        res.StatusCode = StatusCodes.UNAUTHORIZED
+        json.responseJSON(res, {
+            error: `ACCESS UNAUTHORIZED`
+        })
+    }
+
     json.requestJSON(req, res, function(recievedJSON) {
         console.log(recievedJSON)
         const { error, newClass } = schemas.classModel.validate(recievedJSON)
@@ -315,18 +305,18 @@ function createNewClass(req, res) {
                 error: error.message
             })
             return
-        } else {
-            console.log('data is fine')
-            console.log(`@create new class`)
-            res.StatusCode = 200
-            json.responseJSON(res, {
-                ok: "ok"
+        }
+
+        let isCorrect = checkCorecnessOfForumla(recievedJSON.classFormula, recievedJSON.classComponents)
+        if (!isCorrect) {
+            res.StatusCode = StatusCodes.BAD_REQUEST
+            return json.responseJSON(res, {
+                error: `invalid formula`
             })
         }
+        conn.createNewClass(auth.id, recievedJSON, res)
     })
 }
-
-
 
 module.exports = {
     register,

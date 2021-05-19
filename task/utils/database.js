@@ -3,7 +3,8 @@ const json = require(`./handleJson`);
 const bcrypt = require('bcrypt');
 const { func } = require('joi');
 const jwt = require('jsonwebtoken');
-var config = require(`./config`)
+var config = require(`./config`);
+const { StatusCodes } = require('http-status-codes');
 
 const client = new Client({
     host: '127.0.0.1',
@@ -172,7 +173,8 @@ function findCourseInfoById(id, res) {
                 json.responseJSON(res, {
                     teacher: results.rows[0].name + " " + results.rows[0].surname,
                     title: results.rows[0].title,
-                    other_platforms: results.rows[0].course_site_link + ", " + results.rows[0].other_platforms,
+                    teacher_site: results.rows[0].course_site_link,
+                    other_platforms: results.rows[0].other_platforms,
                     schedule: results.rows[0].day_of_occurence + ", " + results.rows[0].start_class + " - " + results.rows[0].end_class
                 })
             }
@@ -319,7 +321,6 @@ function addRequestForClassSignUp(idStudent, idCourse, res) {
 
 }
 
-
 function getStudentGradesById(idStudent, idCourse, res) {
     console.log('getStudentGradesById@database')
     console.log(idStudent)
@@ -350,6 +351,46 @@ function getClassAssignments(idStudent, idClass, res) {
     console.log(`this is not done yet`)
 }
 
+function addUserToClass(idUser, idClass, userType, res) {
+    client.query("insert into user_classes(id_user, id_class, type) values ($1, $2, $3)", [idUser, idClass, userType],
+        function(err, results) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 300;
+                json.responseJSON(res, {
+                    error: err.message
+                })
+            }
+            if (userType === `student`) {
+                res.StatusCodes = StatusCodes.ACCEPTED
+                json.responseJSON(res, {
+                    message: `added student to your class`
+                })
+
+            }
+            if (userType === `profesor`) {
+                res.StatusCodes = StatusCodes.ACCEPTED
+                json.responseJSON(res, {
+                    message: `created new class, you can find it in your home page`
+                })
+            }
+        })
+}
+
+function createNewClass(idTeacher, classInfo, res) {
+    client.query("insert into classes (title, day_of_occurence, start_class, end_class, course_site_link, no_components, formula, other_platforms)  values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", [classInfo.className, classInfo.classDate, classInfo.classHourStart, classInfo.classHourEnd, classInfo.classLink, classInfo.classComponents, classInfo.classFormula, classInfo.classOtherPlatforms],
+        function(err, results) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 300;
+                json.responseJSON(res, {
+                    error: err.message
+                })
+            }
+            addUserToClass(idTeacher, results.rows[0].id, `profesor`, res)
+        })
+}
+
 module.exports = {
     client,
     checkIfUserExists,
@@ -364,5 +405,6 @@ module.exports = {
     updateUserInfo,
     addRequestForClassSignUp,
     getStudentGradesById,
-    getClassAssignments
+    getClassAssignments,
+    createNewClass
 }

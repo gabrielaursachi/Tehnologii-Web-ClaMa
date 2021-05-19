@@ -22,7 +22,6 @@ function retrieveCourseData() {
         .catch(err => { console.log(err) })
 }
 
-
 function retrieveStudentGrades(classInfo) {
     console.log(localStorage.getItem("class"))
     fetch('/api/grades?class=' + localStorage.getItem("class"), {
@@ -51,8 +50,8 @@ function buildUpCourse(classInfo, studentGrades) {
     enterCodeBox.type = "text"
 
     document.getElementById("courseTitle").innerHTML = classInfo.title
-
     document.getElementById("teacher").innerHTML = classInfo.teacher
+    document.getElementById("teacherSite").innerHTML = classInfo.teacher_site
     document.getElementById("platforms").innerHTML = classInfo.other_platforms
     document.getElementById("schedule").innerHTML = classInfo.schedule + "  -  mark as present "
 
