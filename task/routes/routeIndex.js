@@ -14,10 +14,9 @@ router.post('/api/enter-new-class', myController.enterNewClass)
 router.get('/api/grades', myController.getStudentGrades)
 router.get('/api/assignments', myController.getClassAssignments)
 router.post('/api/create-class', myController.createNewClass)
+router.get('/api/assignment', myController.getAssignment)
+router.get('/api/all-assignments', myController.getAllStudentAssignment)
+router.get('/api/catalog', myController.getClassCatalog)
+router.get('/api/news', myController.getNews)
 
-
-//'/api/assignments/all/{id_user???}'
-//'/api/assignments/done/{id_user???}'  
-//'/api/assignments/todo/{id_user???}'
-//'/api/assignments/{id_assignment}' 
 module.exports.index = router

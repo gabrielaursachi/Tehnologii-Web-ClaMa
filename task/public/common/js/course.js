@@ -47,6 +47,7 @@ function buildUpCourse(classInfo, studentGrades) {
 
     var enterCodeBox = document.createElement('input')
     enterCodeBox.className = "classCode"
+    enterCodeBox.id = "classCode"
     enterCodeBox.type = "text"
 
     document.getElementById("courseTitle").innerHTML = classInfo.title
@@ -83,6 +84,42 @@ function buildUpCourse(classInfo, studentGrades) {
     }
     document.getElementById("grades").innerHTML = grades
     document.getElementById("schedule").appendChild(enterCodeBox)
+
+
+
+
+    document.querySelector('input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            console.log(`tryna mark as present worked`)
+
+            // let classId = {
+            //     class: document.getElementById("enterNewClass").value
+            // }
+
+            // fetch('/api/enter-new-class', {
+            //         method: "POST",
+            //         body: JSON.stringify(classId),
+            //         headers: {
+            //             "Content-type": "application/json; charset=UTF-8"
+            //         }
+            //     })
+            //     .then(response => response.json())
+            //     .then(json => {
+            //         console.log(json)
+            //         if (json.error) {
+            //             console.log(json.error);
+            //             document.getElementById("requestMessage").innerHTML = json.error
+            //             document.getElementById("requestMessage").style = "color : red;"
+            //         } else {
+            //             console.log(`registered request`)
+            //             document.getElementById("requestMessage").innerHTML = json.message
+            //             document.getElementById("requestMessage").style = "color : green;"
+            //         }
+            //     })
+            //     .catch(err => { console.log(err) })
+            document.getElementById("classCode").value = ""
+        }
+    });
 }
 
 retrieveAssignmentsData()
@@ -101,11 +138,75 @@ function retrieveAssignmentsData() {
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {
-                buildUpCourse(classInfo, json)
+                buildUpAssignmentsPart(json)
             }
         })
         .catch(err => { console.log(err) })
 
 }
 
-////////////////TO DO: routes to get news and assignments for the specific class
+function buildUpAssignmentsPart(assignments) {
+    console.log(`build assignments`)
+    console.log(assignments.assignments.length)
+    var parentElement = document.getElementById("myAssignments")
+    parentElement.className = "assignments"
+    for (var i = 0; i < assignments.assignments.length; i++) {
+
+        var childElement = document.createElement('a')
+        childElement.className = "assignment_container"
+        childElement.href = "http://localhost:8888/student/html/assignment.html"
+        childElement.assignmentID = assignments.assignments[i].id
+
+
+        let assignmentTitle = document.createElement('div')
+        if (assignments.assignments[i].status == 0) {
+            assignmentTitle.className = "assignmentTitleToDo"
+        } else {
+            assignmentTitle.className = "assignmentTitleDone"
+        }
+
+        let assignmentName = document.createElement('p')
+        assignmentName.className = "assignmentName"
+        let titleContent = document.createElement('b')
+        titleContent.innerHTML = assignments.assignments[i].title
+
+        assignmentName.appendChild(titleContent)
+        assignmentTitle.appendChild(assignmentName)
+
+        let assignmentInfoBody = document.createElement('div')
+        if (assignments.assignments[i].status == 0) {
+            assignmentInfoBody.className = "assignmentInfoToDo"
+        } else {
+            assignmentInfoBody.className = "assignmentInfoDone"
+        }
+
+        let author = document.createElement('p')
+        author.innerHTML = `Author : ` + assignments.assignments[i].teacher
+        author.id = "author"
+        let postedAt = document.createElement('p')
+        postedAt.innerHTML = `Posted at : ` + assignments.assignments[i].created_at
+        postedAt.id = "postedAt"
+        let deadline = document.createElement('p')
+        deadline.innerHTML = `Deadline: ` + assignments.assignments[i].deadline
+        deadline.id = "deadline"
+
+        assignmentInfoBody.appendChild(author)
+        assignmentInfoBody.appendChild(postedAt)
+        assignmentInfoBody.appendChild(deadline)
+
+        childElement.appendChild(assignmentTitle)
+        childElement.appendChild(assignmentInfoBody)
+
+        parentElement.appendChild(childElement)
+    }
+
+    var myAssignments = document.getElementById('myAssignments')
+    for (i = 0; i < myAssignments.childNodes.length; i++) {
+        let assignmentID = myAssignments.childNodes[i].assignmentID
+        myAssignments.childNodes[i].onclick = function() {
+            console.log(`clicked assignment with id ` + assignmentID)
+            localStorage.setItem("assignment", assignmentID)
+        }
+    }
+
+}

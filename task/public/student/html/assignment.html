@@ -25,52 +25,40 @@
 
     </div>
 
+    <div class="assignmentInfo" id="assignmentInfo">
 
-    <div class="assignmentInfo">
-
-        <h1>
-            Assignment title
-        </h1>
-        <div class="general">
-            <p>
-                Author : Cosmin Varlan
-            </p>
-            <p>
-                Posted at : 27 March 2021, 16:20:14
-            </p>
-            <p>
-                Deadline : 13 April 2021, 23:59:59
-            </p>
+        <div class="header" id="myHeader">
+            <b id="assignmentTitle"> </b>
         </div>
+        <div class="general" id="general">
+            <p class="predefined">Author: <span class="customInfo" id="teacher"></span></p>
 
+            <p class="predefined">Posted at: <span class="customInfo" id="postedAt"></span></p>
 
+            <p class="predefined">Deadline: <span class="customInfo" id="deadline"></span></p>
 
+        </div>
         <div class="extra">
-            <p>
-                Other details : Some text entered by the author of the assignment, anything concerning indications or bibliography
-            </p>
+            <p class="predefined "> Other details: <span class="customInfo" id="assignmentBody"></span></p>
         </div>
     </div>
-
     <div class="submitArea">
         <form>
             <textarea id="submitArea" name="submitText" rows="8" cols="60" placeholder="Submit your assignment here..."></textarea>
-
             <br>
             <br>
             <label for="files">Upload your files:</label>
             <input type="file" id="files" class="files" multiple>
             <br>
             <br>
-
             <button type="submit" class="assignmentButton" onclick="eraseText()">Submit</button>
         </form>
-
     </div>
-
 
     <script src="../js/functions.js"></script>
     <script src="../../common/js/logout.js"></script>
+    <script src="../../common/js/assignment.js"></script>
+
 </body>
 
 </html>

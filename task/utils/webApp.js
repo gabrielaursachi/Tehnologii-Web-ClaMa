@@ -26,7 +26,6 @@ class WebApp {
                     var token = parseCookies.parseCookies(req);
                     if (!token) {
                         res.statusCode = StatusCodes.UNAUTHORIZED
-                        console.log(`no cookie`)
                         json.responseJSON(res, {
                             error: `no auth`
                         })
@@ -43,9 +42,7 @@ class WebApp {
                             return
                         }
                     }
-                    console.log(`auth ok`)
                 }
-
                 console.log(`${req.method} ${req.url}`);
                 app.router.route(req, res)
             } else {

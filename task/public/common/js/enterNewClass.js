@@ -6,7 +6,6 @@ document.querySelector('input').addEventListener('keypress', function(e) {
             class: document.getElementById("enterNewClass").value
         }
 
-        //redirect to register to new class on enter
         fetch('/api/enter-new-class', {
                 method: "POST",
                 body: JSON.stringify(classId),
@@ -18,11 +17,13 @@ document.querySelector('input').addEventListener('keypress', function(e) {
             .then(json => {
                 console.log(json)
                 if (json.error) {
-                    console.log(`error encountered`);
                     console.log(json.error);
+                    document.getElementById("requestMessage").innerHTML = json.error
+                    document.getElementById("requestMessage").style = "color : red;"
                 } else {
                     console.log(`registered request`)
-                    console.log(json)
+                    document.getElementById("requestMessage").innerHTML = json.message
+                    document.getElementById("requestMessage").style = "color : green;"
                 }
             })
             .catch(err => { console.log(err) })

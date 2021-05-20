@@ -106,7 +106,6 @@ function checkAuthData(userInfo, res) {
                         return
                     } else {
                         var token = jwt.sign({ id: results.rows[0].id, userType: results.rows[0].type }, config.secret, { expiresIn: 86400 })
-                        console.log('@checkAuthData')
                         var redirectTo
                         if (results.rows[0].type === `student`) {
                             redirectTo = `/student/html/homePage.html`
@@ -157,7 +156,6 @@ function findUserClassesByUserId(id, res) {
 }
 
 function findCourseInfoById(id, res) {
-    console.log(`@findCourseInfoById`)
     client.query("select teach.name, teach.surname, cls.title, cls.no_components, cls.course_site_link, cls.other_platforms, cls.day_of_occurence, cls.start_class, cls.end_class from users teach join user_classes c on c.id_user=teach.id and teach.type='profesor'join classes cls on cls.id=c.id_class where c.id_class = $1", [id],
         function(err, results) {
             if (err) {
@@ -167,8 +165,6 @@ function findCourseInfoById(id, res) {
                     error: err.message
                 })
             } else {
-                console.log(results.rows[0].no_components)
-
                 res.statusCode = 200;
                 json.responseJSON(res, {
                     teacher: results.rows[0].name + " " + results.rows[0].surname,
@@ -179,12 +175,9 @@ function findCourseInfoById(id, res) {
                 })
             }
         })
-
-    ////////TO DO : grades component => another query
 }
 
 function checkIfUsernameExists(user, callback) {
-    console.log(`@checkIfUsernameExists function`)
     console.log(user)
     client.query("select * from users where username = $1", [user.username], (err, res) => {
         if (err) {
@@ -213,9 +206,6 @@ function updateUserInfo(userInfo, userID, res) {
 
     if (userInfo.password === '') {
         console.log(`no new password`)
-            //         UPDATE table_name
-            // SET column1 = value1, column2 = value2...., columnN = valueN
-            // WHERE [condition];
         client.query("update users set name = $1 ,  surname = $2 , username = $3 , email = $4 where id = $5", [userInfo.lastName, userInfo.firstName, userInfo.username, userInfo.email, userID],
             function(err, results) {
                 if (err) {
@@ -226,13 +216,13 @@ function updateUserInfo(userInfo, userID, res) {
                         error: `update went wrong...`
                     })
                     return
-                } else {
-                    res.statusCode = 200;
-                    json.responseJSON(res, {
-                        update: true,
-                        message: `updated account succesfully`
-                    })
                 }
+                res.statusCode = 200;
+                json.responseJSON(res, {
+                    update: true,
+                    message: `updated account succesfully`
+                })
+                return
             })
     } else {
         userInfo.password = bcrypt.hashSync(userInfo.password, 10);
@@ -246,19 +236,17 @@ function updateUserInfo(userInfo, userID, res) {
                         error: `update went wrong...`
                     })
                     return
-                } else {
-                    res.statusCode = 200;
-                    json.responseJSON(res, {
-                        update: true,
-                        message: `updated account succesfully`
-                    })
                 }
+                res.statusCode = 200;
+                json.responseJSON(res, {
+                    update: true,
+                    message: `updated account succesfully`
+                })
             })
     }
 }
 
 function addRequestForClassSignUp(idStudent, idCourse, res) {
-    console.log(idStudent)
     client.query("select * from classes where id = $1", [idCourse],
         function(err, results) {
             if (err) {
@@ -267,18 +255,38 @@ function addRequestForClassSignUp(idStudent, idCourse, res) {
                 json.responseJSON(res, {
                     error: err.message
                 })
-            } else {
-                console.log(results.rows)
-                if (results.rowCount == 0) {
-                    console.log('no class found')
-                    res.statusCode = 300
-                    json.responseJSON(res, {
-                        error: 'Invalid class code'
-                    })
-                    return
-                } else {
-                    //check if user is in already signed up in the class
-                    client.query("select * from user_classes where id_user= $1 and id_class = $2", [idStudent, idCourse],
+                return
+            }
+            console.log(results.rows)
+            if (results.rowCount == 0) {
+                console.log('no class found')
+                res.statusCode = 300
+                json.responseJSON(res, {
+                    error: 'Invalid class code'
+                })
+                return
+            }
+            //check if user is in already signed up in the class
+            client.query("select * from user_classes where id_user= $1 and id_class = $2", [idStudent, idCourse],
+                function(err, results) {
+                    if (err) {
+                        console.log(err)
+                        res.statusCode = 300
+                        json.responseJSON(res, {
+                            error: err.message
+                        })
+                        return
+                    }
+                    console.log(results.rows)
+                    if (results.rowCount == 1) {
+                        res.statusCode = 300
+                        json.responseJSON(res, {
+                            error: 'You are already signed up to this class'
+                        })
+                        return
+                    }
+                    //save to database
+                    client.query("insert into classes_requests(id_class, id_student) values ($1, $2)", [idCourse, idStudent],
                         function(err, results) {
                             if (err) {
                                 console.log(err)
@@ -286,43 +294,20 @@ function addRequestForClassSignUp(idStudent, idCourse, res) {
                                 json.responseJSON(res, {
                                     error: err.message
                                 })
-                            } else {
-                                console.log(results.rows)
-                                if (results.rowCount == 1) {
-                                    res.statusCode = 300
-                                    json.responseJSON(res, {
-                                        error: 'You are already signed up to this class'
-                                    })
-                                } else {
-                                    //save to database
-                                    client.query("insert into classes_requests(id_class, id_student) values ($1, $2)", [idCourse, idStudent],
-                                        function(err, results) {
-                                            if (err) {
-                                                console.log(err)
-                                                res.statusCode = 300
-                                                json.responseJSON(res, {
-                                                    error: err.message
-                                                })
-                                            } else {
-                                                res.statusCode = 200
-                                                json.responseJSON(res, {
-                                                    message: `Request registered, wait for teacher's approval`
-                                                })
-                                            }
-                                        })
-                                }
+                                return
                             }
+                            res.statusCode = 200
+                            json.responseJSON(res, {
+                                message: `Request registered, wait for teacher's approval`
+                            })
                         })
-                    console.log('available class')
-                }
-
-            }
+                })
+            console.log('available class')
         })
 
 }
 
 function getStudentGradesById(idStudent, idCourse, res) {
-    console.log('getStudentGradesById@database')
     console.log(idStudent)
     client.query("select * from classes_catalog where id_class = $1 and id_student = $2", [idCourse, idStudent],
         function(err, results) {
@@ -331,6 +316,18 @@ function getStudentGradesById(idStudent, idCourse, res) {
                 res.statusCode = 300;
                 json.responseJSON(res, {
                     error: err.message
+                })
+                return
+            }
+            if (results.rowCount == 0) {
+                res.statusCode = 200;
+                json.responseJSON(res, {
+                    c1: null,
+                    c2: null,
+                    c3: null,
+                    c4: null,
+                    c5: null,
+                    bonus: null
                 })
             } else {
                 res.statusCode = 200;
@@ -346,9 +343,29 @@ function getStudentGradesById(idStudent, idCourse, res) {
         })
 }
 
-///////////////using this to retrieve a course assignments => also need to mark each assignment as done or todo
 function getClassAssignments(idStudent, idClass, res) {
-    console.log(`this is not done yet`)
+
+    client.query("select id, title, (select concat(name,' ',surname) from users where id=a.id_author) teacher, created_at, deadline, (select count(id_assignment) from students_assignments where (id_assignment, id_student) in (select id_assignment, id_student from students_assignments where id_assignment = a.id and id_student = $2)) status from assignments a where id_class = $1  order by created_at desc", [idClass, idStudent], function(err, results) {
+        if (err) {
+            res.StatusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, {
+                error: err.message
+            })
+            return
+        }
+        for (i = 0; i < results.rowCount; i++) {
+            var createdAt = results.rows[i].created_at.toString()
+            createdAt = createdAt.substring(4, createdAt.indexOf(" GMT"))
+            results.rows[i].created_at = createdAt
+            var deadline = results.rows[i].deadline.toString()
+            deadline = deadline.substring(4, deadline.indexOf(" GMT"))
+            results.rows[i].deadline = deadline
+        }
+        res.StatusCode = StatusCodes.OK
+        json.responseJSON(res, {
+            assignments: results.rows
+        })
+    })
 }
 
 function addUserToClass(idUser, idClass, userType, res) {
@@ -366,7 +383,6 @@ function addUserToClass(idUser, idClass, userType, res) {
                 json.responseJSON(res, {
                     message: `added student to your class`
                 })
-
             }
             if (userType === `profesor`) {
                 res.StatusCodes = StatusCodes.ACCEPTED
@@ -391,6 +407,124 @@ function createNewClass(idTeacher, classInfo, res) {
         })
 }
 
+function getAssignmentInfo(idAssignment, res) {
+    client.query("select id_class, (select concat(name,' ',surname) from users where id=a.id_author) author, title, body, created_at, deadline, files from assignments a where id = $1", [idAssignment],
+        function(err, results) {
+            if (err) {
+                console.log(err.message)
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, { error: err.message })
+                return
+            }
+            console.log(results.rows[0])
+            var createdAt = results.rows[0].created_at.toString()
+            createdAt = createdAt.substring(4, createdAt.indexOf(" GMT"))
+            console.log(createdAt)
+
+            var deadline = results.rows[0].deadline.toString()
+            deadline = deadline.substring(4, deadline.indexOf(" GMT"))
+            console.log(deadline)
+
+            res.StatusCode = StatusCodes.OK
+            json.responseJSON(res, {
+                idClass: results.rows[0].id_class,
+                teacher: results.rows[0].author,
+                title: results.rows[0].title,
+                body: results.rows[0].body,
+                created_at: createdAt,
+                deadline: deadline,
+                files: results.rows[0].files
+            })
+        })
+}
+
+function getStudentAssignments(idStudent, res) {
+    client.query("select id, title, (select concat(name,' ',surname) from users where id=a.id_author) teacher, created_at, deadline, (select count(id_assignment) from students_assignments where (id_assignment, id_student)in (select id_assignment, id_student from students_assignments where id_assignment = a.id and id_student = $1) )status from assignments a join user_classes uc on uc.id_class = a.id_class where uc.id_user = $1  order by created_at desc", [idStudent],
+        function(err, results) {
+            if (err) {
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, {
+                    error: err.message
+                })
+                return
+            }
+            console.log(results.rows)
+            for (i = 0; i < results.rowCount; i++) {
+                var createdAt = results.rows[i].created_at.toString()
+                createdAt = createdAt.substring(4, createdAt.indexOf(" GMT"))
+                results.rows[i].created_at = createdAt
+                var deadline = results.rows[i].deadline.toString()
+                deadline = deadline.substring(4, deadline.indexOf(" GMT"))
+                results.rows[i].deadline = deadline
+            }
+            res.StatusCode = StatusCodes.OK
+            json.responseJSON(res, {
+                assignments: results.rows
+            })
+        })
+}
+
+function getClassCatalog(idProfesor, idClass, res) {
+    console.log('getClassCatalog@database')
+
+    let numberOfComponents
+    client.query("select no_components from classes where id = $1", [idClass],
+        function(err, result) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 300;
+                json.responseJSON(res, {
+                    error: err.message
+                })
+            } else {
+                res.statusCode = 200;
+                numberOfComponents = result.rows[0].no_components
+                console.log(numberOfComponents)
+                let numberOfStudents
+                client.query("select c.*, u.name, u.surname from classes_catalog c left join users u on u.id = c.id_student where c.id_class = $1", [idClass],
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            res.statusCode = 300;
+                            json.responseJSON(res, {
+                                error: err.message
+                            })
+                        } else {
+                            res.statusCode = 200;
+                            numberOfStudents = result.rowCount
+                            console.log(result.rows[0])
+                            let students = result.rows
+                            json.responseJSON(res, {
+                                numberOfComponents: numberOfComponents,
+                                numberOfStudents: numberOfStudents,
+                                students: students
+                            })
+                        }
+                    })
+            }
+        })
+}
+
+function getClassNews(idClass, res) {
+    client.query("select * from news where id_class = $1 order by id desc", [idClass],
+        function(err, results) {
+            if (err) {
+                console.log(err.message)
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, {
+                    error: err.message
+                })
+                return
+            }
+            res.StatusCode = StatusCodes.OK
+            json.responseJSON(res, {
+                news: results.rows
+            })
+            console.log(results.rows)
+        })
+
+}
+
 module.exports = {
     client,
     checkIfUserExists,
@@ -406,5 +540,9 @@ module.exports = {
     addRequestForClassSignUp,
     getStudentGradesById,
     getClassAssignments,
-    createNewClass
+    createNewClass,
+    getAssignmentInfo,
+    getStudentAssignments,
+    getClassCatalog,
+    getClassNews
 }

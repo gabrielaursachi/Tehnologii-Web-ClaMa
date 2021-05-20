@@ -14,7 +14,7 @@ function decryptToken(req) {
     var data;
     try {
         data = jwt.verify(token.myCookie, config.secret)
-        console.log(`decoded token: ${JSON.stringify(data)}`)
+            // console.log(`decoded token: ${JSON.stringify(data)}`)
     } catch (error) {
         console.log(`no token provied. data: ${JSON.stringify(data)}`)
         return undefined
@@ -214,7 +214,6 @@ function logout(req, res) {
 }
 
 function enterNewClass(req, res) {
-
     dataUser = decryptToken(req)
     console.log('enter new class function ')
     json.requestJSON(req, res, function(recievedJSON) {
@@ -227,18 +226,15 @@ function enterNewClass(req, res) {
             })
             return
         } else {
-            //add to database
             conn.addRequestForClassSignUp(dataUser.id, recievedJSON.class, res)
         }
     })
 }
 
-//////////////////////////////////////////////////THIS IS NOT DONE YET
 function getClassAssignments(req, res) {
     dataUser = decryptToken(req)
     conn.getClassAssignments(dataUser.id, req.parameters.class, res)
 }
-
 
 function checkCorecnessOfForumla(formula, components) {
     try {
@@ -279,7 +275,6 @@ function checkCorecnessOfForumla(formula, components) {
                 return false;
         }
     } catch (error) {
-
         console.log(`error: ${JSON.stringify(error.message)}`)
         console.log(error)
         return false;
@@ -295,7 +290,6 @@ function createNewClass(req, res) {
             error: `ACCESS UNAUTHORIZED`
         })
     }
-
     json.requestJSON(req, res, function(recievedJSON) {
         console.log(recievedJSON)
         const { error, newClass } = schemas.classModel.validate(recievedJSON)
@@ -306,7 +300,6 @@ function createNewClass(req, res) {
             })
             return
         }
-
         let isCorrect = checkCorecnessOfForumla(recievedJSON.classFormula, recievedJSON.classComponents)
         if (!isCorrect) {
             res.StatusCode = StatusCodes.BAD_REQUEST
@@ -316,6 +309,33 @@ function createNewClass(req, res) {
         }
         conn.createNewClass(auth.id, recievedJSON, res)
     })
+}
+
+function getAssignment(req, res) {
+    let data = decryptToken(req)
+    conn.getAssignmentInfo(req.parameters.id, res)
+}
+
+function getAllStudentAssignment(req, res) {
+    let user = decryptToken(req)
+    if (user.userType == `profesor`) {
+        res.StatusCode = StatusCodes.FORBIDDEN
+        json.responseJSON(res, {
+            error: `Students only - acces unauthorized`
+        })
+    }
+    conn.getStudentAssignments(user.id, res)
+}
+
+function getClassCatalog(req, res) {
+
+    let user = decryptToken(req)
+    conn.getClassCatalog(user.id, req.parameters.class, res)
+}
+
+function getNews(req, res) {
+    let user = decryptToken(req)
+    conn.getClassNews(req.parameters.class, res)
 }
 
 module.exports = {
@@ -329,6 +349,9 @@ module.exports = {
     enterNewClass,
     getStudentGrades,
     getClassAssignments,
-    createNewClass
-
+    createNewClass,
+    getAssignment,
+    getAllStudentAssignment,
+    getClassCatalog,
+    getNews
 }
