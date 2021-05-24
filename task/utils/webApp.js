@@ -42,6 +42,7 @@ class WebApp {
                             return
                         }
                     }
+                    console.log(token)
                 }
                 console.log(`${req.method} ${req.url}`);
                 app.router.route(req, res)

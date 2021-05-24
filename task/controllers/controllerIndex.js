@@ -5,9 +5,15 @@ const schemas = require(`../models/models`)
 const { StatusCodes } = require('http-status-codes')
 const json = require(`../utils/handleJson`)
 const jwt = require('jsonwebtoken');
-var config = require(`../utils/config`)
-var parseCookies = require(`../utils/cookieParser`)
-var math = require('mathjs')
+const config = require(`../utils/config`)
+const parseCookies = require(`../utils/cookieParser`)
+const math = require('mathjs')
+const { getUploadFile, sendDownloadFile } = require('../utils/handleFiles')
+
+// function downloadFileMockup(req, res) {
+//     console.log(`merge`)
+//     sendFileToDownload(`assignment1`, res)
+// }
 
 function decryptToken(req) {
     var token = parseCookies.parseCookies(req);
@@ -101,24 +107,8 @@ function homepage(req, res) {
             return
         } else {
             conn.findUserClassesByUserId(user.rows[0].id, res);
-            // if (user.rows[0].type === `student`) {
-            //     conn.findUserClassesByUserId(user.rows[0].id, res);
-            //     // query to select classes of user and return as json to front => interpret there
-            //     // get request => /api/classes => query to return classes =>
-            //     // => send to front => front makes another get request to fill html
-
-            // } else {
-            //     // conn.findUserClassesByUserId(user.rows[0].id, res);
-            //     // conn.findUserClassesByUserId(user.rows[0].id, res);
-            //     res.StatusCode = 200
-            //     json.responseJSON(res, {
-            //         redirect: `/teacher/html/profHomePage.html`
-            //     })
-            // }
         }
     })
-
-    console.log(`homepage`)
 }
 
 function courseInfo(req, res) {
@@ -338,6 +328,57 @@ function getNews(req, res) {
     conn.getClassNews(req.parameters.class, res)
 }
 
+function validatePresence(req, res) {
+    let user = decryptToken(req)
+    if (user.userType === `student`) {
+        json.requestJSON(req, res, function(recievedJSON) {
+            conn.validatePresenceCode(user.id, recievedJSON.code, req.parameters.class, res)
+        })
+    } else {
+        res.StatusCode = StatusCodes.FORBIDDEN
+        json.responseJSON(res, { error: `Student only request` })
+        return
+    }
+}
+
+function newUpload(req, res) {
+    var user = decryptToken(req)
+    console.log(`new assignment`)
+    console.log(req.parameters)
+
+    var fileName = req.parameters.fileName.substr(req.parameters.fileName.lastIndexOf("\\") + 1)
+
+    if (user.userType === `student`) { //only assignments
+        if (getUploadFile(req, res, fileName)) {
+            console.log(`succesfully uploaded files`)
+            conn.turnInAssignment(user.id, req.parameters.assignmentId, req.parameters.assignmentText, fileName, res)
+            return
+        }
+        res.StatusCode = StatusCodes.EXPECTATION_FAILED
+        json.responseJSON(res, { error: 'turning in assignment went wrong...try again' })
+        return
+    }
+    /*
+    TO DO : profesor => upload news + assignment => 2 rute diferite
+    */
+}
+
+
+function downloadFile(req, res) {
+    let user = decryptToken(req)
+    if (req.parameters.assignmentId) {
+        conn.getFileName(req.parameters.assignmentId, `assignment`, function(err, data) {
+            if (err) {
+                console.log(err.message)
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, { error: err.message })
+                return
+            }
+            sendDownloadFile(req, res, data.rows[0].files)
+        })
+    }
+}
+
 module.exports = {
     register,
     authenticate,
@@ -353,5 +394,8 @@ module.exports = {
     getAssignment,
     getAllStudentAssignment,
     getClassCatalog,
-    getNews
+    getNews,
+    validatePresence,
+    downloadFile,
+    newUpload
 }

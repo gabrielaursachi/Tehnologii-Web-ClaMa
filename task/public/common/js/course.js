@@ -46,6 +46,7 @@ function retrieveStudentGrades(classInfo) {
 function buildUpCourse(classInfo, studentGrades) {
 
     var enterCodeBox = document.createElement('input')
+
     enterCodeBox.className = "classCode"
     enterCodeBox.id = "classCode"
     enterCodeBox.type = "text"
@@ -85,38 +86,35 @@ function buildUpCourse(classInfo, studentGrades) {
     document.getElementById("grades").innerHTML = grades
     document.getElementById("schedule").appendChild(enterCodeBox)
 
-
-
-
     document.querySelector('input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             console.log(`tryna mark as present worked`)
+            let classEnterCode = {
+                code: document.getElementById("classCode").value
+            }
 
-            // let classId = {
-            //     class: document.getElementById("enterNewClass").value
-            // }
-
-            // fetch('/api/enter-new-class', {
-            //         method: "POST",
-            //         body: JSON.stringify(classId),
-            //         headers: {
-            //             "Content-type": "application/json; charset=UTF-8"
-            //         }
-            //     })
-            //     .then(response => response.json())
-            //     .then(json => {
-            //         console.log(json)
-            //         if (json.error) {
-            //             console.log(json.error);
-            //             document.getElementById("requestMessage").innerHTML = json.error
-            //             document.getElementById("requestMessage").style = "color : red;"
-            //         } else {
-            //             console.log(`registered request`)
-            //             document.getElementById("requestMessage").innerHTML = json.message
-            //             document.getElementById("requestMessage").style = "color : green;"
-            //         }
-            //     })
-            //     .catch(err => { console.log(err) })
+            console.log(classEnterCode)
+            fetch('/api/present?class=' + localStorage.getItem("class"), {
+                    method: "POST",
+                    body: JSON.stringify(classEnterCode),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json)
+                    if (json.error) {
+                        console.log(json.error);
+                        document.getElementById("requestMessage").innerHTML = json.error
+                        document.getElementById("requestMessage").style = "color : red; "
+                    } else {
+                        console.log(`registered request`)
+                        document.getElementById("requestMessage").innerHTML = json.message
+                        document.getElementById("requestMessage").style = "color : green;"
+                    }
+                })
+                .catch(err => { console.log(err) })
             document.getElementById("classCode").value = ""
         }
     });

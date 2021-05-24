@@ -153,6 +153,24 @@ textarea:focus {
     border-bottom: 0.8px solid #59A2CE;
 }
 
+.downloadButton {
+    display: block;
+    /* margin: 0; */
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #2588d8;
+    color: white;
+    outline: none;
+    margin-left: 35px;
+    margin-bottom: 35px;
+}
+
+.downloadButton:hover {
+    background-color: rgb(140, 185, 223);
+}
+
 @media screen and (max-width: 600px) {
     textarea {
         width: 80%;

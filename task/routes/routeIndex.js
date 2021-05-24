@@ -18,5 +18,7 @@ router.get('/api/assignment', myController.getAssignment)
 router.get('/api/all-assignments', myController.getAllStudentAssignment)
 router.get('/api/catalog', myController.getClassCatalog)
 router.get('/api/news', myController.getNews)
-
+router.post('/api/present', myController.validatePresence)
+router.get(`/api/download`, myController.downloadFile)
+router.post(`/api/upload`, myController.newUpload)
 module.exports.index = router

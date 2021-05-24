@@ -41,23 +41,26 @@
         <div class="extra">
             <p class="predefined "> Other details: <span class="customInfo" id="assignmentBody"></span></p>
         </div>
+
+        <!-- <button class="downloadButton"><i class="fa fa-download"></i> Attachments</button> -->
+
     </div>
     <div class="submitArea">
-        <form>
-            <textarea id="submitArea" name="submitText" rows="8" cols="60" placeholder="Submit your assignment here..."></textarea>
+        <form action="/api/upload" id="assignmentForm">
+            <textarea id="assignmentText" name="assignmentText" rows="8" cols="60" placeholder="Submit your assignment here..."></textarea>
             <br>
             <br>
             <label for="files">Upload your files:</label>
-            <input type="file" id="files" class="files" multiple>
+            <input type="file" id="fileInput" class="files">
             <br>
             <br>
-            <button type="submit" class="assignmentButton" onclick="eraseText()">Submit</button>
+            <button type="submit" class="assignmentButton">Submit</button>
         </form>
     </div>
 
     <script src="../js/functions.js"></script>
     <script src="../../common/js/logout.js"></script>
-    <script src="../../common/js/assignment.js"></script>
+    <script type="module" src="../../common/js/assignment.js"></script>
 
 </body>
 

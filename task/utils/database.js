@@ -137,7 +137,7 @@ function checkAuthData(userInfo, res) {
 
 function findUserClassesByUserId(id, res) {
 
-    client.query("select teach.surname, teach.name, c.title, c.id from users teach join user_classes uc on uc.id_user = teach.id and teach.type='profesor' join classes c on c.id=uc.id_class  where uc.id_class in (select id_class from user_classes uc join users u on u.id=uc.id_user where u.id = $1)", [id],
+    client.query("select teach.surname, teach.name, c.title, c.id from users teach join user_classes uc on uc.id_user = teach.id and teach.type='profesor' join classes c on c.id=uc.id_class  where uc.id_class in (select id_class from user_classes uc join users u on u.id=uc.id_user where u.id = $1) order by uc.id_class asc", [id],
         function(err, results) {
             if (err) {
                 console.log(err);
@@ -416,14 +416,14 @@ function getAssignmentInfo(idAssignment, res) {
                 json.responseJSON(res, { error: err.message })
                 return
             }
-            console.log(results.rows[0])
+            // console.log(results.rows[0])
             var createdAt = results.rows[0].created_at.toString()
             createdAt = createdAt.substring(4, createdAt.indexOf(" GMT"))
-            console.log(createdAt)
+                // console.log(createdAt)
 
             var deadline = results.rows[0].deadline.toString()
             deadline = deadline.substring(4, deadline.indexOf(" GMT"))
-            console.log(deadline)
+                // console.log(deadline)
 
             res.StatusCode = StatusCodes.OK
             json.responseJSON(res, {
@@ -518,12 +518,123 @@ function getClassNews(idClass, res) {
             }
             res.StatusCode = StatusCodes.OK
             json.responseJSON(res, {
-                news: results.rows
-            })
-            console.log(results.rows)
+                    news: results.rows
+                })
+                // console.log(results.rows)
         })
 
 }
+
+function validatePresenceCode(idStudent, code, idClass, res) {
+    client.query("select * from classes where enter_code = $1 and id = $2", [code, idClass],
+        function(err, results) {
+            if (err) {
+                console.log(err.message)
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, { error: err.message })
+                return
+            }
+            if (results.rowCount == 0) {
+                res.StatusCode = StatusCodes.NOT_FOUND
+                json.responseJSON(res, {
+                    error: `invalid code`
+                })
+                return
+            }
+            //check if it is already present or not for the specific day
+            client.query("select id_class, id_user from users_attendance where id_class = $1 and id_user = $2 and present_at::date = (select begin_class::date from classes where id = $1) ", [idClass, idStudent],
+                function(err, results) {
+                    if (err) {
+                        console.log(err.message)
+                        res.StatusCode = StatusCodes.BAD_REQUEST
+                        json.responseJSON(res, { error: err.message })
+                        return
+                    }
+                    if (results.rowCount == 0) {
+
+                        //check the day  in this query
+                        client.query("insert into users_attendance (id_class, id_user, present_at) values ($1, $2, current_timestamp)", [idClass, idStudent],
+                            function(err, results) {
+                                if (err) {
+                                    console.log(err.message)
+                                    res.StatusCode = StatusCodes.BAD_REQUEST
+                                    json.responseJSON(res, { error: err.message })
+                                    return
+                                }
+                                //check if it is within timestamp
+                                client.query("SELECT count(*) FROM users_attendance WHERE present_at >=  (select begin_class  from classes where id = 1) and present_at < (select begin_class + ( interval '5 minute')  from classes where id = $1) and id_user = $2", [idClass, idStudent],
+                                    function(err, results) {
+                                        if (err) {
+                                            console.log(err.message)
+                                            res.StatusCode = StatusCodes.BAD_REQUEST
+                                            json.responseJSON(res, { error: err.message })
+                                            return
+                                        }
+                                        if (results.rows[0].count == 0) {
+                                            res.StatusCode = StatusCodes.OK
+                                            json.responseJSON(res, {
+                                                message: `late to class`
+                                            })
+                                            return
+                                        } else {
+                                            res.StatusCode = StatusCodes.OK
+                                            json.responseJSON(res, {
+                                                message: `marked as present`
+                                            })
+                                            markPresence(idStudent, idClass);
+                                        }
+                                    })
+                            })
+                    } else {
+                        res.StatusCode = StatusCodes.OK
+                        json.responseJSON(res, {
+                            error: `already entered class presence code`
+                        })
+                        return
+                    }
+                })
+        })
+}
+
+function markPresence(idStudent, idClass) {
+    client.query("UPDATE classes_catalog SET presences = (select presences from classes_catalog where id_class = $1 and id_student = $2) + 1 where id_class= $1 and id_student= $2", [idClass, idStudent], function(err, results) {
+        if (err) {
+            console.log(err.message)
+            return
+        }
+    })
+}
+
+function turnInAssignment(idStudent, idAssignment, assignmentBody, fileName, res) {
+    client.query("insert into students_assignments(id_assignment, id_student, body, files) values($1, $2, $3, $4)", [idAssignment, idStudent, assignmentBody, fileName],
+        function(err, results) {
+            if (err) {
+                console.log(err);
+                res.statusCode = 300
+                json.responseJSON(res, {
+                    error: err.message
+                })
+                return
+            }
+        })
+}
+
+
+function getFileName(id, type, callback) {
+    if (type === `assignment`) {
+        client.query("select files from assignments where id = $1", [id], (err, res) => {
+            if (err) {
+                callback(err, null)
+                return
+            } else {
+                callback(null, res);
+                return
+            }
+        })
+    }
+
+}
+
 
 module.exports = {
     client,
@@ -544,5 +655,8 @@ module.exports = {
     getAssignmentInfo,
     getStudentAssignments,
     getClassCatalog,
-    getClassNews
+    getClassNews,
+    validatePresenceCode,
+    turnInAssignment,
+    getFileName
 }
