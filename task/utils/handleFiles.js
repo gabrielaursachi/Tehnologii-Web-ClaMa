@@ -1,6 +1,7 @@
 const { parse } = require('querystring');
 const fs = require('fs')
 const path = require('path');
+const { StatusCodes } = require('http-status-codes');
 getUploadFile = async(req, res, filename) => {
     const writeStream = fs.createWriteStream(`./user_files/${filename}`);
     req.on('data', chunk => {
@@ -30,13 +31,21 @@ sendDownloadFile = async(req, res, filename) => {
             json.responseJSON(res, { error: `not a file` })
             return
         }
-        res.writeHead(stat.size, {
-            'Content-Length': stat.size
-        });
-        fs.createReadStream(filePath).pipe(res);
-        res.end()
+        res.StatusCode = StatusCodes.OK
+            // res.writeHead(StatusCodes.OK, {
+            //     'Content-Length': stat.size
+            // });
+
+        // var file = fs.readFileSync(filePath);
+        // res.setHeader('Content-Length', stat.size);
+        // res.write(file, 'binary');
+        // // console.log(file)
+        // res.end();
+
+        var readableStream = fs.createReadStream(filePath).pipe(res);
     } catch (error) {
         console.log('error @ handleFiles => download')
+        console.log(error)
         console.log(error.message)
     }
 }

@@ -262,6 +262,23 @@ input[type="file"] {
     padding-left: 10px;
 }
 
+.downloadButton {
+    display: block;
+    /* margin: 0; */
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #6aca52;
+    color: white;
+    outline: none;
+    margin-top: 20px;
+}
+
+.downloadButton:hover {
+    background-color: #a6e795;
+}
+
 @media screen and (max-width: 600px) {
     .topnav a {
         display: none;

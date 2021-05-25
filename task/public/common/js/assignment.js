@@ -57,55 +57,34 @@ async function download(assignmentId) {
     }
 }
 
-function readyForDownload(assignmentId) {
+async function downloadFile(data) {
+    let encoding = await data.arrayBuffer()
+    let blob = new Blob([encoding]) //{ type: 'text/plain'}
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = "attachment.zip";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(a.href), 7000);
+}
+
+function fetchFile(assignmentId) {
     var url = new URL('http://localhost:8888/api/download')
     var params = { assignmentId: assignmentId }
-    url.search = new URLSearchParams(params).toString();
+    url.search = new URLSearchParams(params).toString()
     fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
+            method: "GET"
         })
         .then((response) => {
             console.log('resp', response);
-            console.log(response.text())
-            return response;
-        }).then(data => {
-            //process te file
-
-            // const text = await (new Response(data.blob)).blob();
-            // console.log(`bytes of file ${text}`)
-            //let encoding = await data.arrayBuffer()
-
-            //let blob = new Blob([encoding], { type: 'text/plain' });
-            // downloadFile(blob, "hello.txt")
-            // const url = window.URL.createObjectURL(blob);
-            // const a = document.createElement('a');
-            // a.style.display = 'none';
-            // a.href = url;
-            // // the filename you want
-            // a.download = "filename.txt";
-            // document.body.appendChild(a);
-            // a.click();
-            // document.body.removeChild(a);
-            // window.URL.revokeObjectURL(url);
-            // setTimeout(() => URL.revokeObjectURL(link.href), 7000);
+            return response
+        }).then((data) => {
+            downloadFile(data)
         }).catch(err => console.error(err));
-}
-
-
-const downloadFile = (blob, fileName) => {
-    const link = document.createElement('a');
-    // create a blobURI pointing to our Blob
-    link.href = URL.createObjectURL(blob);
-    link.download = fileName;
-    // some browser needs the anchor to be in the doc
-    document.body.append(link);
-    link.click();
-    link.remove();
-    // in case the Blob uses a lot of memory
-    setTimeout(() => URL.revokeObjectURL(link.href), 7000);
 }
 
 function fillAssignmentInfo(assignment) {
@@ -131,24 +110,20 @@ function fillAssignmentInfo(assignment) {
         var button = document.createElement('button')
         button.className = "downloadButton"
         button.innerHTML = "Download "
-        button.id = "downloadButton"
+        button.id = "downloadAssignment"
         var icon = document.createElement('i')
         icon.className = "fa fa-download"
         button.append(icon)
         parentElement.appendChild(button)
-
-        readyForDownload(localStorage.getItem("assignment"))
-            // document.getElementById("downloadButton").addEventListener("onclick", )
+        document.getElementById("downloadAssignment").onclick = function() { fetchFile(localStorage.getItem("assignment")) }
     }
 }
 
 
 const upload = (file, assignmentId, assignmentText, fileName) => {
     var url = new URL('http://localhost:8888/api/upload')
-
     var params = { assignmentId: assignmentId, assignmentText: assignmentText, fileName: fileName }
     url.search = new URLSearchParams(params).toString();
-    // alert(JSON.stringify(url))
     fetch(url, { // Your POST endpoint
         method: 'POST',
         body: file // This is your file object
@@ -164,7 +139,6 @@ const upload = (file, assignmentId, assignmentText, fileName) => {
 let submitForm = document.getElementById(`assignmentForm`)
 let assignmentTextField = document.getElementById(`assignmentText`)
 let fileInput = document.getElementById(`fileInput`)
-    // console.error(fileInput)
 submitForm.onsubmit = async(e) => {
     e.preventDefault();
     console.log(`form submit`)

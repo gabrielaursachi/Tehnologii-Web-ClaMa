@@ -342,11 +342,18 @@ function validatePresence(req, res) {
 }
 
 function newUpload(req, res) {
+
     var user = decryptToken(req)
-    console.log(`new assignment`)
     console.log(req.parameters)
 
     var fileName = req.parameters.fileName.substr(req.parameters.fileName.lastIndexOf("\\") + 1)
+    var extension = fileName.substring(fileName.indexOf('.') + 1);
+
+    if (extension != `zip`) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Only ZIP achive files are allowed` })
+        return
+    }
 
     if (user.userType === `student`) { //only assignments
         if (getUploadFile(req, res, fileName)) {
@@ -368,6 +375,18 @@ function downloadFile(req, res) {
     let user = decryptToken(req)
     if (req.parameters.assignmentId) {
         conn.getFileName(req.parameters.assignmentId, `assignment`, function(err, data) {
+            if (err) {
+                console.log(err.message)
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, { error: err.message })
+                return
+            }
+            sendDownloadFile(req, res, data.rows[0].files)
+        })
+    }
+
+    if (req.parameters.newsId) {
+        conn.getFileName(req.parameters.newsId, `news`, function(err, data) {
             if (err) {
                 console.log(err.message)
                 res.StatusCode = StatusCodes.BAD_REQUEST
