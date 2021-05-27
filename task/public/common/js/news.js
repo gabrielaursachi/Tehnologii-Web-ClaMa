@@ -19,14 +19,19 @@ function getClassNews() {
         .catch(err => { console.log(err) })
 }
 
-async function downloadFile(data) {
+async function downloadFile(data, filename) {
     let encoding = await data.arrayBuffer()
-    let blob = new Blob([encoding]) //{ type: 'text/plain'}
+    let blob = new Blob([encoding])
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = "extra.zip";
+    console.log(filename)
+    if (filename) {
+        a.download = filename.split("=")[1];
+    } else {
+        a.download = "extra.zip";
+    }
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -45,7 +50,8 @@ function fetchFile(newsId) {
             console.log('resp', response);
             return response
         }).then((data) => {
-            downloadFile(data)
+            console.log(data.headers.get(`Content-Disposition`))
+            downloadFile(data, data.headers.get(`Content-Disposition`))
         }).catch(err => console.error(err));
 }
 
@@ -56,8 +62,6 @@ function getnewsid(id) {
 function fillNewsSection(news) {
     var parentElement = document.getElementById("newPost")
     parentElement.className = "news"
-
-    let countNewsAttachements = 0
     for (var i = 0; i < news.news.length; i++) {
         var childElement = document.createElement('h1')
         childElement.innerHTML = news.news[i].title
@@ -67,19 +71,18 @@ function fillNewsSection(news) {
         body.innerHTML = news.news[i].body
         parentElement.appendChild(childElement)
         parentElement.appendChild(body)
-
         if (news.news[i].files != null) {
             var button = document.createElement('button')
             button.className = "downloadButton"
             button.innerHTML = "Download "
-            button.id = "downloadButton"
-            button.number = news.news[i].id
+            button.id = `${news.news[i].id}`
             var icon = document.createElement('i')
             icon.className = "fa fa-download"
             button.append(icon)
             body.appendChild(button)
-                // console.log(news.news[i].id)
-            button.onclick = getnewsid(news.news[i].id)
+            button.addEventListener(`click`, function(ev) {
+                fetchFile(this.id)
+            })
         }
     }
 }

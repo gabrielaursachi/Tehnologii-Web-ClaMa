@@ -23,15 +23,33 @@ function retrieveCourseData() {
 }
 
 function buildUpCourse(classInfo, classId) {
-
-    var enterCodeBox = document.createElement('input')
-    enterCodeBox.className = "classCode"
-    enterCodeBox.type = "text"
-    console.log(classInfo)
-
     document.getElementById("courseTitle").innerHTML = classInfo.title
     document.getElementById("teacherSite").innerHTML = classInfo.teacher_site
     document.getElementById("platforms").innerHTML = classInfo.other_platforms
     document.getElementById("schedule").innerHTML = classInfo.schedule
     document.getElementById("classId").innerHTML = classId
+    document.getElementById("code").innerHTML = classInfo.enter_code
+}
+
+function getCode(classId) {
+    var url = new URL('http://localhost:8888/api/start')
+    var params = { class: classId }
+    url.search = new URLSearchParams(params).toString();
+    fetch(url, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.code)
+            document.getElementById("code").innerHTML = data.code
+        })
+        .catch(
+            error => console.log(error)
+        );
+}
+
+let startButton = document.getElementById('startClass')
+startButton.onsubmit = async(e) => {
+    e.preventDefault();
+    getCode(localStorage.getItem("class"))
 }

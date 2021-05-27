@@ -38,14 +38,12 @@ module.exports = {
     newsModel: Joi.object().options({ abortEarly: false }).keys({
         newsTitle: Joi.string().required(),
         newsBodyInput: Joi.string().required(),
-        // files: J //?????
     }),
 
     assignmentModel: Joi.object().options({ abortEarly: false }).keys({
-        assignmentName: Joi.string().required(),
-        assignmentDeadlineDate: Joi.date().required(),
-        assignmentDeadlineHour: Joi.string().regex(/^([0-9]{2})\:([0-9]{2})$/).required(),
-        assignmentDescription: Joi.string().required(),
-        // files= //????
+        title: Joi.string().required(),
+        description: Joi.string().required(),
+        deadline_date: Joi.string().regex(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/).required(),
+        deadline_hour: Joi.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
     })
 }

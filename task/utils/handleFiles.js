@@ -32,19 +32,8 @@ sendDownloadFile = async(req, res, filename) => {
             return
         }
         res.StatusCode = StatusCodes.OK
-            // res.writeHead(StatusCodes.OK, {
-            //     'Content-Length': stat.size
-            // });
-
-        // var file = fs.readFileSync(filePath);
-        // res.setHeader('Content-Length', stat.size);
-        // res.write(file, 'binary');
-        // // console.log(file)
-        // res.end();
-
         var readableStream = fs.createReadStream(filePath).pipe(res);
     } catch (error) {
-        console.log('error @ handleFiles => download')
         console.log(error)
         console.log(error.message)
     }

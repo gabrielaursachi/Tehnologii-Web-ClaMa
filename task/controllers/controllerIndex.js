@@ -10,17 +10,11 @@ const parseCookies = require(`../utils/cookieParser`)
 const math = require('mathjs')
 const { getUploadFile, sendDownloadFile } = require('../utils/handleFiles')
 
-// function downloadFileMockup(req, res) {
-//     console.log(`merge`)
-//     sendFileToDownload(`assignment1`, res)
-// }
-
 function decryptToken(req) {
     var token = parseCookies.parseCookies(req);
     var data;
     try {
         data = jwt.verify(token.myCookie, config.secret)
-            // console.log(`decoded token: ${JSON.stringify(data)}`)
     } catch (error) {
         console.log(`no token provied. data: ${JSON.stringify(data)}`)
         return undefined
@@ -29,10 +23,8 @@ function decryptToken(req) {
 }
 
 function register(req, res) {
-    console.log(`register@controllerIndex`)
     json.requestJSON(req, res, function(recievedJSON) {
         const { error, value } = schemas.accountModel.validate(recievedJSON)
-            //value contine email+parola sau username+parola
         if (error) {
             res.statusCode = StatusCodes.BAD_REQUEST
             json.responseJSON(res, {
@@ -40,12 +32,6 @@ function register(req, res) {
             })
             return
         }
-        /*
-            redirect
-            response.writeHead(301,
-  {Location: 'http://whateverhostthiswillbe:8675/'+newRoom}
-);
-            */
         conn.checkIfUserExists(recievedJSON, function(err, data) {
             if (err) {
                 res.statusCode = StatusCodes.BAD_REQUEST
@@ -57,7 +43,6 @@ function register(req, res) {
             } else {
                 console.log("result from db is : ", data.rowCount);
                 if (data.rowCount == 1) {
-                    console.log('Unavailable username')
                     res.statusCode = 300;
                     json.responseJSON(res, {
                         registered: false,
@@ -73,7 +58,6 @@ function register(req, res) {
 }
 
 function authenticate(req, res) {
-    console.log(`authenticate@controllerIndex`)
     json.requestJSON(req, res, function(recievedJSON) {
         const { error, account } = schemas.authModel.validate(recievedJSON)
         if (error) {
@@ -89,7 +73,6 @@ function authenticate(req, res) {
 }
 
 function identifyUser(req, res) {
-    console.log(`identifyUser@ControllerIndex`)
     let data = decryptToken(req)
     conn.returnUserById(data.id, res)
 }
@@ -112,12 +95,21 @@ function homepage(req, res) {
 }
 
 function courseInfo(req, res) {
-    console.log(req.parameters.class)
+    if (!req.parameters.class) {
+        res.statusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Class parameter required!` })
+        return
+    }
     decryptToken(req);
     conn.findCourseInfoById(req.parameters.class, res)
 }
 
 function getStudentGrades(req, res) {
+    if (!req.parameters.class) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Class parameter required!` })
+        return
+    }
     let data = decryptToken(req);
     conn.getStudentGradesById(data.id, req.parameters.class, res)
 }
@@ -135,8 +127,6 @@ function settingsAccount(req, res) {
             return
         } else {
             //update checks
-            console.log(`@update checking`)
-            console.log(recievedJSON)
             conn.checkIfUsernameExists(recievedJSON, function(err, data) {
                 if (err) {
                     res.statusCode = StatusCodes.BAD_REQUEST
@@ -149,7 +139,6 @@ function settingsAccount(req, res) {
                     console.log("result from db is : ", data.rowCount);
                     if (data.rowCount == 1) {
                         if (data.rows[0].id != dataUser.id) {
-                            console.log('Unavailable username')
                             res.statusCode = 300;
                             json.responseJSON(res, {
                                 update: false,
@@ -170,7 +159,6 @@ function settingsAccount(req, res) {
                             console.log("result from db is : ", data.rowCount);
                             if (data.rowCount == 1) {
                                 if (data.rows[0].id != dataUser.id) {
-                                    console.log('Unavailable mail')
                                     res.statusCode = 300;
                                     json.responseJSON(res, {
                                         update: false,
@@ -197,7 +185,7 @@ function logout(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.write(JSON.stringify({
         authenticate: false,
-        message: `logged in`,
+        message: `logged out`,
         redirect: '/',
     }))
     res.end()
@@ -205,24 +193,42 @@ function logout(req, res) {
 
 function enterNewClass(req, res) {
     dataUser = decryptToken(req)
-    console.log('enter new class function ')
     json.requestJSON(req, res, function(recievedJSON) {
-        console.log(typeof recievedJSON.class)
         if (isNaN(`${recievedJSON.class}` + 1)) {
-            console.log("data is not an integer")
             res.statusCode = StatusCodes.BAD_REQUEST
             json.responseJSON(res, {
                 error: 'Invalid class code'
             })
             return
         } else {
-            conn.addRequestForClassSignUp(dataUser.id, recievedJSON.class, res)
+            conn.checkIfRequestExists(dataUser.id, recievedJSON.class, function(err, data) {
+                if (err) {
+                    res.statusCode = StatusCodes.BAD_REQUEST
+                    json.responseJSON(res, {
+                        error: err.message
+                    })
+                    console.log(err.message)
+                    return
+                }
+                if (data.rowCount == 0) {
+                    conn.addRequestForClassSignUp(dataUser.id, recievedJSON.class, res)
+                } else {
+                    res.StatusCode = StatusCodes.BAD_REQUEST
+                    json.responseJSON(res, { error: `Request has already been sent` })
+                    return
+                }
+            })
         }
     })
 }
 
 function getClassAssignments(req, res) {
     dataUser = decryptToken(req)
+    if (!req.parameters.class) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: 'Class paramter required!' })
+        return
+    }
     conn.getClassAssignments(dataUser.id, req.parameters.class, res)
 }
 
@@ -261,11 +267,9 @@ function checkCorecnessOfForumla(formula, components) {
                 math.evaluate(formula)
                 return true;
             default:
-                console.log(`default case`)
                 return false;
         }
     } catch (error) {
-        console.log(`error: ${JSON.stringify(error.message)}`)
         console.log(error)
         return false;
     }
@@ -273,15 +277,13 @@ function checkCorecnessOfForumla(formula, components) {
 
 function createNewClass(req, res) {
     let auth = decryptToken(req)
-    console.log(auth.type)
     if (auth.userType === `student`) {
-        res.StatusCode = StatusCodes.UNAUTHORIZED
+        res.StatusCode = StatusCodes.FORBIDDEN
         json.responseJSON(res, {
             error: `ACCESS UNAUTHORIZED`
         })
     }
     json.requestJSON(req, res, function(recievedJSON) {
-        console.log(recievedJSON)
         const { error, newClass } = schemas.classModel.validate(recievedJSON)
         if (error) {
             res.statusCode = StatusCodes.BAD_REQUEST
@@ -302,6 +304,11 @@ function createNewClass(req, res) {
 }
 
 function getAssignment(req, res) {
+    if (!req.parameters.id) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Paramter id required!` })
+        return
+    }
     let data = decryptToken(req)
     conn.getAssignmentInfo(req.parameters.id, res)
 }
@@ -319,16 +326,32 @@ function getAllStudentAssignment(req, res) {
 
 function getClassCatalog(req, res) {
 
+    if (!req.parameters.class) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Paramter class required!` })
+        return
+    }
     let user = decryptToken(req)
     conn.getClassCatalog(user.id, req.parameters.class, res)
 }
 
 function getNews(req, res) {
+    if (!req.parameters.class) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Paramter class required!` })
+        return
+    }
     let user = decryptToken(req)
     conn.getClassNews(req.parameters.class, res)
 }
 
 function validatePresence(req, res) {
+
+    if (!req.parameters.class) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Paramter class required!` })
+        return
+    }
     let user = decryptToken(req)
     if (user.userType === `student`) {
         json.requestJSON(req, res, function(recievedJSON) {
@@ -346,18 +369,29 @@ function newUpload(req, res) {
     var user = decryptToken(req)
     console.log(req.parameters)
 
-    var fileName = req.parameters.fileName.substr(req.parameters.fileName.lastIndexOf("\\") + 1)
-    var extension = fileName.substring(fileName.indexOf('.') + 1);
-
-    if (extension != `zip`) {
-        res.StatusCode = StatusCodes.BAD_REQUEST
-        json.responseJSON(res, { error: `Only ZIP achive files are allowed` })
-        return
+    var fileName
+    if (req.parameters.fileName) {
+        fileName = req.parameters.fileName.substr(req.parameters.fileName.lastIndexOf("\\") + 1)
     }
 
     if (user.userType === `student`) { //only assignments
+        if (!(req.parameters.assignmentId)) {
+            res.StatusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, { error: `Parameter assignmentId required!` })
+            return
+        }
+        if (fileName === '') {
+            if (req.parameters.assignmentText === '') {
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, {
+                    error: `Cannot send empty assignment...`
+                })
+                return
+            }
+            conn.turnInAssignment(user.id, req.parameters.assignmentId, req.parameters.assignmentText, fileName, res)
+            return
+        } else
         if (getUploadFile(req, res, fileName)) {
-            console.log(`succesfully uploaded files`)
             conn.turnInAssignment(user.id, req.parameters.assignmentId, req.parameters.assignmentText, fileName, res)
             return
         }
@@ -365,14 +399,87 @@ function newUpload(req, res) {
         json.responseJSON(res, { error: 'turning in assignment went wrong...try again' })
         return
     }
+
+    if (user.userType === `profesor`) {
+        if (!req.parameters.classId) {
+            res.StatusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, { error: `Parameter classId required!` })
+            return
+        }
+        if (!req.parameters.title) {
+            res.StatusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, { error: `Parameter title required!` })
+            return
+        }
+        if (!req.parameters.description) {
+            res.StatusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, { error: `Parameter description required!` })
+            return
+        }
+
+        if ((!req.parameters.deadline_date && req.parameters.deadline_hour) || (req.parameters.deadline_date && !req.parameters.deadline_hour)) {
+            res.StatusCode = StatusCodes.BAD_REQUEST
+            json.responseJSON(res, { error: `Parameter deadline_date or deadline_hour missing!` })
+            return
+        }
+
+        if (req.parameters.deadline_date && req.parameters.deadline_hour) {
+            //assignment
+            var assignment = {
+                title: req.parameters.title,
+                description: req.parameters.description,
+                deadline_date: req.parameters.deadline_date,
+                deadline_hour: req.parameters.deadline_hour
+            }
+            const { error, value } = schemas.assignmentModel.validate(assignment)
+            if (error) {
+                res.statusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, {
+                    error: error.message
+                })
+                return
+            }
+
+            var deadline = req.parameters.deadline_date + ' ' + req.parameters.deadline_hour + ':00'
+            if (fileName === '') {
+                if (req.parameters.description === '') {
+                    res.StatusCode = StatusCodes.BAD_REQUEST
+                    json.responseJSON(res, {
+                        error: `Cannot create empty assignment...`
+                    })
+                    return
+                }
+                conn.createAssignment(req.parameters.classId, user.id, req.parameters.title, req.parameters.description, deadline, req.parameters.fileName, res)
+                return
+            } else
+            if (getUploadFile(req, res, fileName)) {
+                conn.createAssignment(req.parameters.classId, user.id, req.parameters.title, req.parameters.description, deadline, req.parameters.fileName, res)
+                return
+            }
+            res.StatusCode = StatusCodes.EXPECTATION_FAILED
+            json.responseJSON(res, { error: 'creating assignment went wrong...try again' })
+            return
+        }
+
+        //news
+        res.StatusCode = StatusCodes.OK
+        json.responseJSON(res, { message: 'this is news route' })
+
+    }
     /*
-    TO DO : profesor => upload news + assignment => 2 rute diferite
+    TO DO : profesor => upload news 
     */
 }
 
-
 function downloadFile(req, res) {
     let user = decryptToken(req)
+
+    if (!req.parameters.assignmentId && !req.parameters.newsId) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Parameter assignmentId or newsId required!` })
+        return
+    }
+
     if (req.parameters.assignmentId) {
         conn.getFileName(req.parameters.assignmentId, `assignment`, function(err, data) {
             if (err) {
@@ -381,10 +488,20 @@ function downloadFile(req, res) {
                 json.responseJSON(res, { error: err.message })
                 return
             }
+            if (data.rowCount == 0) {
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, { error: `Assignemnt with id ${req.parameters.assignmentId} not found` })
+                return
+            }
+            if (data.rows[0].files == null || data.rows[0].files === '') {
+                res.StatusCode = StatusCodes.NOT_FOUND
+                json.responseJSON(res, { error: 'No files' })
+                return
+            }
+            res.setHeader(`Content-Disposition`, `filename=${data.rows[0].files}`)
             sendDownloadFile(req, res, data.rows[0].files)
         })
     }
-
     if (req.parameters.newsId) {
         conn.getFileName(req.parameters.newsId, `news`, function(err, data) {
             if (err) {
@@ -393,9 +510,35 @@ function downloadFile(req, res) {
                 json.responseJSON(res, { error: err.message })
                 return
             }
+            if (data.rowCount == 0) {
+                res.StatusCode = StatusCodes.BAD_REQUEST
+                json.responseJSON(res, { error: `Assignemnt with id ${req.parameters.assignmentId} not found` })
+                return
+            }
+            if (data.rows[0].files == null || data.rows[0].files === '') {
+                res.StatusCode = StatusCodes.NOT_FOUND
+                json.responseJSON(res, { error: 'No files' })
+                return
+            }
+            res.setHeader(`Content-Disposition`, `filename=${data.rows[0].files}`)
             sendDownloadFile(req, res, data.rows[0].files)
         })
     }
+}
+
+function start(req, res) {
+    user = decryptToken(req)
+    if (user.userType != 'profesor') {
+        res.StatusCode = StatusCodes.FORBIDDEN
+        json.responseJSON(res, { error: 'UNAUTHORIZED - Teachers only' })
+        return
+    }
+    if (!req.parameters.class) {
+        res.StatusCode = StatusCodes.BAD_REQUEST
+        json.responseJSON(res, { error: `Paramter class required!` })
+        return
+    }
+    conn.changeCode(req.parameters.class, Math.random().toString(36).slice(-5), res)
 }
 
 module.exports = {
@@ -416,5 +559,6 @@ module.exports = {
     getNews,
     validatePresence,
     downloadFile,
-    newUpload
+    newUpload,
+    start
 }

@@ -57,14 +57,18 @@ async function download(assignmentId) {
     }
 }
 
-async function downloadFile(data) {
+async function downloadFile(data, filename) {
     let encoding = await data.arrayBuffer()
     let blob = new Blob([encoding]) //{ type: 'text/plain'}
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = "attachment.zip";
+    if (filename) {
+        a.download = filename.split("=")[1];
+    } else {
+        a.download = "attachment.zip";
+    }
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -83,7 +87,7 @@ function fetchFile(assignmentId) {
             console.log('resp', response);
             return response
         }).then((data) => {
-            downloadFile(data)
+            downloadFile(data, data.headers.get(`Content-Disposition`))
         }).catch(err => console.error(err));
 }
 
@@ -105,7 +109,7 @@ function fillAssignmentInfo(assignment) {
     extra.innerHTML = assignment.body
 
     var parentElement = document.getElementById("assignmentInfo")
-    if (assignment.files != null) {
+    if (assignment.files != null && assignment.files != '') {
         console.log(`create button`)
         var button = document.createElement('button')
         button.className = "downloadButton"
@@ -124,15 +128,15 @@ const upload = (file, assignmentId, assignmentText, fileName) => {
     var url = new URL('http://localhost:8888/api/upload')
     var params = { assignmentId: assignmentId, assignmentText: assignmentText, fileName: fileName }
     url.search = new URLSearchParams(params).toString();
-    fetch(url, { // Your POST endpoint
+    fetch(url, {
         method: 'POST',
-        body: file // This is your file object
+        body: file // file object
     }).then(
-        response => response.json() // if the response is a JSON object
+        response => response.json()
     ).then(
-        success => console.log(success) // Handle the success response object
+        success => console.log(success)
     ).catch(
-        error => console.log(error) // Handle the error response object
+        error => console.log(error)
     );
 };
 

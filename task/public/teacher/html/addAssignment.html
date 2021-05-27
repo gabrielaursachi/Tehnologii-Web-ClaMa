@@ -29,43 +29,34 @@
     </div>
 
     <div class="submitArea">
-        <form action="profClass.html">
-
+        <form action="http://localhost:8888/api/create-assignment" method="POST" id="newAssignment">
             <p>
                 <b>Add new assignment</b>
             </p>
-
             <textarea id="assignmentName" name="assignmentName" rows="1" cols="60" placeholder="Enter the assignment title..." required></textarea>
-
             <label for="assignmentDeadlineDate"><b>Select the date of the deadline:</b></label>
             <input type="date" id="assignmentDeadlineDate" name="assignmentDeadlineDate" required>
-
             <br>
             <br>
-
             <label for="assignmentDeadlineHour"><b>Select the hour of the deadline:</b></label>
             <input type="time" name="assignmentDeadlineHour" id="assignmentDeadlineHour" min="00:00" max="23:59" required>
-
             <br>
             <br>
-
             <textarea id="assignmentDescription" name="assignmentDescription" rows="8" cols="60" placeholder="Enter the assignment description..." required></textarea>
-
-
             <label for="files">Upload your files:</label>
-            <input type="file" id="files" name="files" multiple>
+            <input type="file" id="fileInput" name="files">
             <br>
             <br>
-
-            <button type="submit" class="assignmentButton" onclick="javascript:eraseText();">Add</button>
+            <button type="submit" class="assignmentButton">Add</button>
+            <!-- onclick="javascript:eraseText();" -->
         </form>
-
     </div>
 
     <div class="endOfPage"></div>
 
     <script src="../js/functions.js"></script>
     <script src="../../common/js/logout.js"></script>
+    <script src="../../common/js/createNewAssignment.js"></script>
 </body>
 
 </html>
