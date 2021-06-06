@@ -19,7 +19,8 @@
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
+            width="130" height="65">
 
     </div>
 
@@ -37,47 +38,27 @@
 
 
             <table class="catalog" id="catalog">
-
-                <!-- <tr>
-                    <th>Name</th>
-                    <th>Presences</th>
-                    <th>C1</th>
-                    <th>C2</th>
-                    <th>C3</th>
-                    <th>Bonus</th>
-                    <th>Final grade</th>
-                </tr>
-
-                <tr>
-                    <td>Zet Teodor</td>
-                    <td>14</td>
-                    <td contenteditable='true'>8</td>
-                    <td contenteditable='true'>9</td>
-                    <td contenteditable='true'>10</td>
-                    <td contenteditable='true'>0.5</td>
-                    <td class="finalGrade"> 9.5</td>
-                </tr>
-
-                <tr>
-                    <td>Ursachi Gabriela</td>
-                    <td>14</td>
-                    <td contenteditable='true'>9</td>
-                    <td contenteditable='true'>9</td>
-                    <td contenteditable='true'>10</td>
-                    <td contenteditable='true'>0.5</td>
-                    <td class="finalGrade"> 9.83</td>
-                </tr> -->
-
             </table>
 
-            <button type="submit" class="submitNewsButton">
+            <button onclick="saveCatalog()" type="submit" class="submitNewsButton">
                 Save catalog
+            </button>
+            <button onclick="exportCSV()" type="button" class="submitNewsButton">
+                Export as CSV
+            </button>
+            <button onclick="exportHTML()" type="button" class="submitNewsButton">
+                Export as HTML
+            </button>
+            <button onclick="exportPDF()" value="Export" type="button" class="submitNewsButton">
+                Export as PDF
             </button>
         </form>
 
 
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
     <script src="../js/functions.js"></script>
     <script src="../../common/js/logout.js"></script>
     <script src="../../common/js/catalog.js"></script>

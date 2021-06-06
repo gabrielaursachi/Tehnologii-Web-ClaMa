@@ -1,5 +1,5 @@
 let registerForm = document.getElementById(`newClassForm`)
-registerForm.onsubmit = async(e) => {
+registerForm.onsubmit = async (e) => {
     e.preventDefault();
     createClass();
 }
@@ -23,19 +23,22 @@ function createClass() {
     }
     console.log(newClass)
     fetch('/api/create-class', {
-            method: "POST",
-            body: JSON.stringify(newClass),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
+        method: "POST",
+        body: JSON.stringify(newClass),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {
                 console.log(json)
-                    // location.href = "http://localhost:8888/teacher/html/profHomePage.html"
+                // location.href = "http://localhost:8888/teacher/html/profHomePage.html"
             }
         })
         .catch(err => { console.log(err) })

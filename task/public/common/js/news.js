@@ -2,15 +2,18 @@ getClassNews()
 
 function getClassNews() {
     fetch('/api/news?class=' + localStorage.getItem("class"), {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(json.error);
             } else {
                 fillNewsSection(json)
@@ -44,8 +47,8 @@ function fetchFile(newsId) {
     var params = { newsId: newsId }
     url.search = new URLSearchParams(params).toString()
     fetch(url, {
-            method: "GET"
-        })
+        method: "GET"
+    })
         .then((response) => {
             console.log('resp', response);
             return response
@@ -71,7 +74,7 @@ function fillNewsSection(news) {
         body.innerHTML = news.news[i].body
         parentElement.appendChild(childElement)
         parentElement.appendChild(body)
-        if (news.news[i].files != null) {
+        if ((news.news[i].files != null) && news.news[i].files != '') {
             var button = document.createElement('button')
             button.className = "downloadButton"
             button.innerHTML = "Download "
@@ -80,7 +83,7 @@ function fillNewsSection(news) {
             icon.className = "fa fa-download"
             button.append(icon)
             body.appendChild(button)
-            button.addEventListener(`click`, function(ev) {
+            button.addEventListener(`click`, function (ev) {
                 fetchFile(this.id)
             })
         }

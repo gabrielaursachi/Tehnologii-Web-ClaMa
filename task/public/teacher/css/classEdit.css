@@ -220,6 +220,48 @@ select {
     padding: 0.1%;
 }
 
+
+.fa-info-circle  {
+    color: black;
+}
+
+.fa-info-circle .formulaTip {
+    visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -115px;
+}
+
+.fa-info-circle .formulaTip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 70%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.formulaTip .show {
+  visibility: visible;
+}
+
+input#classFormula:hover + span#formulaTip {
+    display: inline;
+}
+input#classFormula:focus + span#formulaTip {
+    display: inline;
+}
+
 @media screen and (max-width: 600px) {
     .topnav a {
         display: none;
@@ -246,6 +288,19 @@ select {
     .newClass .classRect {
         width: 70%;
     }
+    .tip {
+        position: relative;
+        margin-left: 70%;
+    }
+
+    .tip .formulaTip {
+        margin-left: -105px;
+    }
+
+    .tip .formulaTip::after {
+        left: 50%;
+    }
+
 }
 
 @media screen and (max-width: 600px) {

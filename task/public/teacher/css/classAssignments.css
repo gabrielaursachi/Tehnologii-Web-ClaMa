@@ -10,6 +10,10 @@
     float: left;
 }
 
+h1 {
+    text-align: center;
+}
+
 .topnav a {
     display: inline-block;
     color: whitesmoke;
@@ -17,7 +21,7 @@
     padding: 23px 24px;
     text-decoration: none;
     font-size: 18px;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 .topnav a:hover {
@@ -38,9 +42,103 @@ body {
     padding: 0;
     margin: 0;
     background-color: whitesmoke;
-    /* background-image: url("file:///C:/Users/eu/Downloads/Pattern-Randomized.svg"); */
     background-repeat: repeat-y;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.assignmentInfo>h1 {
+    padding: 20px;
+    background-color: whitesmoke;
+    border-bottom: 0.8px solid #59A2CE;
+    vertical-align: middle;
+}
+
+.assignmentInfo>.general {
+    padding: 20px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+}
+
+.assignmentInfo>.extra {
+    padding: 20px;
+    padding-top: 0;
+    margin-left: 20px;
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+}
+
+
+/* .assignmentInfo {
+    height: fit-content;
+    margin: auto;
+    position: relative;
+    background-color: whitesmoke;
+    border-bottom: 0.8px solid #59A2CE;
+    padding: 10px;
+} */
+
+.submitArea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 300px;
+    padding-left: 30px;
+    border-top: 0.8px solid #59A2CE;
+}
+
+textarea {
+    outline: none;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    border: 2px solid #cccccc;
+    resize: none;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.35);
+    padding: 10px;
+    margin-top: 35px;
+}
+
+textarea:focus {
+    outline-color: #2588d8;
+}
+
+.assignmentButton {
+    display: block;
+    margin: 0;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #2588d8;
+    color: white;
+    outline: none;
+}
+
+.assignmentButton:hover {
+    background-color: rgb(140, 185, 223);
+}
+
+.files {
+    padding-left: 5px;
+    border: none;
+    color: black;
+    outline: none;
+    cursor: pointer;
+}
+
+.predefined {
+    /* padding: 10px; */
+    display: block;
+    color: #596faa;
+}
+
+.customInfo {
+    color: #0a1840;
+    /* display: flexbox; */
+    display: inline-block;
+    padding-left: 5px;
 }
 
 .header {
@@ -53,27 +151,6 @@ body {
     z-index: 1;
     text-align: center;
     border-bottom: 0.8px solid #59A2CE;
-}
-
-.generalInfo {
-    height: fit-content;
-    margin: auto;
-    position: relative;
-    background-color: whitesmoke;
-    /* padding: 20px; */
-}
-
-.predefined {
-    padding: 10px;
-    display: block;
-    color: #596faa;
-    margin-left: 2%;
-    font-size: 20px;
-}
-
-.generalInfo form {
-    margin-left: 2%;
-    margin-right: 2%;
 }
 
 .listOfRequests {
@@ -128,184 +205,72 @@ body {
     margin-bottom: auto;
 }
 
+.assignmentInfo {
+    border-bottom: 0.8px solid #59A2CE;
+}
+
+.assignmentInfo>h1 {
+    padding: 20px;
+    background-color: whitesmoke;
+    border-bottom: 0.8px solid #59A2CE;
+    vertical-align: middle;
+}
+
+.assignmentInfo>.general {
+    padding: 20px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+}
+
+.assignmentInfo>.extra {
+    padding: 20px;
+    padding-top: 0;
+    margin-left: 20px;
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+}
+
+
+.files {
+    padding-left: 5px;
+    border: none;
+    color: black;
+    outline: none;
+    cursor: pointer;
+}
+
+.predefined {
+    /* padding: 10px; */
+    display: block;
+    color: #596faa;
+}
+
 .customInfo {
     color: #0a1840;
+    /* display: flexbox; */
     display: inline-block;
     padding-left: 5px;
 }
 
-input[type="text"] {
-    background-color: rgba(241, 245, 247, 0.904);
-    padding: 0;
-    border: none;
-    width: 200px;
-    height: 25px;
-    border-radius: 10px;
-    outline-color: #59A2CE;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
-}
-
-.news {
-    height: fit-content;
-    border-bottom: 0.8px solid #b1b5b8;
-}
-
-h1 {
-    padding-left: 20px;
-    color: #0a1840;
-}
-
-p.newsBody {
-    padding: 10px;
-    color: black;
-}
-
-.assignments {
-    width: 97%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: transparent;
-    background-size: cover;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    padding-bottom: 20px;
-    border-bottom: 0.8px solid #b1b5b8;
-}
-
-.assignments .assignment_container {
-    box-sizing: border-box;
-    width: 55%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-    border-radius: 50px;
-    color: rgb(0, 0, 0);
-    box-shadow: 3px 3px 8px #b8b2b2;
-    background-color: #e5ffe5;
-    background-color: transparent;
-    cursor: pointer;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
-    border: none;
-    text-decoration: none;
-    margin-bottom: 30px;
-}
-
-.assignments .assignment_container:hover {
-    transform: scale(1.015);
-}
-
-.assignmentTitle {
-    text-align: center;
-    padding: 15px;
-    background: #ffd57e;
-    color: black;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
-}
-
-.assignmentInfo {
-    text-align: left;
-    padding: 25px;
-    background-color: #fff6e5;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    /* margin-bottom: 40px; */
-    text-decoration: none;
-    border: .0625rem solid rgba(145, 140, 140, 0.829);
-}
-
-.classToolBar {
-    display: flex;
-    flex-direction: row;
-}
-
-.classToolBar a {
-    text-decoration: none;
-}
-
-.classButton {
-    background-color: #59A2CE;
-    color: white;
-    padding: 12px 10px;
-    margin: 20px 0;
-    cursor: pointer;
-    width: fit-content;
-    text-align: center;
-    font-size: 70%;
-    opacity: 0.9;
-    border: none;
+.downloadButton {
     display: block;
+    /* margin: 0; */
+    padding: 15px 20px;
+    cursor: pointer;
     border-radius: 10px;
-    outline: whitesmoke;
-    margin-left: 20px;
+    border: none;
+    background-color: #2588d8;
+    color: white;
+    outline: none;
+    margin-left: 35px;
+    margin-bottom: 35px;
 }
 
-.classButton:hover {
+.downloadButton:hover {
     background-color: rgb(140, 185, 223);
-}
-
-.news {
-    height: fit-content;
-    margin: auto;
-    position: relative;
-    background-color: whitesmoke;
-}
-
-.addNews {
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-}
-
-.newsTitle {
-    display: block;
-    box-sizing: border-box;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 5px;
-    border: 2px solid #cccccc;
-    resize: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.35);
-    padding: 10px;
-}
-
-.newsBodyInput {
-    outline: none;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 10px;
-    border: 2px solid #cccccc;
-    resize: none;
-    padding: 10px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.35);
-}
-
-.submitNewsButton {
-    background-color: #59A2CE;
-    color: white;
-    cursor: pointer;
-    padding: 12px 17px;
-    opacity: 0.9;
-    border: none;
-    display: block;
-    border-radius: 10px;
-    outline: whitesmoke;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.submitNewsButton:hover {
-    background-color: #6aca52;
-}
-
-label[for="files"],
-input[type="file"] {
-    display: inline-block;
 }
 
 @media screen and (max-width: 600px) {

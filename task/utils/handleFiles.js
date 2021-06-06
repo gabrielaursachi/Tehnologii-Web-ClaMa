@@ -2,7 +2,9 @@ const { parse } = require('querystring');
 const fs = require('fs')
 const path = require('path');
 const { StatusCodes } = require('http-status-codes');
-getUploadFile = async(req, res, filename) => {
+getUploadFile = async (req, res, filename) => {
+    
+    
     const writeStream = fs.createWriteStream(`./user_files/${filename}`);
     req.on('data', chunk => {
         writeStream.write(chunk);

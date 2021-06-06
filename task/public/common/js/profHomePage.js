@@ -3,15 +3,18 @@ handleJWT()
 function handleJWT() {
     console.log(`redirect@auth`)
     fetch('/api/user', {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {
@@ -25,11 +28,11 @@ function handleJWT() {
 function redirectToHomePage(user) {
     console.log(`redirectToHomePage@auth`)
     fetch('/api/homepage', {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
@@ -88,7 +91,7 @@ function buildUpHomePage(classes) {
     for (i = 0; i < myClasses.childNodes.length; i++) {
         console.log(myClasses.childNodes[i].classID)
         let classID = myClasses.childNodes[i].classID
-        myClasses.childNodes[i].onclick = function() {
+        myClasses.childNodes[i].onclick = function () {
             console.log(`clicked class wiht id ` + classID)
             localStorage.setItem("class", classID)
         }

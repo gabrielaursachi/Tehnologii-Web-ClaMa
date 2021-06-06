@@ -262,7 +262,7 @@ p.newsBody {
     padding: 12px 17px;
     opacity: 0.9;
     border: none;
-    display: block;
+    display: inline-block;
     border-radius: 10px;
     outline: whitesmoke;
     margin-top: 20px;

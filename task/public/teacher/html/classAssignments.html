@@ -19,21 +19,35 @@
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
+            width="130" height="65">
 
     </div>
 
-    <div class="header" id="myHeader">
-        <!-- upper border -->
-        <b>Web Technologies</b>
+    <div class="assignmentInfo" id="assignmentInfo">
+
+        <div class="header" id="myHeader">
+            <b id="assignmentTitle"> </b>
+        </div>
+        <div class="general" id="general">
+            <p class="predefined">Author: <span class="customInfo" id="teacher"></span></p>
+
+            <p class="predefined">Posted at: <span class="customInfo" id="postedAt"></span></p>
+
+            <p class="predefined">Deadline: <span class="customInfo" id="deadline"></span></p>
+
+        </div>
+        <div class="extra">
+            <p class="predefined "> Other details: <span class="customInfo" id="assignmentBody"></span></p>
+        </div>
     </div>
 
 
-    <div class="generalInfo" id="general">
+    <div class="assignments" id="assignments">
 
-        <div class="listOfRequests">
+        <div class="listOfRequests" id="listOfRequests">
 
-            <a href="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" download>
+            <!-- <a href="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" download>
                 <div class="request">
 
                     <br>
@@ -82,7 +96,7 @@
                 <p>Imi pare rau dar nu am reusit sa rezolv laboratorul. Promit sa il trimit pe urmatorul.</p>
 
                 <br>
-            </div>
+            </div> -->
 
 
         </div>
@@ -92,6 +106,8 @@
 
     <script src="../js/functions.js"></script>
     <script src="../../common/js/logout.js"></script>
+    <script src="../../common/js/profAssignment.js"></script>
+    <script src="../../common/js/assignmentsFromAssignment.js"></script>
 
 </body>
 

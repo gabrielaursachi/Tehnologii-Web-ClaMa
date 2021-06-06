@@ -19,7 +19,8 @@
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
+            width="130" height="65">
 
     </div>
 
@@ -31,7 +32,8 @@
                 <div class="classSeparator"></div>
             </div>
             <div class="bottomOfRect">
-                <form action="profHomePage.html">
+                <form action="profHomePage.html" id="updateClass">
+                    <p id="requestMessage"></p>
                     <p>
                         <label for="className"><b>Class name:</b></label>
                         <input type="text" name="className" id="className" required placeholder="Class title">
@@ -73,6 +75,13 @@
                     <p>
                         <label for="classFormula"><b>Final grade formula:</b></label>
                         <input type="text" name="classFormula" id="classFormula" placeholder="Ex: (C1+C2+C3)/3">
+                        <i class="fa fa-info-circle" aria-hidden="true" onclick="showTip()">
+                            <span class="formulaTip" id="formulaTip">Formula should countain letters from a-e
+                                representing
+                                the components in
+                                order,
+                                and mathematical symbols</span>
+                        </i>
                     </p>
                     <p>
                         <label for="classOtherPlatforms"><b>Other platforms:</b></label>
@@ -89,6 +98,7 @@
 
     <script src="../js/functions.js"></script>
     <script src="../../common/js/logout.js"></script>
+    <script src="../../common/js/loadClass.js"></script>
 </body>
 
 </html>

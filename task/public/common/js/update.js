@@ -2,16 +2,19 @@ getAccountInfo()
 
 function getAccountInfo() {
     fetch('/api/user', {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
                 ///////////////////////////
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
 
@@ -27,12 +30,12 @@ function fillForm(user) {
     document.getElementById(`firstName`).value = user.surname
     document.getElementById(`lastName`).value = user.name
     document.getElementById(`username`).value = user.username
-        // document.getElementById(`password`).value = 'password'
+    // document.getElementById(`password`).value = 'password'
     document.getElementById(`email`).value = user.email
 }
 
 let updateForm = document.getElementById(`updateForm`)
-updateForm.onsubmit = async(e) => {
+updateForm.onsubmit = async (e) => {
     e.preventDefault();
     updateUser();
 }
@@ -48,12 +51,12 @@ function updateUser() {
     }
     console.log(updatedAccount)
     fetch('/api/update', {
-            method: "POST",
-            body: JSON.stringify(updatedAccount),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "PUT",
+        body: JSON.stringify(updatedAccount),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)

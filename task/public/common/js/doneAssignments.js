@@ -2,15 +2,18 @@ getAssignments()
 
 function getAssignments() {
     fetch('/api/all-assignments', {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {
@@ -73,7 +76,7 @@ function showAllAssignments(assignments) {
     var myAssignments = document.getElementById('myAssignments')
     for (i = 0; i < myAssignments.childNodes.length; i++) {
         let assignmentID = myAssignments.childNodes[i].assignmentID
-        myAssignments.childNodes[i].onclick = function() {
+        myAssignments.childNodes[i].onclick = function () {
             console.log(`clicked assignment with id ` + assignmentID)
             localStorage.setItem("assignment", assignmentID)
         }

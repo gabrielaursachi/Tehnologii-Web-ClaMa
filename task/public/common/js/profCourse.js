@@ -1,18 +1,19 @@
 retrieveCourseData()
 
 function retrieveCourseData() {
-
-    console.log(localStorage.getItem("class"))
     fetch('/api/course?class=' + localStorage.getItem("class"), {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {
@@ -36,8 +37,8 @@ function getCode(classId) {
     var params = { class: classId }
     url.search = new URLSearchParams(params).toString();
     fetch(url, {
-            method: 'GET',
-        })
+        method: 'PUT',
+    })
         .then(response => response.json())
         .then(data => {
             console.log(data.code)
@@ -49,7 +50,7 @@ function getCode(classId) {
 }
 
 let startButton = document.getElementById('startClass')
-startButton.onsubmit = async(e) => {
+startButton.onsubmit = async (e) => {
     e.preventDefault();
     getCode(localStorage.getItem("class"))
 }

@@ -15,11 +15,11 @@ class WebApp {
         this.router = router
     }
 
-    use() {}
+    use() { }
 
     listen() {
         var app = this
-        var server = http.createServer(function(req, res) {
+        var server = http.createServer(function (req, res) {
             if (req.url.startsWith("/api")) {
                 if (!req.url.startsWith("/api/auth") && !req.url.startsWith("/api/register")) {
                     console.log(`${req.method} ${req.url} auth required`);
@@ -61,7 +61,7 @@ class WebApp {
                 const ext = path.parse(pathname).ext;
 
                 console.log(`STATIC HANDLE` + pathname)
-                    // maps file extention to MIME typere
+                // maps file extention to MIME typere
                 const map = {
                     '.ico': 'image/x-icon',
                     '.html': 'text/html',
@@ -77,7 +77,9 @@ class WebApp {
                     '.doc': 'application/msword'
                 };
 
-                fs.exists(pathname, function(exist) {
+
+
+                fs.exists(pathname, function (exist) {
                     if (!exist) {
                         // if the file is not found, return 404
                         res.statusCode = 404;
@@ -98,7 +100,7 @@ class WebApp {
                     }
 
                     // read file from file system
-                    fs.readFile(pathname, function(err, data) {
+                    fs.readFile(pathname, function (err, data) {
                         if (err) {
                             res.statusCode = 500;
                             res.end(`Error getting the file: ${err}.`);

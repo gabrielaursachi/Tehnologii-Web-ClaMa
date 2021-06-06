@@ -2,15 +2,18 @@ assignmentInfo()
 
 function assignmentInfo() {
     fetch('/api/assignment?id=' + localStorage.getItem("assignment"), {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {
@@ -21,45 +24,9 @@ function assignmentInfo() {
         .catch(err => { console.log(err) })
 }
 
-async function download(assignmentId) {
-    try {
-        var url = new URL('http://localhost:8888/api/download')
-        var params = { assignmentId: assignmentId }
-        url.search = new URLSearchParams(params).toString();
-        const res = await fetch(url, {
-            method: 'GET'
-        })
-        const content = await res.body;
-        const reader = content.getReader()
-
-
-
-        // const stream = new content.Readable() // any Node.js readable stream
-        // const blob = await streamToBlob(stream)
-        // console.log(blob)
-        // console.log(`data retrieved is  ${blob}`)
-
-        // const newBlob = new Blob([blob]);
-        // const blobUrl = window.URL.createObjectURL(newBlob);
-
-
-        // const link = document.createElement('a');
-        // link.href = blobUrl;
-        // link.setAttribute('download', `file.txt`);
-        // // link.setAttribute('download', `${filename}.${extension}`);
-        // document.body.appendChild(link);
-        // link.click();
-        // link.parentNode.removeChild(link);
-        // window.URL.revokeObjectURL(blob);
-
-    } catch (error) {
-        console.error(error)
-    }
-}
-
 async function downloadFile(data, filename) {
     let encoding = await data.arrayBuffer()
-    let blob = new Blob([encoding]) //{ type: 'text/plain'}
+    let blob = new Blob([encoding])
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.style.display = 'none';
@@ -81,8 +48,8 @@ function fetchFile(assignmentId) {
     var params = { assignmentId: assignmentId }
     url.search = new URLSearchParams(params).toString()
     fetch(url, {
-            method: "GET"
-        })
+        method: "GET"
+    })
         .then((response) => {
             console.log('resp', response);
             return response
@@ -119,10 +86,9 @@ function fillAssignmentInfo(assignment) {
         icon.className = "fa fa-download"
         button.append(icon)
         parentElement.appendChild(button)
-        document.getElementById("downloadAssignment").onclick = function() { fetchFile(localStorage.getItem("assignment")) }
+        document.getElementById("downloadAssignment").onclick = function () { fetchFile(localStorage.getItem("assignment")) }
     }
 }
-
 
 const upload = (file, assignmentId, assignmentText, fileName) => {
     var url = new URL('http://localhost:8888/api/upload')
@@ -134,16 +100,27 @@ const upload = (file, assignmentId, assignmentText, fileName) => {
     }).then(
         response => response.json()
     ).then(
-        success => console.log(success)
+        success => {
+            console.log(success)
+            if (success.message) {
+                document.getElementById("requestMessage").innerHTML = success.message
+                document.getElementById("requestMessage").style = "color : green; font-size: 20px"
+            } else {
+                document.getElementById("requestMessage").innerHTML = success.error
+                document.getElementById("requestMessage").style = "color : red; font-size: 20px"
+            }
+        }
     ).catch(
-        error => console.log(error)
+        error => {
+            console.log(error)
+        }
     );
 };
 
 let submitForm = document.getElementById(`assignmentForm`)
 let assignmentTextField = document.getElementById(`assignmentText`)
 let fileInput = document.getElementById(`fileInput`)
-submitForm.onsubmit = async(e) => {
+submitForm.onsubmit = async (e) => {
     e.preventDefault();
     console.log(`form submit`)
     let assignmentId = localStorage.getItem(`assignment`)

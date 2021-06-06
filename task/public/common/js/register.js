@@ -1,5 +1,5 @@
 let registerForm = document.getElementById(`userForm`)
-registerForm.onsubmit = async(e) => {
+registerForm.onsubmit = async (e) => {
     e.preventDefault();
     registerUser();
 }
@@ -22,14 +22,17 @@ function registerUser() {
     }
     console.log(values)
     fetch('/api/register', {
-            method: "POST",
-            body: JSON.stringify(values),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
         .then(response => response.json())
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "http://localhost:8888"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
 

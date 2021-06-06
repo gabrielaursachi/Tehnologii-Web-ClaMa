@@ -19,7 +19,8 @@
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
+            width="130" height="65">
 
     </div>
 
@@ -30,19 +31,23 @@
 
     <div class="submitArea">
         <form action="http://localhost:8888/api/create-assignment" method="POST" id="newAssignment">
+            <p id="requestMessage"></p>
             <p>
                 <b>Add new assignment</b>
             </p>
-            <textarea id="assignmentName" name="assignmentName" rows="1" cols="60" placeholder="Enter the assignment title..." required></textarea>
+            <textarea id="assignmentName" name="assignmentName" rows="1" cols="60"
+                placeholder="Enter the assignment title..." required></textarea>
             <label for="assignmentDeadlineDate"><b>Select the date of the deadline:</b></label>
             <input type="date" id="assignmentDeadlineDate" name="assignmentDeadlineDate" required>
             <br>
             <br>
             <label for="assignmentDeadlineHour"><b>Select the hour of the deadline:</b></label>
-            <input type="time" name="assignmentDeadlineHour" id="assignmentDeadlineHour" min="00:00" max="23:59" required>
+            <input type="time" name="assignmentDeadlineHour" id="assignmentDeadlineHour" min="00:00" max="23:59"
+                required>
             <br>
             <br>
-            <textarea id="assignmentDescription" name="assignmentDescription" rows="8" cols="60" placeholder="Enter the assignment description..." required></textarea>
+            <textarea id="assignmentDescription" name="assignmentDescription" rows="8" cols="60"
+                placeholder="Enter the assignment description..." required></textarea>
             <label for="files">Upload your files:</label>
             <input type="file" id="fileInput" name="files">
             <br>
