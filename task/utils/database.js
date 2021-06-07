@@ -665,7 +665,7 @@ function calculateFinalGrade(catalogLine, res) {
 
             result = math.evaluate(formula) + catalogLine.bonus
 
-            res.statusCode = StatusCodes.ok;
+            res.statusCode = StatusCodes.OK;
             json.responseJSON(res, {
                 result: result,
                 id: catalogLine.id_student
