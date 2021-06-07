@@ -19,7 +19,7 @@ client.connect()
 
 function returnUserById(id, res) {
     client.query("select * from users where id = $1", [id],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -86,7 +86,7 @@ function checkIfClassExists(id, callback) {
 function saveUser(userInfo, res) {
     userInfo.password = bcrypt.hashSync(userInfo.password, 10);
     client.query("insert into users(email, username, password, name, surname, type) values ($1, $2, $3, $4, $5, $6)", [userInfo.email, userInfo.username, userInfo.password, userInfo.name, userInfo.surname, userInfo.type],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.NOT_ACCEPTABLE;
@@ -105,7 +105,7 @@ function saveUser(userInfo, res) {
 
 function checkAuthData(userInfo, res) {
     client.query("select * from users where email = $1 or username = $1", [userInfo.username],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.NOT_FOUND;
@@ -133,7 +133,7 @@ function checkAuthData(userInfo, res) {
                         res.statusCode = StatusCodes.OK;
                         let date = new Date();
                         date.setDate(date.getDate() + 1); //cookie expires in a day
-                        res.setHeader('Set-cookie', `myCookie=${token}; HttpOnly; Secure; expires =${date}; Max-Age=; Domain=localhost; Path=/; overwrite=true`)
+                        res.setHeader('Set-cookie', `myCookie=${token}; HttpOnly; Secure; expires =${date}; Max-Age=; Domain=https://webclassmanager.herokuapp.com; Path=/; overwrite=true`)
                         res.setHeader('Content-Type', 'application/json');
                         res.write(JSON.stringify({
                             authenticate: true,
@@ -155,7 +155,7 @@ function checkAuthData(userInfo, res) {
 
 function findUserClassesByUserId(id, res) {
     client.query("select teach.surname, teach.name, c.title, c.id from users teach join user_classes uc on uc.id_user = teach.id and teach.type='profesor' join classes c on c.id=uc.id_class  where uc.id_class in (select id_class from user_classes uc join users u on u.id=uc.id_user where u.id = $1) order by uc.id_class asc", [id],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -173,7 +173,7 @@ function findUserClassesByUserId(id, res) {
 
 function findCourseInfoById(id, res) {
     client.query("select teach.name, teach.surname, cls.title, cls.no_components, cls.course_site_link, cls.other_platforms, cls.day_of_occurence, cls.start_class, cls.end_class, cls.enter_code from users teach join user_classes c on c.id_user=teach.id and teach.type='profesor'join classes cls on cls.id=c.id_class where c.id_class = $1", [id],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -229,7 +229,7 @@ function updateUserInfo(userInfo, userID, res) {
     if (userInfo.password === '') {
         console.log(`no new password`)
         client.query("update users set name = $1 ,  surname = $2 , username = $3 , email = $4 where id = $5", [userInfo.lastName, userInfo.firstName, userInfo.username, userInfo.email, userID],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     console.log(err);
                     res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -249,7 +249,7 @@ function updateUserInfo(userInfo, userID, res) {
     } else {
         userInfo.password = bcrypt.hashSync(userInfo.password, 10);
         client.query("update users set name = $1 ,  surname = $2 , username = $3 , email = $4, password = $5 where id = $6", [userInfo.lastName, userInfo.firstName, userInfo.username, userInfo.email, userInfo.password, userID],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     console.log(err);
                     res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -270,7 +270,7 @@ function updateUserInfo(userInfo, userID, res) {
 
 function checkIfRequestExists(idStudent, idCourse, res, callback) {
 
-    checkIfClassExists(idCourse, function(err, results) {
+    checkIfClassExists(idCourse, function (err, results) {
         if (err) {
             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
             json.responseJSON(res, {
@@ -299,7 +299,7 @@ function checkIfRequestExists(idStudent, idCourse, res, callback) {
 
 function addRequestForClassSignUp(idStudent, idCourse, res) {
     client.query("select * from classes where id = $1", [idCourse],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -318,7 +318,7 @@ function addRequestForClassSignUp(idStudent, idCourse, res) {
             }
             //check if user is in already signed up in the class
             client.query("select * from user_classes where id_user= $1 and id_class = $2", [idStudent, idCourse],
-                function(err, results) {
+                function (err, results) {
                     if (err) {
                         console.log(err)
                         res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -337,7 +337,7 @@ function addRequestForClassSignUp(idStudent, idCourse, res) {
                     }
                     //save to database
                     client.query("insert into classes_requests(id_class, id_student) values ($1, $2)", [idCourse, idStudent],
-                        function(err, results) {
+                        function (err, results) {
                             if (err) {
                                 console.log(err)
                                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -358,7 +358,7 @@ function addRequestForClassSignUp(idStudent, idCourse, res) {
 }
 
 function getStudentGradesById(idStudent, idCourse, res) {
-    checkIfClassExists(idCourse, function(err, data) {
+    checkIfClassExists(idCourse, function (err, data) {
         if (err) {
             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
             json.responseJSON(res, {
@@ -373,7 +373,7 @@ function getStudentGradesById(idStudent, idCourse, res) {
             return
         }
         client.query("select * from classes_catalog where id_class = $1 and id_student = $2", [idCourse, idStudent],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     console.log(err);
                     res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -409,7 +409,7 @@ function getStudentGradesById(idStudent, idCourse, res) {
 
 function getClassAssignments(idStudent, idClass, res) {
 
-    checkIfClassExists(idClass, function(err, data) {
+    checkIfClassExists(idClass, function (err, data) {
         if (err) {
             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
             json.responseJSON(res, {
@@ -423,7 +423,7 @@ function getClassAssignments(idStudent, idClass, res) {
             json.responseJSON(res, { error: `Class with id ${idClass} not found` })
             return
         }
-        client.query("select id, title, (select concat(name,' ',surname) from users where id=a.id_author) teacher, created_at, deadline, (select count(id_assignment) from students_assignments where (id_assignment, id_student) in (select id_assignment, id_student from students_assignments where id_assignment = a.id and id_student = $2)) status from assignments a where id_class = $1  order by created_at desc", [idClass, idStudent], function(err, results) {
+        client.query("select id, title, (select concat(name,' ',surname) from users where id=a.id_author) teacher, created_at, deadline, (select count(id_assignment) from students_assignments where (id_assignment, id_student) in (select id_assignment, id_student from students_assignments where id_assignment = a.id and id_student = $2)) status from assignments a where id_class = $1  order by created_at desc", [idClass, idStudent], function (err, results) {
             if (err) {
                 res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
                 json.responseJSON(res, {
@@ -451,7 +451,7 @@ function getClassAssignments(idStudent, idClass, res) {
 
 function addUserToClass(idUser, idClass, userType, res) {
     client.query("insert into user_classes(id_user, id_class, type) values ($1, $2, $3)", [idUser, idClass, userType],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -476,7 +476,7 @@ function addUserToClass(idUser, idClass, userType, res) {
 
 function createNewClass(idTeacher, classInfo, res) {
     client.query("insert into classes (title, day_of_occurence, start_class, end_class, course_site_link, no_components, formula, other_platforms)  values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id", [classInfo.className, classInfo.classDate, classInfo.classHourStart, classInfo.classHourEnd, classInfo.classLink, classInfo.classComponents, classInfo.classFormula, classInfo.classOtherPlatforms],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -490,7 +490,7 @@ function createNewClass(idTeacher, classInfo, res) {
 
 function getAssignmentInfo(idAssignment, res) {
 
-    client.query("select * from assignments where id = $1", [idAssignment], function(err, results) {
+    client.query("select * from assignments where id = $1", [idAssignment], function (err, results) {
         if (err) {
             console.log(err.message)
             res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -503,7 +503,7 @@ function getAssignmentInfo(idAssignment, res) {
             return
         }
         client.query("select id_class, (select concat(name,' ',surname) from users where id=a.id_author) author, title, body, created_at, deadline, files from assignments a where id = $1", [idAssignment],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     console.log(err.message)
                     res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -513,11 +513,11 @@ function getAssignmentInfo(idAssignment, res) {
                 // console.log(results.rows[0])
                 var createdAt = results.rows[0].created_at.toString()
                 createdAt = createdAt.substring(4, createdAt.indexOf(" GMT"))
-                    // console.log(createdAt)
+                // console.log(createdAt)
 
                 var deadline = results.rows[0].deadline.toString()
                 deadline = deadline.substring(4, deadline.indexOf(" GMT"))
-                    // console.log(deadline)
+                // console.log(deadline)
 
                 res.StatusCode = StatusCodes.OK
                 json.responseJSON(res, {
@@ -535,7 +535,7 @@ function getAssignmentInfo(idAssignment, res) {
 
 function getStudentAssignments(idStudent, res) {
     client.query("select id, title, (select concat(name,' ',surname) from users where id=a.id_author) teacher, created_at, deadline, (select count(id_assignment) from students_assignments where (id_assignment, id_student)in (select id_assignment, id_student from students_assignments where id_assignment = a.id and id_student = $1) )status from assignments a join user_classes uc on uc.id_class = a.id_class where uc.id_user = $1  order by created_at desc", [idStudent],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
                 json.responseJSON(res, {
@@ -563,7 +563,7 @@ function getClassCatalog(idProfesor, idClass, res) {
     let numberOfComponents
     let classTitle
     client.query("select no_components, title from classes where id = $1", [idClass],
-        function(err, result) {
+        function (err, result) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -577,7 +577,7 @@ function getClassCatalog(idProfesor, idClass, res) {
                 console.log(numberOfComponents)
                 let numberOfStudents
                 client.query("select c.*, u.name, u.surname from classes_catalog c left join users u on u.id = c.id_student where c.id_class = $1 order by u.name", [idClass],
-                    function(err, result) {
+                    function (err, result) {
                         if (err) {
                             console.log(err);
                             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -604,7 +604,7 @@ function getClassCatalog(idProfesor, idClass, res) {
 function saveCatalog(req, idClass, res) {
     for (let i = 0; i < req.length; i++) {
         client.query("update classes_catalog set c1 = $1, c2 = $2, c3 = $3, c4 = $4, c5 = $5, bonus = $6 where id_class = $7 and id_student = $8", [req[i].c1, req[i].c2, req[i].c3, req[i].c4, req[i].c5, req[i].bonus, idClass, req[i].id],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     console.log(err);
                     res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -625,7 +625,7 @@ function saveCatalog(req, idClass, res) {
 
 function calculateFinalGrade(catalogLine, res) {
     client.query("select formula from classes where id = $1", [catalogLine.id_class],
-        function(err, result) {
+        function (err, result) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -673,7 +673,7 @@ function calculateFinalGrade(catalogLine, res) {
 
 function getRequests(idClass, res) {
     client.query("select c.*, u.name, u.surname from classes_requests c join users u on u.id = c.id_student  where c.id_class=$1", [idClass],
-        function(err, result) {
+        function (err, result) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -694,7 +694,7 @@ function getRequests(idClass, res) {
 
 function processRequest(idClass, answer, idStudent, idRequest, res) {
     client.query("select * from classes_requests where id=$1 and id_student=$2", [idRequest, idStudent],
-        function(err, result) {
+        function (err, result) {
             if (err || result.rowCount == 0) {
                 console.log(err);
                 res.statusCode = StatusCodes.NOT_FOUND;
@@ -709,7 +709,7 @@ function processRequest(idClass, answer, idStudent, idRequest, res) {
     console.log("idClass= " + idClass + " answer=" + answer + " idStudent=" + idStudent + " idRequest=" + idRequest)
     if (answer) {
         client.query("insert into user_classes (id_user, id_class, type) values ($1, $2, 'student')", [idStudent, idClass],
-            function(err, result) {
+            function (err, result) {
                 if (err) {
                     console.log(err);
                     res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -726,7 +726,7 @@ function processRequest(idClass, answer, idStudent, idRequest, res) {
                 })
                 console.log("Student " + idStudent + " was added in class " + idClass)
                 client.query("insert into classes_catalog (id_class, id_student, presences) values ($1, $2, 0)", [idClass, idStudent],
-                    function(err, result) {
+                    function (err, result) {
                         if (err) {
                             console.log(err);
                             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -740,7 +740,7 @@ function processRequest(idClass, answer, idStudent, idRequest, res) {
             })
     }
     client.query("delete from classes_requests where id=$1", [idRequest],
-        function(err, result) {
+        function (err, result) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -755,7 +755,7 @@ function processRequest(idClass, answer, idStudent, idRequest, res) {
 
 function loadCourseInfo(idClass, res) {
     client.query("select * from classes where id=$1", [idClass],
-        function(err, result) {
+        function (err, result) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.NOT_FOUND;
@@ -786,7 +786,7 @@ function loadCourseInfo(idClass, res) {
 
 function updateClass(classId, className, classDate, classHourStart, classHourEnd, classLink, classComponents, classFormula, classOtherPlatforms, res) {
     client.query("update classes set title=$1, day_of_occurence=$2, start_class=$3, end_class=$4, course_site_link=$5, no_components=$6, formula=$7, other_platforms=$8 where id=$9", [className, classDate, classHourStart, classHourEnd, classLink, classComponents, classFormula, classOtherPlatforms, classId],
-        function(err, result) {
+        function (err, result) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -809,7 +809,7 @@ function getAssignmentsFromAssignment(assignmentId, res) {
 
     console.log("assignment id = " + assignmentId)
     client.query("select sa.*, u.name, u.surname from students_assignments sa join users u on sa.id_student=u.id where sa.id_assignment=$1", [assignmentId],
-        function(err, result) {
+        function (err, result) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.NOT_FOUND
@@ -829,7 +829,7 @@ function getAssignmentsFromAssignment(assignmentId, res) {
 
 
 function getClassNews(idClass, res) {
-    checkIfClassExists(idClass, function(err, reults) {
+    checkIfClassExists(idClass, function (err, reults) {
         if (err) {
             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
             json.responseJSON(res, {
@@ -844,7 +844,7 @@ function getClassNews(idClass, res) {
             return
         }
         client.query("select * from news where id_class = $1 order by id desc", [idClass],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     console.log(err.message)
                     res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -863,7 +863,7 @@ function getClassNews(idClass, res) {
 
 function validatePresenceCode(idStudent, code, idClass, res) {
 
-    checkIfClassExists(idClass, function(err, reults) {
+    checkIfClassExists(idClass, function (err, reults) {
         if (err) {
             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
             json.responseJSON(res, {
@@ -878,7 +878,7 @@ function validatePresenceCode(idStudent, code, idClass, res) {
             return
         }
         client.query("select * from classes where enter_code = $1 and id = $2", [code, idClass],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     console.log(err.message)
                     res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -894,7 +894,7 @@ function validatePresenceCode(idStudent, code, idClass, res) {
                 }
                 //check if it is already present or not for the specific day
                 client.query("select id_class, id_user from users_attendance where id_class = $1 and id_user = $2 and present_at::date = (select begin_class::date from classes where id = $1) ", [idClass, idStudent],
-                    function(err, results) {
+                    function (err, results) {
                         if (err) {
                             console.log(err.message)
                             res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -904,7 +904,7 @@ function validatePresenceCode(idStudent, code, idClass, res) {
                         if (results.rowCount == 0) {
                             //check the day  in this query
                             client.query("insert into users_attendance (id_class, id_user, present_at) values ($1, $2, current_timestamp)", [idClass, idStudent],
-                                function(err, results) {
+                                function (err, results) {
                                     if (err) {
                                         console.log(err.message)
                                         res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -913,7 +913,7 @@ function validatePresenceCode(idStudent, code, idClass, res) {
                                     }
                                     //check if it is within timestamp
                                     client.query("SELECT count(*) FROM users_attendance WHERE present_at >=  (select begin_class  from classes where id = 1) and present_at < (select begin_class + ( interval '5 minute')  from classes where id = $1) and id_user = $2", [idClass, idStudent],
-                                        function(err, results) {
+                                        function (err, results) {
                                             if (err) {
                                                 console.log(err.message)
                                                 res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -949,7 +949,7 @@ function validatePresenceCode(idStudent, code, idClass, res) {
 }
 
 function markPresence(idStudent, idClass) {
-    client.query("UPDATE classes_catalog SET presences = (select presences from classes_catalog where id_class = $1 and id_student = $2) + 1 where id_class= $1 and id_student= $2", [idClass, idStudent], function(err, results) {
+    client.query("UPDATE classes_catalog SET presences = (select presences from classes_catalog where id_class = $1 and id_student = $2) + 1 where id_class= $1 and id_student= $2", [idClass, idStudent], function (err, results) {
         if (err) {
             console.log(err.message)
             return
@@ -959,7 +959,7 @@ function markPresence(idStudent, idClass) {
 
 function turnInAssignment(idStudent, idAssignment, assignmentBody, fileName, res) {
     client.query("insert into students_assignments(id_assignment, id_student, body, files) values($1, $2, $3, $4)", [idAssignment, idStudent, assignmentBody, fileName],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err);
                 res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -1022,7 +1022,7 @@ function getFileName(id, type, authorType, callback) {
 
 function changeCode(idClass, newCode, res) {
 
-    checkIfClassExists(idClass, function(err, reults) {
+    checkIfClassExists(idClass, function (err, reults) {
         if (err) {
             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
             json.responseJSON(res, {
@@ -1037,7 +1037,7 @@ function changeCode(idClass, newCode, res) {
             return
         }
         client.query("UPDATE classes SET enter_code = $1, begin_class = now()  where id= $2", [newCode, idClass],
-            function(err, results) {
+            function (err, results) {
                 if (err) {
                     res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
                     json.responseJSON(res, { error: err.message })
@@ -1053,7 +1053,7 @@ function changeCode(idClass, newCode, res) {
 
 function createAssignment(idClass, idAuthor, title, description, deadline, fileName, res) {
     client.query("insert into assignments(id_class, id_author, title, body, created_at, deadline, files) values ($1, $2, $3, $4, now(), $5, $6)", [idClass, idAuthor, title, description, deadline, fileName],
-        function(err, results) {
+        function (err, results) {
             if (err) {
                 console.log(err)
                 res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -1067,7 +1067,7 @@ function createAssignment(idClass, idAuthor, title, description, deadline, fileN
 }
 
 function postNews(idClass, title, description, filename, res) {
-    checkIfClassExists(idClass, function(err, reults) {
+    checkIfClassExists(idClass, function (err, reults) {
         if (err) {
             res.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
             json.responseJSON(res, {
@@ -1082,7 +1082,7 @@ function postNews(idClass, title, description, filename, res) {
             return
         }
         client.query("insert into news (id_class, title, body, files) values ($1, $2, $3, $4)", [idClass, title, description, filename],
-            function(err, reults) {
+            function (err, reults) {
                 if (err) {
                     res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR;
                     json.responseJSON(res, { error: err.message })
