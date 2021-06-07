@@ -220,6 +220,13 @@ select {
     padding: 0.1%;
 }
 
+.formulaTip {
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+    opacity: 70%;
+}
+
 @media screen and (max-width: 600px) {
     .topnav a {
         display: none;

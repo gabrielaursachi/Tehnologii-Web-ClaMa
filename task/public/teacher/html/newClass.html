@@ -19,7 +19,8 @@
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png" width="130" height="65">
+        <img class="logo" alt="logo of the site" src="../others/922020e567654f5aa59ea53b7b16826b-removebg-preview.png"
+            width="130" height="65">
 
     </div>
 
@@ -33,7 +34,8 @@
             <p class="requestMessage" id="requestMessage"></p>
             <div class="bottomOfRect">
                 <!-- http://localhost:8888/api/create-class -->
-                <form action="http://localhost:8888/api/create-class" method="POST" autocomplete="off" id="newClassForm">
+                <form action="http://localhost:8888/api/create-class" method="POST" autocomplete="off"
+                    id="newClassForm">
                     <p>
                         <label for="className"><b>Class name:</b></label>
                         <input type="text" name="className" id="className" required placeholder="Class title">
@@ -60,7 +62,8 @@
                     </p>
                     <p>
                         <label for="classLink"><b>Class link:</b></label>
-                        <input type="text" name="classLink" id="classLink" placeholder="Link to your class website" required>
+                        <input type="text" name="classLink" id="classLink" placeholder="Link to your class website"
+                            required>
                     </p>
                     <p>
                         <label for="classComponents"><b>Number of components:</b></label>
@@ -74,11 +77,18 @@
                     </p>
                     <p>
                         <label for="classFormula"><b>Final grade formula:</b></label>
-                        <input type="text" name="classFormula" id="classFormula" placeholder="Ex: (C1+C2+C3)/3" required>
+                        <input type="text" name="classFormula" id="classFormula" placeholder="Ex: (a+b+c)/3">
+                        <span class="formulaTip" id="formulaTip">Formula should countain
+                            letters from a-e
+                            representing
+                            the components in
+                            order,
+                            and mathematical symbols!</span>
                     </p>
                     <p>
                         <label for="classOtherPlatforms"><b>Other platforms:</b></label>
-                        <input type="text" name="classOtherPlatforms" id="classOtherPlatforms" placeholder="Ex: Zoom" required>
+                        <input type="text" name="classOtherPlatforms" id="classOtherPlatforms" placeholder="Ex: Zoom"
+                            required>
                     </p>
                     <button type="submit" class="submitClass">
                         Create new class

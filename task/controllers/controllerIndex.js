@@ -295,9 +295,10 @@ function createNewClass(req, res) {
         let isCorrect = checkCorecnessOfForumla(recievedJSON.classFormula, recievedJSON.classComponents)
         if (!isCorrect) {
             res.StatusCode = StatusCodes.BAD_REQUEST
-            return json.responseJSON(res, {
+            json.responseJSON(res, {
                 error: `invalid formula`
             })
+            return
         }
         conn.createNewClass(auth.id, recievedJSON, res)
     })
