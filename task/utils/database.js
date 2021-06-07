@@ -1000,12 +1000,13 @@ function getFileName(id, type, authorType, callback) {
                     return
                 }
             })
-        } else {
-            json.responseJSON(callback, {
-                error: "Type of assignment is incorrect"
-            })
-            return
         }
+        // else {
+        //     json.responseJSON(callback, {
+        //         error: "Type of assignment is incorrect"
+        //     })
+        //     return
+        // }
     }
     if (type === `news`) {
         client.query("select files from news where id = $1", [id], (err, res) => {

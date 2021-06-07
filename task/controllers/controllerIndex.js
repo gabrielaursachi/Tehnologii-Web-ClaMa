@@ -281,6 +281,7 @@ function createNewClass(req, res) {
         json.responseJSON(res, {
             error: `ACCESS UNAUTHORIZED`
         })
+        return
     }
     json.requestJSON(req, res, function(recievedJSON) {
         const { error, newClass } = schemas.classModel.validate(recievedJSON)
@@ -319,6 +320,7 @@ function getAllStudentAssignment(req, res) {
         json.responseJSON(res, {
             error: `Students only - acces unauthorized`
         })
+        return
     }
     conn.getStudentAssignments(user.id, res)
 }
@@ -640,6 +642,29 @@ function downloadFile(req, res) {
     }
 
     if (req.parameters.assignmentId) {
+        if (user.userType === `student`) {
+            conn.getFileName(req.parameters.assignmentId, `assignment`, 'teacher', function(err, data) {
+                if (err) {
+                    console.log(err.message)
+                    res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR
+                    json.responseJSON(res, { error: err.message })
+                    return
+                }
+                if (data.rowCount == 0) {
+                    res.StatusCode = StatusCodes.NOT_FOUND
+                    json.responseJSON(res, { error: `Assignemnt with id ${req.parameters.assignmentId} not found` })
+                    return
+                }
+                if (data.rows[0].files == null || data.rows[0].files === '') {
+                    res.StatusCode = StatusCodes.NOT_FOUND
+                    json.responseJSON(res, { error: 'No files' })
+                    return
+                }
+                res.setHeader(`Content-Disposition`, `filename=${data.rows[0].files}`)
+                sendDownloadFile(req, res, data.rows[0].files)
+                return
+            })
+        }
         conn.getFileName(req.parameters.assignmentId, `assignment`, req.parameters.type, function(err, data) {
             if (err) {
                 console.log(err.message)
@@ -659,6 +684,7 @@ function downloadFile(req, res) {
             }
             res.setHeader(`Content-Disposition`, `filename=${data.rows[0].files}`)
             sendDownloadFile(req, res, data.rows[0].files)
+            return
         })
     }
     if (req.parameters.newsId) {
