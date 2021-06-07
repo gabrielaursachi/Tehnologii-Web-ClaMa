@@ -624,7 +624,7 @@ async function newUpload(req, res) {
 function verifyIfFileExists(fileName) {
     try {
         if (fs.existsSync(`./user_files/${fileName}`)) {
-            fileName = fileName
+            fileName = Math.random().toString(36).slice(-5) + "_" + fileName
         }
     } catch (err) {
         console.error(err)
@@ -659,6 +659,7 @@ function downloadFile(req, res) {
                 json.responseJSON(res, { error: 'No files' })
                 return
             }
+            console.log("filename= " + data.rows[0].files)
             res.setHeader(`Content-Disposition`, `filename=${data.rows[0].files}`)
             sendDownloadFile(req, res, data.rows[0].files)
         })
