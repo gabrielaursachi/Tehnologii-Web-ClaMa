@@ -624,7 +624,7 @@ async function newUpload(req, res) {
 function verifyIfFileExists(fileName) {
     try {
         if (fs.existsSync(`./user_files/${fileName}`)) {
-            fileName = Math.random().toString(36).slice(-5) + "_" + fileName
+            fileName = fileName
         }
     } catch (err) {
         console.error(err)
