@@ -9,7 +9,7 @@ function authenticateUser() {
         username: document.getElementById("username").value,
         password: document.getElementById("password").value
     }
-    fetch('/api/auth', {
+    fetch('https://webclassmanager.herokuapp.com/api/auth', {
             method: "POST",
             body: JSON.stringify(account),
             headers: { "Content-type": "application/json; charset=UTF-8" }
