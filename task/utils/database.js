@@ -483,6 +483,7 @@ function createNewClass(idTeacher, classInfo, res) {
                 json.responseJSON(res, {
                     error: err.message
                 })
+                return
             }
             addUserToClass(idTeacher, results.rows[0].id, `profesor`, res)
         })

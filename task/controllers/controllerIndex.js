@@ -281,6 +281,7 @@ function createNewClass(req, res) {
         json.responseJSON(res, {
             error: `ACCESS UNAUTHORIZED`
         })
+        return
     }
     json.requestJSON(req, res, function (recievedJSON) {
         const { error, newClass } = schemas.classModel.validate(recievedJSON)
