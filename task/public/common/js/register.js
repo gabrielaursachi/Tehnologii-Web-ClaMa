@@ -31,7 +31,7 @@ function registerUser() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
@@ -40,7 +40,7 @@ function registerUser() {
                 invalidDataError.className += " display"
                 document.getElementById("invalidData").innerHTML = json.error.split('.')[0]
             } else {
-                location.href = `http://localhost:8888`
+                location.href = `https://webclassmanager.herokuapp.com`
             }
         })
         .catch(err => { console.log(err) })
