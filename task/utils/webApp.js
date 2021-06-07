@@ -114,7 +114,7 @@ class WebApp {
 
             }
         })
-        server.listen(port)
+        server.listen(process.env.PORT)
         console.log(`app running on PORT: ${port}`)
     }
 }
