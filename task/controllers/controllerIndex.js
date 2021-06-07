@@ -664,7 +664,7 @@ function downloadFile(req, res) {
         })
     }
     if (req.parameters.newsId) {
-        conn.getFileName(req.parameters.newsId, `news`, function (err, data) {
+        conn.getFileName(req.parameters.newsId, `news`, req.parmeters.type, function (err, data) {
             if (err) {
                 console.log(err.message)
                 res.StatusCode = StatusCodes.INTERNAL_SERVER_ERROR
