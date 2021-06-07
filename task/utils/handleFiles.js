@@ -24,7 +24,7 @@ getUploadFile = async (req, res, filename) => {
 
 sendDownloadFile = async (req, res, filename) => {
     try {
-        var filePath = path.resolve(`./user_files/${filename}`);
+        var filePath = path.resolve(`../../user_files/${filename}`);
         console.log("filepath= " + filePath)
         var stat = await fs.promises.stat(filePath)
         console.log(`sendFilesoDownload => ${stat}`)
