@@ -981,7 +981,7 @@ function getFileName(id, type, authorType, callback) {
     if (type === `assignment`) {
         if (authorType == "teacher") {
             //console.log("selecting from assignments")
-            client.query("select files from assignments where id = $1", [id], (err, res) => {
+            client.query("select files from assignments where id = $1", [id], function (err, res) {
                 if (err) {
                     callback(err, null)
                     return
@@ -993,7 +993,7 @@ function getFileName(id, type, authorType, callback) {
             })
         } else if (authorType == "student") {
             //console.log("selecting from students_assignments")
-            client.query("select files from students_assignments where id = $1", [id], (err, res) => {
+            client.query("select files from students_assignments where id = $1", [id], function (err, res) {
                 if (err) {
                     callback(err, null)
                     return
@@ -1005,7 +1005,7 @@ function getFileName(id, type, authorType, callback) {
         }
     }
     if (type === `news`) {
-        client.query("select files from news where id = $1", [id], (err, res) => {
+        client.query("select files from news where id = $1", [id], function (err, res) {
             if (err) {
                 callback(err, null)
                 return
