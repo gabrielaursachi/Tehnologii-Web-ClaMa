@@ -3,8 +3,8 @@ const fs = require('fs')
 const path = require('path');
 const { StatusCodes } = require('http-status-codes');
 getUploadFile = async (req, res, filename) => {
-    
-    
+
+
     const writeStream = fs.createWriteStream(`./user_files/${filename}`);
     req.on('data', chunk => {
         writeStream.write(chunk);
@@ -22,10 +22,10 @@ getUploadFile = async (req, res, filename) => {
     });
 }
 
-sendDownloadFile = async(req, res, filename) => {
+sendDownloadFile = async (req, res, filename) => {
     try {
         var filePath = path.resolve(__dirname, `../user_files/${filename}`);
-        console.log(filePath)
+        console.log("filepath= " + filePath)
         var stat = await fs.promises.stat(filePath)
         console.log(`sendFilesoDownload => ${stat}`)
         if (!stat.isFile) {
