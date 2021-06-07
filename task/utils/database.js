@@ -133,7 +133,7 @@ function checkAuthData(userInfo, res) {
                         res.statusCode = StatusCodes.OK;
                         let date = new Date();
                         date.setDate(date.getDate() + 1); //cookie expires in a day
-                        res.setHeader('Set-cookie', `myCookie=${token}; HttpOnly; Secure; expires =${date}; Max-Age=; Domain=https://webclassmanager.herokuapp.com; Path=/; overwrite=true`)
+                        res.setHeader('Set-cookie', `myCookie=${token}; HttpOnly; Secure; expires =${date}; Max-Age=; Domain=.webclassmanager.herokuapp.com; Path=/; overwrite=true`)
                         res.setHeader('Content-Type', 'application/json');
                         res.write(JSON.stringify({
                             authenticate: true,
