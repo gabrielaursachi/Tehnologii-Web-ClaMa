@@ -8,11 +8,12 @@ const { StatusCodes } = require('http-status-codes');
 var math = require('mathjs')
 
 const client = new Client({
-    host: '127.0.0.1',
-    user: 'postgres',
-    password: 'gabriela',
-    database: 'clama',
-    port: 5432
+    host: 'ec2-52-17-1-206.eu-west-1.compute.amazonaws.com',
+    user: 'cfguifvghrsemo',
+    password: 'ee09cf8e6b3a4479b7a0dc7096ed391064b88796bfa0e3a638280dc7854a1516',
+    database: 'de3egfj5vs89fl',
+    port: 5432,
+    ssl: { rejectUnauthorized: false }
 })
 client.connect()
 
