@@ -126,9 +126,9 @@ function checkAuthData(userInfo, res) {
                         var token = jwt.sign({ id: results.rows[0].id, userType: results.rows[0].type }, config.secret, { expiresIn: 86400 })
                         var redirectTo
                         if (results.rows[0].type === `student`) {
-                            redirectTo = `/student/html/homePage.html`
+                            redirectTo = `https://webclassmanager.herokuapp.com/student/html/homePage.html`
                         } else {
-                            redirectTo = `/teacher/html/profHomePage.html`
+                            redirectTo = `https://webclassmanager.herokuapp.com/teacher/html/profHomePage.html`
                         }
                         res.statusCode = StatusCodes.OK;
                         let date = new Date();
