@@ -20,8 +20,8 @@ class WebApp {
     listen() {
         var app = this
         var server = http.createServer(function (req, res) {
-            if (req.url.startsWith("/api")) {
-                if (!req.url.startsWith("/api/auth") && !req.url.startsWith("/api/register")) {
+            if (req.url.startsWith("https://webclassmanager.herokuapp.com/api")) {
+                if (!req.url.startsWith("https://webclassmanager.herokuapp.com/api/auth") && !req.url.startsWith("https://webclassmanager.herokuapp.com/api/register")) {
                     console.log(`${req.method} ${req.url} auth required`);
                     var token = parseCookies.parseCookies(req);
                     if (!token) {
