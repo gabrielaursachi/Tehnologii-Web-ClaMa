@@ -13,7 +13,7 @@ function handleJWT() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://https://webclassmanager.herokuapp.com"
+                    location.href = "https://webclassmanager.herokuapp.com"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);

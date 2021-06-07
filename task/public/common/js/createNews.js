@@ -8,7 +8,7 @@ newsForm.onsubmit = async (e) => {
 }
 
 const upload = (file, fileName, title, description, classId) => {
-    var url = new URL('http://localhost:8888/api/upload')
+    var url = new URL('https://webclassmanager.herokuapp.com/api/upload')
     var params = { classId: classId, fileName: fileName, title: title, description: description }
     url.search = new URLSearchParams(params).toString();
     console.log(url);
@@ -25,7 +25,7 @@ const upload = (file, fileName, title, description, classId) => {
                 document.getElementById("requestMessage").style = "color : green; font-size: 20px"
             } else {
                 if (success.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com/"
                 }
                 document.getElementById("requestMessage").innerHTML = success.error
                 document.getElementById("requestMessage").style = "color : red; font-size: 20px"

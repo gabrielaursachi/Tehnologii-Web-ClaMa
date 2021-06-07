@@ -14,7 +14,7 @@ function assignmentInfo() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com/"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
@@ -28,7 +28,7 @@ function assignmentInfo() {
 
 async function download(assignmentId) {
     try {
-        var url = new URL('http://localhost:8888/api/download')
+        var url = new URL('https://webclassmanager.herokuapp.com/api/download')
         var params = { assignmentId: assignmentId }
         url.search = new URLSearchParams(params).toString();
         const res = await fetch(url, {
@@ -82,7 +82,7 @@ async function downloadFile(data, filename) {
 }
 
 function fetchFile(assignmentId, type) {
-    var url = new URL('http://localhost:8888/api/download')
+    var url = new URL('https://webclassmanager.herokuapp.com/api/download')
     var params = {
         assignmentId: assignmentId,
         type : type

@@ -11,6 +11,9 @@ function retrieveCourseRequests() {
         .then(json => {
             console.log(json)
             if (json.error) {
+                if (json.error == "no auth") {
+                    location.href = "https://webclassmanager.herokuapp.com"
+                }
                 console.log(`error encountered`);
                 console.log(json.error);
             } else {

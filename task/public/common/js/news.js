@@ -12,7 +12,7 @@ function getClassNews() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com/"
                 }
                 console.log(json.error);
             } else {
@@ -43,7 +43,7 @@ async function downloadFile(data, filename) {
 }
 
 function fetchFile(newsId) {
-    var url = new URL('http://localhost:8888/api/download')
+    var url = new URL('https://webclassmanager.herokuapp.com/api/download')
     var params = { newsId: newsId }
     url.search = new URLSearchParams(params).toString()
     fetch(url, {

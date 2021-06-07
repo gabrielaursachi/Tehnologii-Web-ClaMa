@@ -13,7 +13,7 @@ function handleJWT() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com/"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
@@ -38,7 +38,7 @@ function redirectToHomePage(user) {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com/"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
@@ -59,7 +59,7 @@ function buildUpHomePage(classes) {
 
         var childElement = document.createElement('a')
         childElement.className = "classRect"
-        childElement.href = "http://localhost:8888/student/html/course.html"
+        childElement.href = "https://webclassmanager.herokuapp.com/student/html/course.html"
         childElement.classID = classes[i].id
 
         let topOfRect = document.createElement('div')

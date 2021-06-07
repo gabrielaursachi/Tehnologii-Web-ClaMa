@@ -18,7 +18,7 @@ document.querySelector('input').addEventListener('keypress', function (e) {
                 console.log(json)
                 if (json.error) {
                     if (json.error == "no auth") {
-                        location.href = "http://localhost:8888"
+                        location.href = "https://webclassmanager.herokuapp.com/"
                     }
                     console.log(json.error);
                     document.getElementById("requestMessage").innerHTML = json.error

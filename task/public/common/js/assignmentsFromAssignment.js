@@ -126,7 +126,7 @@ function buildAssignments(json) {
 }
 
 function fetchFile(assignmentId, type) {
-    var url = new URL('http://localhost:8888/api/download')
+    var url = new URL('https://webclassmanager.herokuapp.com/api/download')
     var params = {
         assignmentId: assignmentId,
         type: type

@@ -12,7 +12,7 @@ function getAssignments() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "http://https://webclassmanager.herokuapp.com"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
@@ -37,7 +37,7 @@ function showAllAssignments(assignments) {
 
             var childElement = document.createElement('a')
             childElement.className = "assignment_container"
-            childElement.href = "http://localhost:8888/student/html/assignment.html"
+            childElement.href = "https://webclassmanager.herokuapp.com/student/html/assignment.html"
             childElement.assignmentID = assignments.assignments[i].id
 
             let assignmentName = document.createElement('p')
