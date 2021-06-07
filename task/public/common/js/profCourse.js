@@ -12,7 +12,7 @@ function retrieveCourseData() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "http://https://webclassmanager.herokuapp.com"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
@@ -33,7 +33,7 @@ function buildUpCourse(classInfo, classId) {
 }
 
 function getCode(classId) {
-    var url = new URL('http://localhost:8888/api/start')
+    var url = new URL('https://webclassmanager.herokuapp.com/api/start')
     var params = { class: classId }
     url.search = new URLSearchParams(params).toString();
     fetch(url, {
