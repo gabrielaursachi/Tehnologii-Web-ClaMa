@@ -1009,7 +1009,7 @@ function getFileName(id, type, authorType, callback) {
             return
         }
     }
-    if (type === `news`) {
+    else if (type === `news`) {
         client.query("select files from news where id = $1", [id], (err, res) => {
             if (err) {
                 callback(err, null)
