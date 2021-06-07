@@ -1002,11 +1002,6 @@ function getFileName(id, type, authorType, callback) {
                     return
                 }
             })
-        } else {
-            json.responseJSON(callback, {
-                error: "Type of assignment is incorrect"
-            })
-            return
         }
     }
     if (type === `news`) {
