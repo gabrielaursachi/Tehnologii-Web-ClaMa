@@ -608,11 +608,11 @@ async function newUpload(req, res) {
                 })
                 return
             }
-            conn.postNews(req.parameters.classId, req.parameters.title, req.parameters.description, req.parameters.fileName, res)
+            conn.postNews(req.parameters.classId, req.parameters.title, req.parameters.description, fileName, res)
             return
         } else
             if (getUploadFile(req, res, fileName)) {
-                conn.postNews(req.parameters.classId, req.parameters.title, req.parameters.description, req.parameters.fileName, res)
+                conn.postNews(req.parameters.classId, req.parameters.title, req.parameters.description, fileName, res)
                 return
             }
         res.StatusCode = StatusCodes.BAD_REQUEST
