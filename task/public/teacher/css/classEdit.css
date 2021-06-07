@@ -220,46 +220,11 @@ select {
     padding: 0.1%;
 }
 
-
-.fa-info-circle  {
-    color: black;
-}
-
-.fa-info-circle .formulaTip {
-    visibility: hidden;
-  width: 160px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -115px;
-}
-
-.fa-info-circle .formulaTip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 70%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.formulaTip .show {
-  visibility: visible;
-}
-
-input#classFormula:hover + span#formulaTip {
-    display: inline;
-}
-input#classFormula:focus + span#formulaTip {
-    display: inline;
+.formulaTip {
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+    opacity: 70%;
 }
 
 @media screen and (max-width: 600px) {
