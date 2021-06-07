@@ -97,7 +97,7 @@ function saveUser(userInfo, res) {
                 res.statusCode = StatusCodes.OK;
                 json.responseJSON(res, {
                     registered: true,
-                    redirect: `http://localhost:8888`
+                    redirect: `https://webclassmanager.herokuapp.com`
                 })
             }
         })
