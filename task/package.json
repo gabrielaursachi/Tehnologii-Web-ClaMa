@@ -10,7 +10,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "bcrypt": "^5.0.1",
+        "bcrypt": ">=3.0.0",
         "http-status-codes": "^2.1.4",
         "joi": "^17.4.0",
         "jsonwebtoken": "^8.5.1",
