@@ -36,9 +36,13 @@ function createClass() {
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
+                document.getElementById("requestMessage").innerHTML = json.error
+                document.getElementById("requestMessage").style = "color : red; text-align: center"
             } else {
                 console.log(json)
                 // location.href = "http://localhost:8888/teacher/html/profHomePage.html"
+                document.getElementById("requestMessage").innerHTML = json.message
+                document.getElementById("requestMessage").style = "color : green; text-align: center"
             }
         })
         .catch(err => { console.log(err) })
