@@ -9,7 +9,7 @@ function authenticateUser() {
         username: document.getElementById("username").value,
         password: document.getElementById("password").value
     }
-    fetch('/api/auth', {
+    fetch('https://webclassmanager.herokuapp.com/api/auth', {
         method: "POST",
         body: JSON.stringify(account),
         headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -19,7 +19,7 @@ function authenticateUser() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
