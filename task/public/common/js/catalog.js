@@ -192,7 +192,6 @@ function saveCatalog() {
             }
         })
         .catch(err => { console.log(err) })
-
 }
 
 function getFinalGrade(student, i) {
