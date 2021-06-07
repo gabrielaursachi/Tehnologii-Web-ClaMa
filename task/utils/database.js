@@ -617,6 +617,7 @@ function saveCatalog(req, idClass, res) {
                 }
             })
     }
+    res.StatusCode = StatusCodes.OK
     json.responseJSON(res, {
         update: true,
         message: `catalog updated`

@@ -13,7 +13,7 @@ function retrieveCourseCatalog() {
             console.log(json)
             if (json.error) {
                 if (json.error == "no auth") {
-                    location.href = "http://localhost:8888"
+                    location.href = "https://webclassmanager.herokuapp.com/"
                 }
                 console.log(`error encountered`);
                 console.log(json.error);
