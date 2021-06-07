@@ -1,7 +1,7 @@
 window.onload = (event) => {
-    const logout = async() => {
+    const logout = async () => {
         try {
-            let result = await fetch(`http://localhost:8888/api/logout`).then(resp => resp.json())
+            let result = await fetch(`https://webclassmanager.herokuapp.com/api/logout`).then(resp => resp.json())
             location.href = result.redirect
         } catch (error) {
             console.error(error)
